@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orca fork 작업 정리</title>
+<style>
+  :root { --bg:#0f1115; --surface:#171a21; --border:#2a2f3a; --fg:#e6e8ee; --muted:#9aa3b2; --ok:#3fb950; --warn:#d29922; --err:#f85149; }
+  @media (prefers-color-scheme: light) { :root { --bg:#fafbfc; --surface:#fff; --border:#d8dde5; --fg:#1d232c; --muted:#5b6573; --ok:#1a7f37; --warn:#9a6700; --err:#cf222e; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.7 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif; background:var(--bg); color:var(--fg); }
+  main { max-width:920px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  h2 { font-size:19px; margin:40px 0 12px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .lead { color:var(--muted); margin:0 0 20px; }
+  code { font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1px 5px; }
+  table { width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:14px; }
+  th,td { text-align:left; vertical-align:top; padding:8px 10px; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-size:13px; }
+  .ok { color:var(--ok); font-weight:600; } .warn { color:var(--warn); font-weight:600; } .err { color:var(--err); font-weight:600; }
+  .note { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--warn); border-radius:6px; padding:12px 14px; margin:14px 0; }
+  li { margin:4px 0; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Orca fork 작업 정리</h1>
+<p class="lead">2026-10-19 · <code>github.com/SingTheCode/orca</code> · 브랜치 <code>specflow-harness</code> · 로컬 <code>~/dev/orca</code></p>
+
+<h2>요청 범위와 결과</h2>
+<table>
+  <thead><tr><th>#</th><th>요청</th><th>결과</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>GitHub에 Orca fork</td><td class="ok">완료</td></tr>
+    <tr><td>2</td><td>SpecFlow 기능 구현 제외</td><td class="ok">반영 (SpecFlow 코드 이식 없음)</td></tr>
+    <tr><td>3</td><td>omp를 기본 하네스로</td><td class="ok">완료</td></tr>
+    <tr><td>4</td><td>devx API Role 기본 세팅</td><td class="ok">완료</td></tr>
+    <tr><td>6</td><td>사내 Jira PAT 연동</td><td class="ok">완료 (실제 PAT 연결은 미시험)</td></tr>
+    <tr><td>5, 7~10</td><td>grill-me, 티켓 생성, 칸반, 동기화, Registry</td><td>계획만 작성 (<code>docs/specflow-fork-plan.html</code>)</td></tr>
+  </tbody>
+</table>
+
+<h2>바뀐 내용</h2>
+<table>
+  <thead><tr><th>항목</th><th>내용</th></tr></thead>
+  <tbody>
+    <tr><td>앱 정체성</td><td>번들 ID <code>com.stablyai.orca</code> → <code>io.github.singthecode.orca</code>. 업데이트 피드와 배포 대상은 <code>SingTheCode/orca</code> releases. 소유자 이름은 <code>src/shared/release-channel.ts</code>의 <code>RELEASE_OWNER</code> 한 곳에서 관리</td></tr>
+    <tr><td>omp 기본 에이전트</td><td>새 프로필의 <code>defaultTuiAgent</code>를 <code>'omp'</code>로. omp가 없으면 기존 자동 선택으로 대체</td></tr>
+    <tr><td>devx Role</td><td>omp 실행 시 <code>~/.omp/agent/extensions/orca-devx-roles.ts</code> 설치. devx-proxy(<code>localhost:18888</code>)를 provider로 등록하고, 사용자가 비워 둔 역할에만 프리셋 적용. 사용자 설정 파일은 수정하지 않음</td></tr>
+    <tr><td>사내 Jira</td><td>Jira 연결 창이 Self-hosted + 개인 액세스 토큰 + <code>https://jira.sinc.co.kr</code>로 미리 채워진 채 열림. 토큰만 붙여 넣으면 됨</td></tr>
+  </tbody>
+</table>
+
+<h2>검증</h2>
+<ul>
+  <li>dev 앱에서 omp 실행 → <code>DEVX-PONG devx/vertex_ai/claude-opus-5-5</code> 응답 (omp 세션 기록으로 확인)</li>
+  <li>dev 앱 번들 ID <code>io.github.singthecode.orca.dev</code>, 기본 에이전트 <code>omp</code>, Jira 창 기본값 확인</li>
+  <li>사내 Jira는 Server 9.12.6이며 Orca가 쓰는 REST 경로가 모두 존재</li>
+  <li>테스트: 옛 피드 주소를 쓰던 업데이터 테스트 79건을 새 주소로 고친 뒤 통과. 시작 관련 테스트 1건은 대규모 병렬 실행에서만 실패하고 단독 실행에서는 통과</li>
+  <li>타입체크: upstream에 원래 있던 오류 1건 외 신규 오류 없음</li>
+</ul>
+
+<h2>정정한 사항</h2>
+<div class="note">
+<ul>
+  <li><b>앱 ID 변경 범위:</b> 처음엔 1번 범위 밖이라고 했지만, 검토표에서 1번의 작업으로 적어 둔 내용이었습니다. 이후 실제로 변경했습니다.</li>
+  <li><b>HTML 문서 커밋:</b> upstream <code>.gitignore</code>가 <code>docs/**</code>를 무시해서, 앞서 "push했다"고 한 HTML 문서들이 실제로는 커밋되지 않았습니다. 강제 추가해 <code>13155cac5f</code>로 올렸습니다.</li>
+  <li><b>기존 Orca와 병행 설치:</b> "나란히 설치된다"는 안내는 틀렸습니다. 아래 위험 참고.</li>
+</ul>
+</div>
+
+<h2>주의: 기존 Orca와 프로필 폴더 공유</h2>
+<p>번들 ID는 바꿨지만 사용자 데이터 폴더 <code>~/Library/Application Support/orca</code>는 upstream Orca와 같습니다. 설정, 런타임 정보, Jira 토큰, 터미널 daemon 상태를 함께 씁니다.</p>
+<table>
+  <thead><tr><th>상황</th><th>결과</th></tr></thead>
+  <tbody>
+    <tr><td>두 앱 동시 실행</td><td class="ok">막힘. 단일 실행 잠금이 이 폴더 기준이라 두 번째 앱은 첫 번째로 넘기고 종료 (코드로 확인, 설치본 두 개로는 미시험)</td></tr>
+    <tr><td>번갈아 실행</td><td class="err">위험. daemon launchd 이름이 앱 ID로 시작해 fork와 upstream daemon이 같은 프로필에 둘 다 남을 수 있음</td></tr>
+    <tr><td>upstream 자동 업데이트</td><td class="err">위험. 더 새로운 스키마·프로토콜로 쓴 상태를 fork가 읽게 될 수 있음</td></tr>
+  </tbody>
+</table>
+<p><b>현재 안내:</b> fork로 옮길 때는 기존 Orca를 종료하고 Applications에서 지운 뒤 설치합니다.</p>
+
+<h2>배포 전 남은 일</h2>
+<ul>
+  <li>Apple Developer ID 서명·공증, Windows 코드 서명. 서명된 릴리스가 없어 지금은 업데이트 확인 시 "새 버전 없음"</li>
+  <li>번들 ID가 바뀌어 macOS 권한(손쉬운 사용, 화면 기록 등)은 다시 허용 필요</li>
+  <li>devx-proxy가 <code>localhost:18888</code>에서 실행 중이어야 Role 세팅이 동작</li>
+</ul>
+
+<h2>결정 필요</h2>
+<p class="warn">팀에서 기존 Orca와 fork를 함께 설치해 써야 하나요?</p>
+<ul>
+  <li><b>함께 써야 한다면:</b> 프로필 폴더 이름을 분리하는 작업을 따로 진행합니다. CLI와 daemon 경로 코드(<code>metadata.ts</code>, <code>serve-bundle-coordination.ts</code>, <code>codex-home-paths.ts</code>, <code>logs-directory.ts</code>)까지 함께 바꿔야 하고, 기존 사용자는 설정을 새로 잡아야 합니다.</li>
+  <li><b>fork가 Orca를 대체한다면:</b> 지금 안내대로 충분합니다.</li>
+</ul>
+
+<h2>관련 문서</h2>
+<ul>
+  <li><code>docs/specflow-fork-guide.html</code>: 작업 설명서 (사용 방법, 변경 파일, 빌드 명령)</li>
+  <li><code>docs/specflow-fork-plan.html</code>: 전체 계획과 2차 작업(5, 7~10번), 위험 목록</li>
+</ul>
+
+</main>
+</body>
+</html>
