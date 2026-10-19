@@ -193,7 +193,8 @@ export function buildDefaultSettings(args: {
     terminalMainSideEffectAuthority: true,
     terminalHiddenDeliveryGate: true,
     terminalModelQueryAuthority: true,
-    defaultTuiAgent: null,
+    // Why: this fork ships omp as the house harness; pickTuiAgent still falls back to auto-pick when omp is not installed.
+    defaultTuiAgent: 'omp',
     disabledTuiAgents: [...DEFAULT_DISABLED_TUI_AGENTS],
     pluginSystemEnabled: false,
     disabledPlugins: [],

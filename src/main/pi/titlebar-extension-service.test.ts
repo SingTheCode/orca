@@ -722,6 +722,7 @@ describe('PiTitlebarExtensionService', () => {
         const extensions = readdirSync(join(ompAgentDir, 'extensions')).sort()
         expect(extensions).toEqual([
           'orca-agent-status.ts',
+          'orca-devx-roles.ts',
           'orca-prefill.ts',
           'orca-titlebar-spinner.ts'
         ])

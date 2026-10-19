@@ -36,6 +36,8 @@ type JiraInstanceType = 'cloud' | 'server'
 // Self-hosted Jira accepts either a personal access token (Bearer) or classic
 // username + password (Basic); older Server/DC instances predate PATs.
 type ServerAuthMethod = 'pat' | 'basic'
+// Why: this fork targets the company's self-hosted Jira (Server 9.x, PAT Bearer auth); the dialog opens preset to it so users only paste a token.
+const HOUSE_JIRA_SITE_URL = 'https://jira.sinc.co.kr'
 
 // Why: mirrors the inline Jira connect dialog in TaskPage so the onboarding
 // "Connect integrations" step can reuse the same site URL + email + API token
@@ -62,9 +64,9 @@ export function JiraConnectDialog({
   const tokenId = useId()
   const errorId = useId()
 
-  const [instanceType, setInstanceType] = useState<JiraInstanceType>('cloud')
+  const [instanceType, setInstanceType] = useState<JiraInstanceType>('server')
   const [serverAuthMethod, setServerAuthMethod] = useState<ServerAuthMethod>('pat')
-  const [siteUrl, setSiteUrl] = useState('')
+  const [siteUrl, setSiteUrl] = useState(HOUSE_JIRA_SITE_URL)
   const [email, setEmail] = useState('')
   const [apiToken, setApiToken] = useState('')
   const [connectState, setConnectState] = useState<ConnectState>('idle')
@@ -77,9 +79,9 @@ export function JiraConnectDialog({
     if (!open) {
       return
     }
-    setInstanceType('cloud')
+    setInstanceType('server')
     setServerAuthMethod('pat')
-    setSiteUrl('')
+    setSiteUrl(HOUSE_JIRA_SITE_URL)
     setEmail('')
     setApiToken('')
     setConnectState('idle')
@@ -127,7 +129,8 @@ export function JiraConnectDialog({
 
   // Why: a stray backdrop click must not discard typed credentials. Mode switches clear the
   // credential fields, so a toggle alone is not dirty. Escape / Cancel / × stay explicit.
-  const isDraftDirty = (): boolean => siteUrl !== '' || email !== '' || apiToken !== ''
+  const isDraftDirty = (): boolean =>
+    (siteUrl !== '' && siteUrl !== HOUSE_JIRA_SITE_URL) || email !== '' || apiToken !== ''
   const guardOutsideDismiss = preventOutsideDismissWhenDirty(isDraftDirty)
 
   const handleConnect = async (): Promise<void> => {
@@ -157,10 +160,10 @@ export function JiraConnectDialog({
         return
       }
       if (result.ok) {
-        setSiteUrl('')
+        setSiteUrl(HOUSE_JIRA_SITE_URL)
         setEmail('')
         setApiToken('')
-        setInstanceType('cloud')
+        setInstanceType('server')
         setServerAuthMethod('pat')
         setConnectState('idle')
         onOpenChange(false)
@@ -229,7 +232,14 @@ export function JiraConnectDialog({
                 if (!value || connectState === 'connecting') {
                   return
                 }
-                setInstanceType(value as JiraInstanceType)
+                const nextType = value as JiraInstanceType
+                setInstanceType(nextType)
+                // Keep the house URL only where it applies; a typed URL is left alone.
+                if (nextType === 'cloud' && siteUrl.trim() === HOUSE_JIRA_SITE_URL) {
+                  setSiteUrl('')
+                } else if (nextType === 'server' && siteUrl.trim() === '') {
+                  setSiteUrl(HOUSE_JIRA_SITE_URL)
+                }
                 clearCredentialsOnModeSwitch()
               }}
               aria-label={translate(

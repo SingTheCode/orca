@@ -37,6 +37,7 @@ beforeEach(() => {
 afterEach(cleanup)
 
 function fillSiteAndToken(): void {
+  fireEvent.click(screen.getByRole('radio', { name: 'Atlassian Cloud' }))
   fireEvent.change(screen.getByLabelText('Jira Cloud site URL'), {
     target: { value: 'https://example.atlassian.net' }
   })
@@ -98,5 +99,38 @@ describe('Jira scoped-token connection UI', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Connect' }))
     await waitFor(() => expect(screen.getByRole('alert').textContent).toContain('cloud ID'))
     expect(screen.getByLabelText('API token').getAttribute('aria-invalid')).toBeNull()
+  })
+})
+
+describe('Jira connect dialog house defaults', () => {
+  it('submits a pasted PAT to the self-hosted house Jira without identity', async () => {
+    render(<JiraConnectDialog open onOpenChange={vi.fn()} />)
+    expect(screen.queryByLabelText(/email|Username/)).toBeNull()
+    fireEvent.change(screen.getByLabelText('Personal access token', { selector: 'input' }), {
+      target: { value: 'pat-value' }
+    })
+    fireEvent.click(screen.getByRole('button', { name: 'Connect' }))
+    await waitFor(() =>
+      expect(mocks.connectJira).toHaveBeenCalledWith({
+        siteUrl: 'https://jira.sinc.co.kr',
+        email: '',
+        apiToken: 'pat-value',
+        authType: 'server'
+      })
+    )
+  })
+
+  it('drops the house URL when switching to Cloud but keeps a typed URL', () => {
+    render(<JiraConnectDialog open onOpenChange={vi.fn()} />)
+    fireEvent.click(screen.getByRole('radio', { name: 'Atlassian Cloud' }))
+    expect(screen.getByLabelText('Jira Cloud site URL')).toHaveProperty('value', '')
+    fireEvent.change(screen.getByLabelText('Jira Cloud site URL'), {
+      target: { value: 'https://acme.atlassian.net' }
+    })
+    fireEvent.click(screen.getByRole('radio', { name: 'Self-hosted' }))
+    expect(screen.getByLabelText('Jira site URL')).toHaveProperty(
+      'value',
+      'https://acme.atlassian.net'
+    )
   })
 })
