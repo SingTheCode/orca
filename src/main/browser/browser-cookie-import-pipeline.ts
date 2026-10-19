@@ -116,7 +116,7 @@ export async function importValidatedCookies(
     return {
       ok: false,
       reason:
-        'This Orca client cannot report cookies skipped for an unreadable site partition. Update Orca on this device and try again.'
+        'This Oh My DevX client cannot report cookies skipped for an unreadable site partition. Update Oh My DevX on this device and try again.'
     }
   }
   // Why: a family-suppressed sibling is a partition skip too, so partitionSkippedCookies is a

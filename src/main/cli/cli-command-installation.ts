@@ -20,7 +20,7 @@ import {
   type CommandQuarantine,
   type StableCommandInspection
 } from './cli-command-filesystem-transaction'
-import { DEV_LAUNCHER_DIR, LEGACY_LINUX_COMMAND_NAME } from './cli-install-constants'
+import { DEV_LAUNCHER_DIR, LEGACY_LINUX_COMMAND_NAMES } from './cli-install-constants'
 import { buildWindowsForwarder } from './cli-dev-launcher'
 import { isPermissionError } from '../win32-utils'
 import { isPathInsideOrEqual } from './cli-install-path-format'
@@ -99,9 +99,18 @@ export class CliCommandInstallation extends CliCommandInspection {
       return
     }
 
-    const commandPath = join(this.homePath, '.local', 'bin', LEGACY_LINUX_COMMAND_NAME)
+    for (const legacyName of LEGACY_LINUX_COMMAND_NAMES) {
+      await this.removeLegacyLinuxCommandNameIfManaged(legacyName, launcherPath)
+    }
+  }
+
+  private async removeLegacyLinuxCommandNameIfManaged(
+    legacyName: string,
+    launcherPath: string
+  ): Promise<void> {
+    const commandPath = join(this.homePath, '.local', 'bin', legacyName)
     try {
-      const inspected = await this.inspectStableLegacyCommand(commandPath, launcherPath)
+      const inspected = await this.inspectStableLegacyCommand(commandPath, launcherPath, legacyName)
       if (!inspected?.managed) {
         return
       }
@@ -128,17 +137,21 @@ export class CliCommandInstallation extends CliCommandInspection {
     await link(heldPath, commandPath)
   }
 
-  protected isManagedLegacyLinuxTarget(resolvedTarget: string, launcherPath: string): boolean {
-    const legacyLauncherPath = resolve(dirname(launcherPath), LEGACY_LINUX_COMMAND_NAME)
+  protected isManagedLegacyLinuxTarget(
+    resolvedTarget: string,
+    launcherPath: string,
+    legacyName: string
+  ): boolean {
+    const legacyLauncherPath = resolve(dirname(launcherPath), legacyName)
     if (resolvedTarget === legacyLauncherPath) {
       return true
     }
 
-    if (basename(resolvedTarget) !== LEGACY_LINUX_COMMAND_NAME) {
+    if (basename(resolvedTarget) !== legacyName) {
       return false
     }
 
-    if (this.isPackagedLinuxLauncherTarget(resolvedTarget, LEGACY_LINUX_COMMAND_NAME)) {
+    if (this.isPackagedLinuxLauncherTarget(resolvedTarget, legacyName)) {
       return true
     }
 
@@ -149,11 +162,7 @@ export class CliCommandInstallation extends CliCommandInspection {
 
     const extractionOptions = this.appImageExtractionOptions()
     return extractionOptions
-      ? isAppImageExtractedLauncherPath(
-          extractionOptions,
-          resolvedTarget,
-          LEGACY_LINUX_COMMAND_NAME
-        )
+      ? isAppImageExtractedLauncherPath(extractionOptions, resolvedTarget, legacyName)
       : false
   }
 
@@ -201,7 +210,8 @@ export class CliCommandInstallation extends CliCommandInspection {
 
   private async inspectStableLegacyCommand(
     commandPath: string,
-    launcherPath: string
+    launcherPath: string,
+    legacyName: string
   ): Promise<
     | (Pick<StableCommandInspection, 'fileSha256' | 'rawSymlinkTarget'> & {
         snapshot: NonNullable<StableCommandInspection['snapshot']>
@@ -224,7 +234,7 @@ export class CliCommandInstallation extends CliCommandInspection {
       snapshot: inspected.snapshot,
       managed: Boolean(
         resolvedTarget &&
-        (this.isManagedLegacyLinuxTarget(resolvedTarget, launcherPath) ||
+        (this.isManagedLegacyLinuxTarget(resolvedTarget, launcherPath, legacyName) ||
           (this.appImagePath && resolve(resolvedTarget) === resolve(this.appImagePath)))
       )
     }

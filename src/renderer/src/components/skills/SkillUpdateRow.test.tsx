@@ -62,14 +62,14 @@ describe('SkillUpdateRow', () => {
   it('labels a copy from another source quietly and names that source', async () => {
     await render(<SkillUpdateRow group={group()} state="available" />)
 
-    expect(container?.textContent).toContain('Not from Orca')
+    expect(container?.textContent).toContain('Not from Oh My DevX')
     expect(container?.textContent).not.toContain('Update available')
     expect(tooltipText()).toBe(
-      'Installed from acme/agent-skills. Selecting it replaces it with Orca’s version.'
+      'Installed from acme/agent-skills. Selecting it replaces it with Oh My DevX’s version.'
     )
     // Why: the source is only in the tooltip, so keyboard focus must be able to open it.
     const label = Array.from(container?.querySelectorAll('[tabindex="0"]') ?? []).find((node) =>
-      node.textContent?.includes('Not from Orca')
+      node.textContent?.includes('Not from Oh My DevX')
     )
     expect(label).toBeDefined()
   })
@@ -78,7 +78,7 @@ describe('SkillUpdateRow', () => {
     await render(<SkillUpdateRow group={group({ lockSource: null })} state="available" />)
 
     expect(tooltipText()).toBe(
-      'No Orca install record for this copy. Selecting it replaces it with Orca’s version.'
+      'No Oh My DevX install record for this copy. Selecting it replaces it with Oh My DevX’s version.'
     )
   })
 
@@ -91,7 +91,7 @@ describe('SkillUpdateRow', () => {
     )
 
     expect(container?.textContent).toContain('Update available')
-    expect(container?.textContent).not.toContain('Not from Orca')
+    expect(container?.textContent).not.toContain('Not from Oh My DevX')
   })
 
   it('renders a checkbox only while the user is choosing', async () => {

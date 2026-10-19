@@ -20,6 +20,8 @@ const DEV_PARENT_SHUTDOWN_GRACE_MS = 3000
 const HTTP1_COMPATIBILITY_ENV_VAR = 'ORCA_DISABLE_HTTP2'
 const TRUE_ENV_VALUES = new Set(['1', 'true', 'yes', 'on'])
 const FALSE_ENV_VALUES = new Set(['0', 'false', 'no', 'off'])
+// Why: the CLI (src/cli/runtime/metadata.ts) and daemon resolve the packaged profile by this name.
+const PACKAGED_USER_DATA_DIR_NAME = 'orca'
 let devParentShutdownRequested = false
 
 type NetworkCompatibilityOptions = {
@@ -213,6 +215,12 @@ export function configureDevUserDataPath(isDev: boolean): void {
   }
 
   if (!isDev) {
+    // Why: the product was renamed to "Oh My DevX", which would move Electron's default userData
+    // (derived from productName) away from the folder every CLI/daemon path still hardcodes.
+    // An explicit --user-data-dir switch keeps winning.
+    if (!app.commandLine.hasSwitch('user-data-dir')) {
+      app.setPath('userData', join(app.getPath('appData'), PACKAGED_USER_DATA_DIR_NAME))
+    }
     return
   }
   const overrideUserDataPath = process.env.ORCA_DEV_USER_DATA_PATH

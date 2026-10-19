@@ -68,8 +68,8 @@ describe('a structured worker whose agent outlasts the preamble wait', () => {
       state: 'outcome_unknown',
       turnStart: 'unobserved',
       nextCommands: [
-        'orca orchestration worker-show --dispatch d1 --json',
-        'orca orchestration worker-abandon --dispatch d1 --json'
+        'omdx orchestration worker-show --dispatch d1 --json',
+        'omdx orchestration worker-abandon --dispatch d1 --json'
       ]
     })
     expect(db.markWorkerStartUnknown).toHaveBeenCalledWith(

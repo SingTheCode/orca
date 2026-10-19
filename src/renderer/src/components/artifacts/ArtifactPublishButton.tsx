@@ -200,7 +200,7 @@ export function ArtifactPublishButton({
                 <p className="text-xs font-medium">
                   {translate(
                     'auto.components.artifacts.ArtifactPublishButton.accountTitle',
-                    'Orca account'
+                    'Oh My DevX account'
                   )}
                 </p>
                 <p className="text-[11px] leading-4 text-muted-foreground">

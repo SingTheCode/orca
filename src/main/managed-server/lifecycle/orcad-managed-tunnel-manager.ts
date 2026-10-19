@@ -132,7 +132,7 @@ export class OrcadManagedTunnelManager {
     checks: OrcadTunnelStartChecks = {}
   ): Promise<number> {
     if (!target.generation) {
-      throw new Error('Managed Orca SSH target has no registration generation.')
+      throw new Error('Managed Oh My DevX SSH target has no registration generation.')
     }
     const managerGeneration = this.managerGeneration
     const ownershipGeneration = (this.ownershipGenerations.get(environmentId) ?? 0) + 1
@@ -150,7 +150,7 @@ export class OrcadManagedTunnelManager {
       connection,
       forwards: this.forwards,
       localPort: 0,
-      label: 'Managed Orca server',
+      label: 'Managed Oh My DevX server',
       remotePort,
       rereadRemotePort: checks.rereadRemotePort,
       verify: checks.verify,
@@ -237,16 +237,18 @@ export class OrcadManagedTunnelManager {
     const targetStore = this.dependencies.getTargetStore()
     const connectionManager = this.dependencies.getConnectionManager()
     if (!targetStore || !connectionManager) {
-      throw new Error('SSH is unavailable on this client; the managed Orca server is unverifiable.')
+      throw new Error(
+        'SSH is unavailable on this client; the managed Oh My DevX server is unverifiable.'
+      )
     }
     const target = targetStore.getTarget(deployment.sshTargetId)
     if (!target || target.generation !== deployment.sshTargetGeneration) {
       throw new Error(
-        'The SSH registration for this managed Orca server was removed or re-created.'
+        'The SSH registration for this managed Oh My DevX server was removed or re-created.'
       )
     }
     if (getManagedOrcadFenceEnvironmentId(target) !== environment.id) {
-      throw new Error('The SSH target is no longer owned by this managed Orca server.')
+      throw new Error('The SSH target is no longer owned by this managed Oh My DevX server.')
     }
 
     const managerGeneration = this.managerGeneration
@@ -295,7 +297,7 @@ export class OrcadManagedTunnelManager {
       connection,
       forwards: this.forwards,
       localPort: deployment.localPort,
-      label: `Managed Orca server: ${environment.name}`,
+      label: `Managed Oh My DevX server: ${environment.name}`,
       ...checks,
       stillCurrent: () => stillOwned() && connection.getConnectGeneration() === transportGeneration
     })

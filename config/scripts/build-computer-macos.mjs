@@ -15,8 +15,8 @@ const entitlementsPath = path.join(
   'entitlements.computer-use.mac.plist'
 )
 const bundleId =
-  process.env.ORCA_COMPUTER_MACOS_BUNDLE_ID ?? 'io.github.singthecode.orca.computer-use'
-const displayName = 'Orca Computer Use'
+  process.env.ORCA_COMPUTER_MACOS_BUNDLE_ID ?? 'io.github.singthecode.omdx.computer-use'
+const displayName = 'Oh My DevX Computer Use'
 const signingIdentity = resolveSigningIdentity()
 const universalTriples = ['arm64-apple-macosx', 'x86_64-apple-macosx']
 

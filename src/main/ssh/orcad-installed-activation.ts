@@ -211,7 +211,7 @@ export async function activateInstalledOrcad(
   if (unstopped) {
     return notActivated(
       'orcad_outgoing_stop_incomplete',
-      `${unstopped} No snapshot was taken and the candidate was not started. Orca requires ` +
+      `${unstopped} No snapshot was taken and the candidate was not started. Oh My DevX requires ` +
         'matching runtime readiness before signaling an incumbent and confirmed exit before ' +
         'snapshotting.'
     )
@@ -243,7 +243,7 @@ export async function activateInstalledOrcad(
       : ''
     throw new Error(
       `Could not snapshot ${options.userDataDir} before activating ${fullVersion}` +
-        `${reason ? `: ${reason}` : ''}. Orca's persisted state carries no schema version, so ` +
+        `${reason ? `: ${reason}` : ''}. Oh My DevX's persisted state carries no schema version, so ` +
         'without a snapshot a rollback has no way back. Refusing to activate. Fix what stops ' +
         `the copy (often a full disk or quota on ${orcadRemoteBaseDir(options.host, options.remoteHome)}), ` +
         `then reconnect.${restarted}`

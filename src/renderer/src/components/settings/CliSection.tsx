@@ -50,13 +50,13 @@ function getRevealLabel(platform: string): string {
 
 function getInstallDescription(platform: string): string {
   if (platform === 'darwin') {
-    return 'Register `orca` in /usr/local/bin.'
+    return 'Register `omdx` in /usr/local/bin.'
   }
   if (platform === 'linux') {
-    return 'Register `orca-ide` in ~/.local/bin.'
+    return 'Register `omdx-ide` in ~/.local/bin.'
   }
   if (platform === 'win32') {
-    return 'Register `orca` in your user PATH.'
+    return 'Register `omdx` in your user PATH.'
   }
   return 'CLI registration is not yet available on this platform.'
 }
@@ -162,12 +162,12 @@ export function CliSection({
     <section className="space-y-4" data-settings-section="cli">
       <div className="space-y-1">
         <h2 className="text-sm font-semibold">
-          {translate('auto.components.settings.CliSection.c5c0f2641d', 'Orca CLI')}
+          {translate('auto.components.settings.CliSection.c5c0f2641d', 'Oh My DevX CLI')}
         </h2>
         <p className="text-xs text-muted-foreground">
           {translate(
             'auto.components.settings.CliSection.outsideOrcaDescription',
-            'Orca terminals already have `orca`. Turn this on to use `orca` from other terminals outside Orca.'
+            'Oh My DevX terminals already have `omdx`. Turn this on to use `omdx` from other terminals outside Oh My DevX.'
           )}
         </p>
       </div>
@@ -312,7 +312,7 @@ export function CliSection({
               <p className="text-xs text-muted-foreground">
                 {translate(
                   'auto.components.settings.CliSection.36a6f919ba',
-                  'Give agents Orca-aware workspace, terminal, and progress workflows.'
+                  'Give agents Oh My DevX-aware workspace, terminal, and progress workflows.'
                 )}
               </p>
             </div>
@@ -323,7 +323,7 @@ export function CliSection({
               title={translate('auto.components.settings.CliSection.6053cf736c', 'CLI skill')}
               description={translate(
                 'auto.components.settings.CliSection.e8012c03a1',
-                'Enables agents to use Orca workspace, terminal, and progress commands.'
+                'Enables agents to use Oh My DevX workspace, terminal, and progress commands.'
               )}
               command={cliSkillInstallCommand}
               terminalTitle="CLI skill setup"

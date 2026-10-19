@@ -78,7 +78,7 @@ export function statusFromState(
         state: 'partial',
         configPath: pluginPath,
         managedHooksPresent: false,
-        detail: 'Amp Orca status plugin exists but is not Orca-managed'
+        detail: 'Amp Oh My DevX status plugin exists but is not Oh My DevX-managed'
       }
     case 'error':
       return {

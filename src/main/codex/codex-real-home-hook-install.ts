@@ -98,11 +98,11 @@ export async function reconcileCodexHookEntriesInHome(
           }
         }
       }
-      throw new Error(`Orca entries in ${home.homePath} did not settle`)
+      throw new Error(`Oh My DevX entries in ${home.homePath} did not settle`)
     })
   } catch (error) {
     console.warn(
-      `[codex-real-home-hooks] could not reconcile Orca entries in ${home.homePath}:`,
+      `[codex-real-home-hooks] could not reconcile Oh My DevX entries in ${home.homePath}:`,
       error
     )
   }
@@ -205,7 +205,7 @@ function reconcilePass(
     removeHookTrustEntries(tomlPath, findStale(readHookTrustEntries(tomlPath)))
   } catch (error) {
     // Why still written: the entry and its approval are in place; a leftover approval matches no hook.
-    console.warn('[codex-real-home-hooks] could not drop stale Orca approvals:', error)
+    console.warn('[codex-real-home-hooks] could not drop stale Oh My DevX approvals:', error)
   }
   return 'settled'
 }

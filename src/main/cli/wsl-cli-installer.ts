@@ -8,7 +8,7 @@ import {
   buildWslBridgeScript,
   buildWslLauncher,
   getBridgePathFromCommandPath,
-  getPosixDirname,
+  getLegacyWslCommandPaths,
   getWslBridgeMarker,
   getWslLauncherMarker,
   parseManagedLauncherTarget
@@ -27,7 +27,6 @@ import {
 
 const MANAGED_MARKER = getWslLauncherMarker()
 const BRIDGE_MANAGED_MARKER = getWslBridgeMarker()
-const LEGACY_WSL_COMMAND_NAME = 'orca'
 const WSL_COMMAND_TIMEOUT_MS = 10_000
 
 function normalizeManagedScriptContent(content: string): string {
@@ -179,16 +178,18 @@ export class WslCliInstaller {
       return { changed: true, managed: true, status: await this.install(status) }
     }
 
-    const legacyCommandPath = status.commandPath
-      ? `${getPosixDirname(status.commandPath)}/${LEGACY_WSL_COMMAND_NAME}`
-      : null
-    if (!legacyCommandPath || !this.distro) {
+    if (!status.commandPath || !this.distro) {
       return { changed: false, managed: status.state === 'installed', status }
     }
 
-    const legacyContent = await this.readCommandFile(this.distro, legacyCommandPath)
-    const legacyManaged =
-      typeof legacyContent === 'string' && legacyContent.includes(MANAGED_MARKER)
+    let legacyManaged = false
+    for (const legacyCommandPath of getLegacyWslCommandPaths(status.commandPath)) {
+      const legacyContent = await this.readCommandFile(this.distro, legacyCommandPath)
+      if (typeof legacyContent === 'string' && legacyContent.includes(MANAGED_MARKER)) {
+        legacyManaged = true
+        break
+      }
+    }
     if (!legacyManaged) {
       return { changed: false, managed: status.state === 'installed', status }
     }
@@ -236,15 +237,19 @@ export class WslCliInstaller {
     if (!status.supported || !status.commandPath) {
       return status
     }
-    const legacyCommandPath = `${getPosixDirname(status.commandPath)}/${LEGACY_WSL_COMMAND_NAME}`
+    const legacyCommandPaths = getLegacyWslCommandPaths(status.commandPath)
     if (status.state === 'not_installed') {
-      // Why: a managed legacy `orca` left behind would later be re-adopted by
+      // Why: a managed legacy `orca`/`orca-ide` left behind would later be re-adopted by
       // startup reconciliation as opt-in proof, silently undoing this removal.
       await this.run(
         this.distro as string,
         [
           'set -eu',
-          buildManagedLegacyRemoveCommand(quotePosixShellDoubleQuotedApostrophe(legacyCommandPath))
+          ...legacyCommandPaths.map((legacyCommandPath) =>
+            buildManagedLegacyRemoveCommand(
+              quotePosixShellDoubleQuotedApostrophe(legacyCommandPath)
+            )
+          )
         ].join('\n')
       )
       return status
@@ -255,7 +260,7 @@ export class WslCliInstaller {
 
     await this.run(
       this.distro as string,
-      buildSafeRemoveCommand(status.commandPath, legacyCommandPath)
+      buildSafeRemoveCommand(status.commandPath, legacyCommandPaths)
     )
     return this.getStatus()
   }

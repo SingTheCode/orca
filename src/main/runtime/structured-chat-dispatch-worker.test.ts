@@ -83,7 +83,7 @@ function dispatchCount(): unknown {
 }
 
 describe('a chat as the assignee of orchestration dispatch', () => {
-  it('records the chat by its Orca session ID and sends an idle chat its task as a turn', async () => {
+  it('records the chat by its Oh My DevX session ID and sends an idle chat its task as a turn', async () => {
     await openChat(COORDINATOR)
     const worker = await openChat(PEER_CHAT)
     const { runId, taskId } = await coordinatorRunAndTask()
@@ -109,7 +109,7 @@ describe('a chat as the assignee of orchestration dispatch', () => {
     })
     const task = turnText(worker.turns[0]!)
     expect(task).toContain('build it')
-    expect(task).toContain(`Your Orca session ID is: ${WORKER}`)
+    expect(task).toContain(`Your Oh My DevX session ID is: ${WORKER}`)
     expect(task).toContain('The coordinator cannot see this chat')
     expect(task).toContain('it will send this chat a fresh')
     expect(task).not.toContain('this terminal')
@@ -212,7 +212,7 @@ describe('a chat as the assignee of orchestration dispatch', () => {
 
     expect(error).toMatchObject({
       code: 'terminal_is_coordinator',
-      message: expect.stringContaining("is this coordinator's own Orca session ID")
+      message: expect.stringContaining("is this coordinator's own Oh My DevX session ID")
     })
     expect(dispatchCount()).toEqual({ n: 0 })
     expect(db.getTask(taskId)?.status).toBe('ready')
@@ -256,7 +256,7 @@ describe('a chat as the assignee of orchestration dispatch', () => {
 
     await vi.waitFor(() => expect(worker.turns).toHaveLength(1), WAIT)
     expect(turnText(worker.turns[0]!)).toMatch(
-      /^You have 1 orchestration message\. Run `orca(-dev)? orchestration check`\.$/
+      /^You have 1 orchestration message\. Run `omdx(-dev)? orchestration check`\.$/
     )
     expect(await queuedCardTexts(PEER_CHAT)).toEqual([])
     await settleTurn(PEER_CHAT, 0)

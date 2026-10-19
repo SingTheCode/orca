@@ -1,16 +1,16 @@
-# Orca Emulator
+# Oh My DevX Emulator
 
-This discovery stub loads the version-matched guide from the Orca executable used for this session.
+This discovery stub loads the version-matched guide from the Oh My DevX executable used for this session.
 
-Prefer Orca over raw `serve-sim` or direct `simctl` for simulator control inside Orca; it
+Prefer Oh My DevX over raw `serve-sim` or direct `simctl` for simulator control inside Oh My DevX; it
 handles device scoping, helper lifecycle, and worktree context.
 
 <!-- shared: resolver -->
 
-## Load the version-matched guide before running Orca commands
+## Load the version-matched guide before running Oh My DevX commands
 
 ```text
-ORCA skills get orca-emulator
+OMDX skills get orca-emulator
 ```
 
 <!-- shared: no-guessing -->

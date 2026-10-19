@@ -31,7 +31,7 @@ export function sshHostServerStatusLine(
       tone: 'warning',
       text: translate(
         'auto.components.settings.sshHostServer.notServing',
-        'Orca couldn’t confirm that the managed server is answering.'
+        'Oh My DevX couldn’t confirm that the managed server is answering.'
       ),
       detail: status.serving.detail
     }
@@ -92,7 +92,7 @@ function sourceChangedLine(): SshHostServerStatusLine {
     tone: 'warning',
     text: translate(
       'auto.components.settings.sshHostServer.sourceChanged',
-      'An older version of Orca changed this host’s projects. Move those changes to its managed server, or keep the server’s version, to connect again.'
+      'An older version of Oh My DevX changed this host’s projects. Move those changes to its managed server, or keep the server’s version, to connect again.'
     )
   }
 }
@@ -108,7 +108,7 @@ function unavailableLine(reason: string | undefined): SshHostServerStatusLine {
       tone: 'destructive',
       text: translate(
         'auto.components.settings.sshHostServer.unsupported',
-        'This host isn’t supported by this version of Orca ({{reason}}). To keep using it, install an older version of Orca.',
+        'This host isn’t supported by this version of Oh My DevX ({{reason}}). To keep using it, install an older version of Oh My DevX.',
         { reason: cause }
       )
     }
@@ -117,7 +117,7 @@ function unavailableLine(reason: string | undefined): SshHostServerStatusLine {
     tone: 'destructive',
     text: translate(
       'auto.components.settings.sshHostServer.unsupportedUnknown',
-      'This host isn’t supported by this version of Orca. To keep using it, install an older version of Orca.'
+      'This host isn’t supported by this version of Oh My DevX. To keep using it, install an older version of Oh My DevX.'
     ),
     ...(reason ? { detail: reason } : {})
   }
@@ -128,17 +128,17 @@ function unavailableCause(reason: string): string | null {
     case 'unsupported_host':
       return translate(
         'auto.components.settings.sshHostServer.cause.unsupportedHost',
-        'Orca has no server build for this system'
+        'Oh My DevX has no server build for this system'
       )
     case 'artifacts_unavailable':
       return translate(
         'auto.components.settings.sshHostServer.cause.artifactsUnavailable',
-        'this Orca build doesn’t include the server'
+        'this Oh My DevX build doesn’t include the server'
       )
     case 'libc_unidentified':
       return translate(
         'auto.components.settings.sshHostServer.cause.libcUnidentified',
-        'Orca couldn’t identify the host’s system libraries'
+        'Oh My DevX couldn’t identify the host’s system libraries'
       )
     case 'runtime_self_test':
       return translate(
@@ -165,7 +165,7 @@ function tunnelUnavailableLine(): SshHostServerStatusLine {
     tone: 'destructive',
     text: translate(
       'auto.components.settings.sshHostServer.tunnelUnsupported',
-      'This host isn’t supported by this version of Orca: its SSH server doesn’t allow port forwarding, and Orca couldn’t reach its server through the SSH session either. To keep using it, install an older version of Orca.'
+      'This host isn’t supported by this version of Oh My DevX: its SSH server doesn’t allow port forwarding, and Oh My DevX couldn’t reach its server through the SSH session either. To keep using it, install an older version of Oh My DevX.'
     )
   }
 }
@@ -175,7 +175,7 @@ function retryLine(): SshHostServerStatusLine {
     tone: 'warning',
     text: translate(
       'auto.components.settings.sshHostServer.setupRetry',
-      'Orca couldn’t start its server on this host. Try connecting again.'
+      'Oh My DevX couldn’t start its server on this host. Try connecting again.'
     )
   }
 }
@@ -185,7 +185,7 @@ function heldMoveLine(): SshHostServerStatusLine {
     tone: 'warning',
     text: translate(
       'auto.components.settings.sshHostServer.moveHeld',
-      'Orca paused moving this host’s projects to its managed server because it couldn’t confirm the server’s copy. Nothing is lost: the host keeps its projects and stays locked until the move finishes. Connect again to resume. If the server can’t come back, stop or forget it in Settings > Managed servers.'
+      'Oh My DevX paused moving this host’s projects to its managed server because it couldn’t confirm the server’s copy. Nothing is lost: the host keeps its projects and stays locked until the move finishes. Connect again to resume. If the server can’t come back, stop or forget it in Settings > Managed servers.'
     )
   }
 }
@@ -202,12 +202,12 @@ function linkedProjectsLine(
       count > 0
         ? translate(
             'auto.components.settings.sshHostServer.linkedProjects',
-            'This host’s Orca server already had {{paths}}, so this desktop now uses the server’s copy. This desktop’s tabs and {{count}} automations there were not moved, and worktrees it created there show as external worktrees.',
+            'This host’s Oh My DevX server already had {{paths}}, so this desktop now uses the server’s copy. This desktop’s tabs and {{count}} automations there were not moved, and worktrees it created there show as external worktrees.',
             { paths, count }
           )
         : translate(
             'auto.components.settings.sshHostServer.linkedProjectsNoAutomations',
-            'This host’s Orca server already had {{paths}}, so this desktop now uses the server’s copy. This desktop’s tabs there were not moved, and worktrees it created there show as external worktrees.',
+            'This host’s Oh My DevX server already had {{paths}}, so this desktop now uses the server’s copy. This desktop’s tabs there were not moved, and worktrees it created there show as external worktrees.',
             { paths }
           )
   }
@@ -218,17 +218,17 @@ function settingUpLabel(phase: (typeof SSH_MANAGED_SERVER_PHASES)[number]): stri
     case 'deploying':
       return translate(
         'auto.components.settings.sshHostServer.deploying',
-        'Setting up a managed Orca server…'
+        'Setting up a managed Oh My DevX server…'
       )
     case 'converting':
       return translate(
         'auto.components.settings.sshHostServer.converting',
-        'Moving this host’s projects to its managed Orca server…'
+        'Moving this host’s projects to its managed Oh My DevX server…'
       )
     case 'connecting':
       return translate(
         'auto.components.settings.sshHostServer.connecting',
-        'Connecting to the managed Orca server…'
+        'Connecting to the managed Oh My DevX server…'
       )
     case 'updating':
       return translate(
@@ -254,12 +254,12 @@ function unservedLine(
         text: status.terminals
           ? translate(
               'auto.components.settings.sshHostServer.olderTerminals',
-              '{{count}} terminals started by an older version of Orca are still running on this host, and they don’t stop on their own. Close them in that version of Orca or end them on the host, then reconnect.',
+              '{{count}} terminals started by an older version of Oh My DevX are still running on this host, and they don’t stop on their own. Close them in that version of Oh My DevX or end them on the host, then reconnect.',
               { count: status.terminals }
             )
           : translate(
               'auto.components.settings.sshHostServer.olderTerminalsUncounted',
-              'Terminals started by an older version of Orca are still running on this host, and they don’t stop on their own. Close them in that version of Orca or end them on the host, then reconnect.'
+              'Terminals started by an older version of Oh My DevX are still running on this host, and they don’t stop on their own. Close them in that version of Oh My DevX or end them on the host, then reconnect.'
             )
       }
     case 'relay_terminals_unverifiable':
@@ -267,7 +267,7 @@ function unservedLine(
         tone: 'warning',
         text: translate(
           'auto.components.settings.sshHostServer.olderTerminalsUnverifiable',
-          'Orca couldn’t confirm that terminals started by an older version of Orca have exited. Reconnect to try again.'
+          'Oh My DevX couldn’t confirm that terminals started by an older version of Oh My DevX have exited. Reconnect to try again.'
         )
       }
     case 'orcad_unavailable':

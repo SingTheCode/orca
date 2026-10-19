@@ -136,7 +136,7 @@ export function CreateStep({
         <DialogDescription>
           {translate(
             'auto.components.sidebar.AddRepoCreateStep.b100311784',
-            'Name it and Orca will create a real project with sensible defaults.'
+            'Name it and Oh My DevX will create a real project with sensible defaults.'
           )}
         </DialogDescription>
       </DialogHeader>

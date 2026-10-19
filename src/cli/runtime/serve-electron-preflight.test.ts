@@ -75,7 +75,7 @@ describe('preflightElectronServe', () => {
       preflightElectronServe({}, userData, { platform: 'linux', deps: deps({ reachable: true }) })
     ).resolves.toBe(3)
     expect(String(stderr.mock.calls[0]?.[0])).toContain(
-      'Orca is already running for this userData profile as pid 4242; not starting a second process.'
+      'Oh My DevX is already running for this userData profile as pid 4242; not starting a second process.'
     )
   })
 
@@ -128,7 +128,7 @@ describe('preflightElectronServe', () => {
     const fingerprint = () => 'Background|ssh=1|sandbox=0'
 
     it('refuses a later run from the same environment with exit 78 before anything else', () => {
-      recordElectronServeStartupAbort(userData, 'Orca serve aborted with SIGABRT on macOS.', {
+      recordElectronServeStartupAbort(userData, 'Oh My DevX serve aborted with SIGABRT on macOS.', {
         now: 1_000,
         fingerprint
       })

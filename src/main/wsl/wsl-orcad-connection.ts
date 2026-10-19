@@ -244,7 +244,7 @@ export class WslOrcadConnectionManager {
       environmentId,
       remotePort: launch.port,
       localPort: preferredLocalPort,
-      label: `Orca server in WSL: ${label}`
+      label: `Oh My DevX server in WSL: ${label}`
     })
     try {
       if (this.generation(key) !== generation) {
@@ -260,7 +260,9 @@ export class WslOrcadConnectionManager {
       }
       if (identity.verdict === 'unreachable') {
         // Why not fail: a server that is still starting is not a wrong server.
-        console.warn(`[wsl] Orca server in ${distro} did not answer its bridge: ${identity.detail}`)
+        console.warn(
+          `[wsl] Oh My DevX server in ${distro} did not answer its bridge: ${identity.detail}`
+        )
       }
       if (this.generation(key) !== generation) {
         throw new WslOrcadConnectionSupersededError(distro)

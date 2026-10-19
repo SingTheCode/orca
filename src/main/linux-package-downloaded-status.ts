@@ -8,13 +8,13 @@ import { getLinuxPackageType } from './linux-update-package-type'
 import type { LinuxPackageArtifact } from './linux-package-update-recovery'
 
 export const LINUX_PACKAGE_MARKER_UNUSABLE_MESSAGE =
-  'Orca could not verify the installed Linux package format, so it will not install this update automatically. Download the update from the official release page and install it manually.'
+  'Oh My DevX could not verify the installed Linux package format, so it will not install this update automatically. Download the update from the official release page and install it manually.'
 export const LINUX_PACKAGE_EXTERNALLY_MANAGED_MESSAGE =
-  'This copy of Orca is managed by your system package manager, so Orca cannot install updates itself. Update Orca through your distribution instead.'
+  'This copy of Oh My DevX is managed by your system package manager, so Oh My DevX cannot install updates itself. Update Oh My DevX through your distribution instead.'
 export const LINUX_PACKAGE_MANUAL_INSTALL_MESSAGE =
-  'Quit Orca before running the system package install command.'
+  'Quit Oh My DevX before running the system package install command.'
 const PACKAGE_METADATA_UNUSABLE_MESSAGE =
-  'The downloaded package metadata could not be verified. Quit Orca before downloading and installing the update from the official release page.'
+  'The downloaded package metadata could not be verified. Quit Oh My DevX before downloading and installing the update from the official release page.'
 
 export function createLinuxPackageManualInstallStatus(
   artifact: Pick<LinuxPackageArtifact, 'packageType' | 'version'>

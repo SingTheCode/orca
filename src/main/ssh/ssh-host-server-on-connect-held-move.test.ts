@@ -106,7 +106,7 @@ describe('a move to the managed server that stops short', () => {
     })
     if (result.route === 'unserved') {
       expect(unservedHostServerMessage(result)).toBe(
-        'Orca couldn’t start its server on this host. Try connecting again.'
+        'Oh My DevX couldn’t start its server on this host. Try connecting again.'
       )
     }
     warn.mockRestore()

@@ -57,7 +57,7 @@ const DEFAULT_DEPENDENCIES: WslOrcadIncumbentDependencies = {
       environmentId: target.id,
       remotePort,
       localPort: 0,
-      label: `Orca server in WSL: ${target.label} (update check)`
+      label: `Oh My DevX server in WSL: ${target.label} (update check)`
     }),
   census: requestOrcadTerminalCensus
 }

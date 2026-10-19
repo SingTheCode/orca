@@ -165,7 +165,7 @@ describe('removing a managed server host', () => {
     })
     expect(mocks.requestRemove).not.toHaveBeenCalled()
     expect(removeTarget).not.toHaveBeenCalled()
-    expect(document.body.textContent).toContain('Build box runs a managed Orca server')
+    expect(document.body.textContent).toContain('Build box runs a managed Oh My DevX server')
     const open = Array.from(document.body.querySelectorAll('button')).find(
       (button) => button.textContent === 'Open Managed servers'
     )

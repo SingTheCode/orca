@@ -54,7 +54,7 @@ export function readSessionRecipient(
       ? { sessionId, address: formatOrcaSessionAddress(sessionId) }
       : {
           code: CODES.unknown,
-          message: `${recipient} does not name an Orca session ID. No message was sent.`
+          message: `${recipient} does not name an Oh My DevX session ID. No message was sent.`
         }
   }
   const sessionId = isOrcaSessionId(recipient) ? recipient : null
@@ -81,7 +81,7 @@ export function refuseUndeliverableSessionRecipient(
   if (!store) {
     return {
       code: CODES.unknown,
-      message: `Agent session ${sessionId} cannot be verified: this Orca is not running its agent-session host. ${noEffect}`
+      message: `Agent session ${sessionId} cannot be verified: this Oh My DevX is not running its agent-session host. ${noEffect}`
     }
   }
   const found = lookupOrcaAgentSession(store, sessionId)
@@ -91,7 +91,7 @@ export function refuseUndeliverableSessionRecipient(
   if (found.kind === 'unknown') {
     return {
       code: CODES.unknown,
-      message: `No Orca agent session ${sessionId} exists on this host. ${noEffect}`
+      message: `No Oh My DevX agent session ${sessionId} exists on this host. ${noEffect}`
     }
   }
   const reach = structuredSessionMailReach(store, found.record, db)
@@ -132,6 +132,6 @@ function providerIdRefusal(
   const address = `${ORCA_SESSION_ADDRESS_PREFIX}${root}`
   return {
     code: CODES.providerId,
-    message: `${id} is the provider's own session id, which changes on /clear. This session's Orca session ID is ${address}; address it by that instead. ${noEffect}`
+    message: `${id} is the provider's own session id, which changes on /clear. This session's Oh My DevX session ID is ${address}; address it by that instead. ${noEffect}`
   }
 }

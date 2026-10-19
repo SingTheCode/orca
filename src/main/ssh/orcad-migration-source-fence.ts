@@ -34,7 +34,7 @@ import { orcadMigrationRefusalReason } from './orcad-migration-refusal-reason'
 
 export const ORCAD_MIGRATION_LEAVE_BEHIND_TERMINALS = 'orcad_migration_leave_behind_terminals'
 export const ORCAD_MIGRATION_LEAVE_BEHIND_TERMINALS_REASON =
-  'Move anyway needs every terminal on this host closed first, and Orca could not confirm they all exited. Close them, or end them on the host, then connect again.'
+  'Move anyway needs every terminal on this host closed first, and Oh My DevX could not confirm they all exited. Close them, or end them on the host, then connect again.'
 
 export type OrcadMigrationFenceState =
   | { state: 'none' }

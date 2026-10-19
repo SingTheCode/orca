@@ -172,18 +172,18 @@ export function HostRemoveDialog({
     target.kind === 'wsl'
       ? translate(
           'auto.components.sidebar.HostRemoveDialog.wslHostEndsTerminals',
-          'Removes {{value0}} from Orca, ends its open terminals and stops Orca’s server in that distro. Files in the distro are untouched.',
+          'Removes {{value0}} from Oh My DevX, ends its open terminals and stops Oh My DevX’s server in that distro. Files in the distro are untouched.',
           { value0: label }
         )
       : target.kind === 'runtime'
         ? translate(
             'auto.components.sidebar.HostRemoveDialog.4d5e6f7a8b',
-            'This opens the Orca servers settings where you can remove this server.'
+            'This opens the Oh My DevX servers settings where you can remove this server.'
           )
         : hasWorkspaces
           ? translate(
               'auto.components.sidebar.HostRemoveDialog.hostHasWorkspacesDefault',
-              'Removes {{value0}} and its credentials from this computer. Its {{value1}} stay in Orca — remote files are not touched.',
+              'Removes {{value0}} and its credentials from this computer. Its {{value1}} stay in Oh My DevX — remote files are not touched.',
               { value0: label, value1: workspaceCountLabel }
             )
           : translate(
@@ -201,7 +201,7 @@ export function HostRemoveDialog({
       )
     : translate(
         'auto.components.sidebar.HostRemoveDialog.alsoForgetLocal',
-        'Also remove these {{value0}} from Orca',
+        'Also remove these {{value0}} from Oh My DevX',
         { value0: workspaceCountLabel }
       )
 
@@ -267,7 +267,7 @@ export function HostRemoveDialog({
                           )
                         : translate(
                             'auto.components.sidebar.HostRemoveDialog.alsoForgetLocalHint',
-                            'Clears them from Orca only. Remote files, worktrees, and branches are left untouched.'
+                            'Clears them from Oh My DevX only. Remote files, worktrees, and branches are left untouched.'
                           )}
                     </span>
                   </span>

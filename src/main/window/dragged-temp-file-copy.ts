@@ -178,7 +178,7 @@ export async function materializeDragTempPath(
       }
       // Why: a caller that gave up mid-copy never hands this path out; don't retain it.
       signal?.throwIfAborted()
-      console.debug('[drop] copied a drag-temp file into Orca storage', { bytes: size })
+      console.debug('[drop] copied a drag-temp file into Oh My DevX storage', { bytes: size })
       return { result: imported(sourcePath, destPath), copiedBytes: size }
     } finally {
       await handle.close()

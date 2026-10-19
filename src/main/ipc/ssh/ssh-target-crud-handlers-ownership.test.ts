@@ -91,7 +91,7 @@ describe('SSH target CRUD against managed orcad targets', () => {
       orcadProvisioning: { requestId: 'request-1', name: 'Managed' }
     }
     await expect(handler('ssh:removeTarget')(null, { id: 'ssh-1' })).rejects.toThrow(
-      'managed Orca server'
+      'managed Oh My DevX server'
     )
     expect(mocks.remove).not.toHaveBeenCalled()
   })

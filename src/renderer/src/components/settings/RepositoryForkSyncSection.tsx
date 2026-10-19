@@ -90,7 +90,7 @@ function formatForkSyncResult(result: GitForkSyncResult): { title: string; descr
       blockedDescription ??
       translate(
         'auto.components.settings.RepositoryForkSyncSection.blockedFallback',
-        'Orca could not fast-forward this fork safely.'
+        'Oh My DevX could not fast-forward this fork safely.'
       )
   }
 }
@@ -205,7 +205,7 @@ export function RepositoryForkSyncSection({
           <p className="text-xs text-muted-foreground">
             {translate(
               'auto.components.settings.RepositoryForkSyncSection.longDescription',
-              'When this fork is behind upstream, Orca can safely fast-forward its default branch. Orca skips the update if the branch has local-only commits or conflicts.'
+              'When this fork is behind upstream, Oh My DevX can safely fast-forward its default branch. Oh My DevX skips the update if the branch has local-only commits or conflicts.'
             )}
           </p>
           <p className="text-xs text-muted-foreground">

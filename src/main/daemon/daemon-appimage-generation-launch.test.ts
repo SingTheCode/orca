@@ -19,7 +19,7 @@ let cacheRootPath = ''
 
 beforeEach(() => {
   root = mkdtempSync(join(tmpdir(), 'orca-generation-launch-'))
-  appImagePath = join(root, 'Orca.AppImage')
+  appImagePath = join(root, 'Oh My DevX.AppImage')
   cacheRootPath = join(root, 'cache')
   writeFileSync(appImagePath, 'appimage')
   resolveIdentity.mockReturnValue({ appImagePath })
@@ -39,10 +39,10 @@ function input(overrides: { appVersion?: string; environment?: NodeJS.ProcessEnv
   }
 }
 
-/** An extracted generation of `appImagePath` as `orca` registration leaves it. */
+/** An extracted generation of `appImagePath` as `omdx` registration leaves it. */
 function extractGeneration(options: { node?: boolean; version?: string } = {}): string {
   const generation = resolveAppImageExtractedRoot({ appImagePath, cacheRootPath })!.rootPath
-  const launcher = join(generation, 'resources', 'bin', 'orca-ide')
+  const launcher = join(generation, 'resources', 'bin', 'omdx-ide')
   mkdirSync(join(launcher, '..'), { recursive: true })
   writeFileSync(launcher, '#!/bin/sh\n')
   chmodSync(launcher, 0o755)

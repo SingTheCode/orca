@@ -150,7 +150,7 @@ function renderSystemdUnit(argv: string[], env: Record<string, string>): string 
   // Why KillMode=process: stopping the service stops the supervisor, which stops its server; the
   // terminal daemon is designed to outlive the server, as it outlives the desktop app.
   return `[Unit]
-Description=Orca server (orca serve --supervise)
+Description=Oh My DevX server (omdx serve --supervise)
 StartLimitIntervalSec=900
 StartLimitBurst=5
 

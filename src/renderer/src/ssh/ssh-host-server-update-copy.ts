@@ -10,7 +10,7 @@ export function managedUpdateLine(update: SshManagedServerUpdateNote): SshHostSe
         tone: 'muted',
         text: translate(
           'auto.components.settings.sshHostServer.hostNewer',
-          'Runs a managed Orca server from a newer Orca; it keeps that version.'
+          'Runs a managed Oh My DevX server from a newer Oh My DevX; it keeps that version.'
         )
       }
     case 'deferred':
@@ -18,7 +18,7 @@ export function managedUpdateLine(update: SshManagedServerUpdateNote): SshHostSe
         tone: 'muted',
         text: translate(
           'auto.components.settings.sshHostServer.updateDeferredLater',
-          'Runs a managed Orca server; it updates on a later connect.'
+          'Runs a managed Oh My DevX server; it updates on a later connect.'
         ),
         ...withDetail(update.detail)
       }
@@ -27,7 +27,7 @@ export function managedUpdateLine(update: SshManagedServerUpdateNote): SshHostSe
         tone: 'warning',
         text: translate(
           'auto.components.settings.sshHostServer.updateFailedPrevious',
-          'Runs a managed Orca server on its previous version; updating it failed.'
+          'Runs a managed Oh My DevX server on its previous version; updating it failed.'
         ),
         ...withDetail(update.detail)
       }
@@ -36,7 +36,7 @@ export function managedUpdateLine(update: SshManagedServerUpdateNote): SshHostSe
         tone: 'warning',
         text: translate(
           'auto.components.settings.sshHostServer.behindRolledBack',
-          'Runs an older managed Orca server than this app; the last update was rolled back. Use Update server to try again.'
+          'Runs an older managed Oh My DevX server than this app; the last update was rolled back. Use Update server to try again.'
         )
       }
     case 'no-template':
@@ -44,7 +44,7 @@ export function managedUpdateLine(update: SshManagedServerUpdateNote): SshHostSe
         tone: 'muted',
         text: translate(
           'auto.components.settings.sshHostServer.behindNoTemplate',
-          'Runs a managed Orca server this app can’t update; this build has no server for this host.'
+          'Runs a managed Oh My DevX server this app can’t update; this build has no server for this host.'
         )
       }
     case 'migrating':
@@ -52,7 +52,7 @@ export function managedUpdateLine(update: SshManagedServerUpdateNote): SshHostSe
         tone: 'muted',
         text: translate(
           'auto.components.settings.sshHostServer.behindMigrating',
-          'Runs a managed Orca server that updates after its project move finishes.'
+          'Runs a managed Oh My DevX server that updates after its project move finishes.'
         )
       }
     case 'check-failed':
@@ -60,7 +60,7 @@ export function managedUpdateLine(update: SshManagedServerUpdateNote): SshHostSe
         tone: 'warning',
         text: translate(
           'auto.components.settings.sshHostServer.behindCheckFailed',
-          'Runs a managed Orca server; Orca couldn’t check whether it is behind this app.'
+          'Runs a managed Oh My DevX server; Oh My DevX couldn’t check whether it is behind this app.'
         ),
         ...withDetail(update.detail)
       }

@@ -56,7 +56,7 @@ export async function createWorktreeWithAgent(args: {
     if (hasLaunchModelFlags(flags)) {
       throw new RuntimeClientError(
         'incompatible_runtime',
-        'This Orca host cannot start an agent on a chosen model or effort. Update Orca on the execution host, or omit --model and --effort.'
+        'This Oh My DevX host cannot start an agent on a chosen model or effort. Update Oh My DevX on the execution host, or omit --model and --effort.'
       )
     }
     const params = {

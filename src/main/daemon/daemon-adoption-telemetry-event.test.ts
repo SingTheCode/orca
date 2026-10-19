@@ -74,7 +74,7 @@ const stalePidRecord: ParsedDaemonPid = {
   linuxStartTicks: null,
   bootId: null,
   spawnerExecPath:
-    '/Users/alice/Library/Caches/io.github.singthecode.orca.ShipIt/u/Orca.app/Contents/MacOS/Orca',
+    '/Users/alice/Library/Caches/io.github.singthecode.omdx.ShipIt/u/Orca.app/Contents/MacOS/Orca',
   cgroupUnit: null
 }
 const origin = {

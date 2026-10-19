@@ -4,7 +4,7 @@ import { classifyRuntimeEnvironmentHost } from '../../../shared/runtime-environm
 import type { KnownRuntimeEnvironment } from '../../../shared/runtime-environments'
 
 const UNREACHABLE_RE =
-  /could not connect to the remote orca runtime|remote orca runtime closed the connection|timed out (?:waiting for|while connecting to) the remote orca runtime/i
+  /could not connect to the remote (?:orca|oh my devx) runtime|remote (?:orca|oh my devx) runtime closed the connection|timed out (?:waiting for|while connecting to) the remote (?:orca|oh my devx) runtime/i
 
 export function withRuntimeUnreachableHint(
   environment: Pick<KnownRuntimeEnvironment, 'orcadDeployment'>,
@@ -18,7 +18,7 @@ export function withRuntimeUnreachableHint(
     case 'wsl':
       // Why not Tailscale: a WSL host is a distro on this computer, reached over wsl.exe.
       return UNREACHABLE_RE.test(message)
-        ? `${message} The Orca server in the WSL distro ${host.deployment.distro} isn’t answering; connect it again in Settings → Remote Orca Servers → WSL hosts.`
+        ? `${message} The Oh My DevX server in the WSL distro ${host.deployment.distro} isn’t answering; connect it again in Settings → Remote Oh My DevX Servers → WSL hosts.`
         : message
   }
 }

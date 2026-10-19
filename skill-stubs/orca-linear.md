@@ -1,13 +1,13 @@
-# Orca Linear
+# Oh My DevX Linear
 
-This discovery stub loads the version-matched guide from the Orca executable used for this session.
+This discovery stub loads the version-matched guide from the Oh My DevX executable used for this session.
 
 <!-- shared: resolver -->
 
-## Load the version-matched guide before running Orca commands
+## Load the version-matched guide before running Oh My DevX commands
 
 ```text
-ORCA skills get orca-linear
+OMDX skills get orca-linear
 ```
 
 <!-- shared: no-guessing -->

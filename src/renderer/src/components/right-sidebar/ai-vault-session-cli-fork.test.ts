@@ -71,7 +71,7 @@ describe('Resume in New CLI eligibility', () => {
 })
 
 describe('Resume in New CLI failure text', () => {
-  const UPDATE = 'Update Orca on the host that runs this chat to resume it in a new CLI.'
+  const UPDATE = 'Update Oh My DevX on the host that runs this chat to resume it in a new CLI.'
 
   it.each([
     'agent_session_conflict',

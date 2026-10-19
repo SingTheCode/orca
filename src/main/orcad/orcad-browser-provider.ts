@@ -78,6 +78,8 @@ export function installedElectronCandidates(
   const joinPath = platform === 'win32' ? win32.join : posix.join
   if (platform === 'darwin') {
     return [
+      '/Applications/Oh My DevX.app/Contents/MacOS/Oh My DevX',
+      joinPath(homePath, 'Applications', 'Oh My DevX.app', 'Contents', 'MacOS', 'Oh My DevX'),
       '/Applications/Orca.app/Contents/MacOS/Orca',
       joinPath(homePath, 'Applications', 'Orca.app', 'Contents', 'MacOS', 'Orca')
     ]
@@ -85,12 +87,25 @@ export function installedElectronCandidates(
   if (platform === 'win32') {
     return [
       ...(environment.LOCALAPPDATA
-        ? [joinPath(environment.LOCALAPPDATA, 'Programs', 'Orca', 'Orca.exe')]
+        ? [
+            joinPath(environment.LOCALAPPDATA, 'Programs', 'Oh My DevX', 'OhMyDevX.exe'),
+            joinPath(environment.LOCALAPPDATA, 'Programs', 'Orca', 'Orca.exe')
+          ]
         : []),
-      ...(environment.ProgramFiles ? [joinPath(environment.ProgramFiles, 'Orca', 'Orca.exe')] : [])
+      ...(environment.ProgramFiles
+        ? [
+            joinPath(environment.ProgramFiles, 'Oh My DevX', 'OhMyDevX.exe'),
+            joinPath(environment.ProgramFiles, 'Orca', 'Orca.exe')
+          ]
+        : [])
     ]
   }
   return [
+    joinPath(homePath, '.local', 'bin', 'omdx-ide'),
+    '/usr/local/bin/omdx-ide',
+    '/usr/bin/omdx-ide',
+    '/opt/Oh My DevX/omdx-ide',
+    '/opt/omdx-ide/omdx-ide',
     joinPath(homePath, '.local', 'bin', 'orca-ide'),
     '/usr/local/bin/orca-ide',
     '/usr/bin/orca-ide',
@@ -98,7 +113,7 @@ export function installedElectronCandidates(
   ]
 }
 
-/** The .deb/AppImage CLI shims (`orca-ide` on PATH) are bash scripts, not Electron. */
+/** The .deb/AppImage CLI shims (`omdx-ide` on PATH) are bash scripts, not Electron. */
 async function isScriptShim(path: string): Promise<boolean> {
   try {
     const handle = await open(await realpath(path), 'r')

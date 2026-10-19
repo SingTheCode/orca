@@ -152,7 +152,7 @@ describe('CodexStructuredSessionAdapter.acquire', () => {
       CODEX_HOME: '/codex/home',
       ORCA_AGENT_SESSION_ID: 'session-1',
       ORCA_STRUCTURED_SESSION: '1',
-      ORCA_CLI_COMMAND: expect.stringMatching(/^[^:;]*[\\/]cli[\\/]bin[\\/]orca-dev$/),
+      ORCA_CLI_COMMAND: expect.stringMatching(/^[^:;]*[\\/]cli[\\/]bin[\\/]omdx-dev$/),
       ...(process.platform !== 'win32'
         ? { ORCA_CLI_BIN_DIR: expect.stringMatching(/^[^:;]*[\\/]cli[\\/]bin$/) }
         : {}),
@@ -177,7 +177,7 @@ describe('CodexStructuredSessionAdapter.acquire', () => {
           'shell_environment_policy.set.ORCA_AGENT_SESSION_ID': 'session-1',
           'shell_environment_policy.set.ORCA_STRUCTURED_SESSION': '1',
           'shell_environment_policy.set.ORCA_CLI_COMMAND': expect.stringMatching(
-            /^[^:;]*[\\/]cli[\\/]bin[\\/]orca-dev$/
+            /^[^:;]*[\\/]cli[\\/]bin[\\/]omdx-dev$/
           ),
           'shell_environment_policy.set.ORCA_USER_DATA_PATH': expect.any(String),
           'shell_environment_policy.set.ORCA_ENVIRONMENT': '',

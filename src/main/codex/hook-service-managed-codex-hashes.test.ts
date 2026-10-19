@@ -217,7 +217,7 @@ describe('managed-home Codex hook approval', () => {
     useAnswer({
       kind: 'refused',
       codexVersion: 'codex-cli 0.127.0',
-      failure: 'Codex 0.127.0 is too old for Orca status; update Codex'
+      failure: 'Codex 0.127.0 is too old for Oh My DevX status; update Codex'
     })
 
     const status = await service.install()
@@ -308,7 +308,7 @@ describe('managed-home Codex hook approval', () => {
     ).toBe('sha256:codex-stop')
     expect(status).toMatchObject({
       state: 'installed',
-      detail: expect.stringContaining('Approved by Orca; not yet confirmed by Codex')
+      detail: expect.stringContaining('Approved by Oh My DevX; not yet confirmed by Codex')
     })
   })
 
@@ -349,7 +349,7 @@ describe('managed-home Codex hook approval', () => {
 
     expect(new CodexHookService().getStatus(managedHome())).toMatchObject({
       state: 'not_installed',
-      detail: 'Orca has not asked Codex yet'
+      detail: 'Oh My DevX has not asked Codex yet'
     })
   })
 
@@ -576,7 +576,7 @@ describe('managed-home Codex hook approval', () => {
       })
       expect(status).toMatchObject({
         state: 'installed',
-        detail: 'Approved by Orca; not yet confirmed by Codex (waiting for Codex to answer)'
+        detail: 'Approved by Oh My DevX; not yet confirmed by Codex (waiting for Codex to answer)'
       })
       expect(new CodexHookService().getStatus(managedHome()).detail).toBe(status.detail)
     })
@@ -629,7 +629,7 @@ describe('managed-home Codex hook approval', () => {
 
       expect(service.getStatus(managedHome())).toMatchObject({
         state: 'partial',
-        detail: "Orca's hook entry is not approved yet (timed out)"
+        detail: "Oh My DevX's hook entry is not approved yet (timed out)"
       })
     })
 
@@ -649,7 +649,7 @@ describe('managed-home Codex hook approval', () => {
 
       expect(service.getStatus(managedHome())).toMatchObject({
         state: 'partial',
-        detail: "Orca's hook entry is not approved yet (timed out)"
+        detail: "Oh My DevX's hook entry is not approved yet (timed out)"
       })
     })
 
@@ -713,7 +713,7 @@ describe('managed-home Codex hook approval', () => {
       useAnswer({
         kind: 'refused',
         codexVersion: 'codex-cli 0.127.0',
-        failure: 'Codex 0.127.0 is too old for Orca status; update Codex'
+        failure: 'Codex 0.127.0 is too old for Oh My DevX status; update Codex'
       })
 
       const status = await new CodexHookService().install()

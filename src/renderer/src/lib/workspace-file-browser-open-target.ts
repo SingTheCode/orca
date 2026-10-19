@@ -7,9 +7,9 @@ import { useAppStore } from '@/store'
 
 /** Still the answer for flows that need a real `file://` URL (e.g. dropping a file on a browser pane). */
 export const REMOTE_FILE_BROWSER_UNSUPPORTED_MESSAGE =
-  'Open in Orca Browser is only available for local files.'
+  'Open in Oh My DevX Browser is only available for local files.'
 export const TWIN_FILE_BROWSER_UNSUPPORTED_MESSAGE =
-  'This project is on more than one host, so Orca cannot tell which copy to open.'
+  'This project is on more than one host, so Oh My DevX cannot tell which copy to open.'
 
 export type WorkspaceFileBrowserOpenTarget =
   | {

@@ -44,10 +44,10 @@ type OrcadCatalogMigrationOperation = 'abort' | 'commit' | 'stage' | 'state'
 export const ORCAD_MIGRATION_DESTINATION_UNSUPPORTED = 'orcad_migration_destination_unsupported'
 /** An older destination would strip automations' extra agent arguments, so the move is refused. */
 export const ORCAD_MIGRATION_DESTINATION_EXTRA_AGENT_ARGS_UNSUPPORTED =
-  'orcad_migration_destination_extra_agent_args_unsupported:Update Orca on this host to use extra arguments.'
+  'orcad_migration_destination_extra_agent_args_unsupported:Update Oh My DevX on this host to use extra arguments.'
 /** The destination does not parse this manifest's source kind; nothing was sent, so nothing staged. */
 export const ORCAD_MIGRATION_DESTINATION_SOURCE_KIND_UNSUPPORTED =
-  'orcad_migration_destination_source_kind_unsupported:Update Orca on this host to move this project to it.'
+  'orcad_migration_destination_source_kind_unsupported:Update Oh My DevX on this host to move this project to it.'
 
 export type CatalogRequestOptions = {
   signal?: AbortSignal

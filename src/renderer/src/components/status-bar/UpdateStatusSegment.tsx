@@ -34,7 +34,7 @@ export function UpdateStatusSegment({
         label: `${pct}%`,
         tooltip: translate(
           'auto.components.status.bar.UpdateStatusSegment.248ee5d8ef',
-          'Orca v{{value0}} downloading… {{value1}}%',
+          'Oh My DevX v{{value0}} downloading… {{value1}}%',
           { value0: status.version, value1: pct }
         ),
         ariaLabel: translate(
@@ -51,7 +51,7 @@ export function UpdateStatusSegment({
         tooltip: getUpdateInstallBlockGuidance(status.installBlock).explainer,
         ariaLabel: translate(
           'updates.installBlock.waitingAriaLabel',
-          'Update waiting for other Orca instances. Click to expand.'
+          'Update waiting for other Oh My DevX instances. Click to expand.'
         )
       }
     }
@@ -61,7 +61,7 @@ export function UpdateStatusSegment({
         label: translate('updates.installBlock.preparingLabel', 'Preparing update'),
         tooltip: translate(
           'updates.installBlock.preparingSummary',
-          'Checking running Orca instances before restarting.'
+          'Checking running Oh My DevX instances before restarting.'
         ),
         ariaLabel: translate(
           'updates.installBlock.preparingAriaLabel',
@@ -80,7 +80,7 @@ export function UpdateStatusSegment({
         ),
         tooltip: translate(
           'auto.components.status.bar.UpdateStatusSegment.9d13213a56',
-          'Orca v{{value0}} ready to install',
+          'Oh My DevX v{{value0}} ready to install',
           { value0: readyVersion }
         ),
         ariaLabel: translate(

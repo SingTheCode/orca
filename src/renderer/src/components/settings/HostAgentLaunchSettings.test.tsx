@@ -154,7 +154,7 @@ describe('host launch settings form', () => {
     const args = await screen.findByDisplayValue('--host-marker')
     expect(
       screen.getByText(
-        'Choose whether Orca launches agents with fewer permission prompts or with manual checks.'
+        'Choose whether Oh My DevX launches agents with fewer permission prompts or with manual checks.'
       )
     ).toBeTruthy()
     expect(screen.queryByDisplayValue('--desktop-marker')).toBeNull()

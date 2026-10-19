@@ -247,7 +247,7 @@ function setupFailed(
   error: unknown,
   empty: boolean
 ): Promise<HostServerOnConnectResult> {
-  console.warn('[ssh] Managed Orca server setup failed; using the relay this session:', error)
+  console.warn('[ssh] Managed Oh My DevX server setup failed; using the relay this session:', error)
   reportHostServerSetupError(deps.report, target, trace, error)
   const unavailable = classifyOrcadHostUnavailable(error)
   const conflict = empty ? null : orcadMigrationConflictGuidance(error)
@@ -313,7 +313,7 @@ function deferred(
   result: { code: string; reason: string },
   empty: boolean
 ): Promise<HostServerOnConnectResult> {
-  console.warn(`[ssh] Managed Orca server setup deferred (${result.code}):`, result.reason)
+  console.warn(`[ssh] Managed Oh My DevX server setup deferred (${result.code}):`, result.reason)
   const unavailable = classifyOrcadHostUnavailable({ code: result.code })
   return unfinished(target, deps, unavailable, empty, 'deferred', result.reason)
 }
@@ -334,7 +334,7 @@ async function unfinished(
     await (empty ? deps.abandonDeploy(target) : deps.abandonConversion(target))
   } catch (error) {
     // A staged or registered destination keeps its fence; the connect reports it below.
-    console.warn('[ssh] The managed Orca server setup keeps its fence:', error)
+    console.warn('[ssh] The managed Oh My DevX server setup keeps its fence:', error)
   }
   // Why re-read: only the journal says whether the abort released the host or left it locked.
   const held = !empty && !unavailable && deps.hasUnfinishedConversion(target)

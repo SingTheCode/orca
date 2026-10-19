@@ -8,10 +8,10 @@ export function getUpdateInstallBlockGuidance(block: UpdateInstallBlock): {
 } {
   if (block.reason === 'busy') {
     return {
-      title: translate('updates.installBlock.busyTitle', 'Another Orca is updating'),
+      title: translate('updates.installBlock.busyTitle', 'Another Oh My DevX is updating'),
       summary: translate(
         'updates.installBlock.busySummary',
-        'An update is already being installed by another Orca instance.'
+        'An update is already being installed by another Oh My DevX instance.'
       ),
       explainer: translate(
         'updates.installBlock.busyGuidance',
@@ -24,7 +24,7 @@ export function getUpdateInstallBlockGuidance(block: UpdateInstallBlock): {
       title: translate('updates.installBlock.unresponsiveTitle', 'Waiting for background servers'),
       summary: translate(
         'updates.installBlock.unresponsiveSummary',
-        'Orca could not finish pausing its background servers for the update.'
+        'Oh My DevX could not finish pausing its background servers for the update.'
       ),
       explainer: translate(
         'updates.installBlock.unresponsiveGuidance',
@@ -41,11 +41,11 @@ export function getUpdateInstallBlockGuidance(block: UpdateInstallBlock): {
     summary: onlyServers
       ? translate(
           'updates.installBlock.serverSummary',
-          'A background Orca server is still using this app.'
+          'A background Oh My DevX server is still using this app.'
         )
       : translate(
           'updates.installBlock.instanceSummary',
-          'Another Orca instance is still using this app.'
+          'Another Oh My DevX instance is still using this app.'
         ),
     explainer: onlyServers
       ? translate(
@@ -55,11 +55,11 @@ export function getUpdateInstallBlockGuidance(block: UpdateInstallBlock): {
       : hasServers
         ? translate(
             'updates.installBlock.mixedGuidance',
-            'Close any other Orca windows and stop the server from the terminal or service that started it. Connected devices will disconnect. Then retry.'
+            'Close any other Oh My DevX windows and stop the server from the terminal or service that started it. Connected devices will disconnect. Then retry.'
           )
         : translate(
             'updates.installBlock.instanceGuidance',
-            'Quit other Orca instances, then retry. Your downloaded update will be kept ready.'
+            'Quit other Oh My DevX instances, then retry. Your downloaded update will be kept ready.'
           )
   }
 }

@@ -11,11 +11,11 @@ export function profileStateWriteFailureDialogOptions(error: Error): MessageBoxO
   return {
     type: 'error',
     title: 'Saving stopped',
-    message: 'Orca has stopped saving this profile.',
+    message: 'Oh My DevX has stopped saving this profile.',
     detail:
       profileStateWriterFailureOutcome(error) === 'indeterminate'
-        ? 'Orca could not confirm whether your most recent change was saved. New changes will not be saved until you restart Orca.'
-        : 'Changes saved before this point are safe. New changes will not be saved until you restart Orca.',
+        ? 'Oh My DevX could not confirm whether your most recent change was saved. New changes will not be saved until you restart Oh My DevX.'
+        : 'Changes saved before this point are safe. New changes will not be saved until you restart Oh My DevX.',
     buttons: ['OK']
   }
 }

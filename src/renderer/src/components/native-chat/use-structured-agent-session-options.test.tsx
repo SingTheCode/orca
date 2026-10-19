@@ -462,7 +462,7 @@ describe('useStructuredAgentSessionOptions', () => {
       })
       await waitFor(() =>
         expect(mocks.toastError).toHaveBeenCalledWith(
-          "The setting wasn't changed. Orca on the computer running this chat has hit a request limit. Update Orca there, then try again."
+          "The setting wasn't changed. Oh My DevX on the computer running this chat has hit a request limit. Update Oh My DevX there, then try again."
         )
       )
       expect(mocks.enqueue).not.toHaveBeenCalled()

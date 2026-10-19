@@ -25,7 +25,7 @@ async function makeCache(): Promise<{ cacheRootPath: string; rootPath: string; e
   const cacheRootPath = join(base, 'cache')
   const rootPath = join(cacheRootPath, NAMESPACE, GENERATION)
   await mkdir(rootPath, { recursive: true })
-  return { cacheRootPath, rootPath, execPath: join(rootPath, 'orca-ide') }
+  return { cacheRootPath, rootPath, execPath: join(rootPath, 'omdx-ide') }
 }
 
 function reader(
@@ -47,7 +47,7 @@ describe('AppImage generation leases', () => {
       generationKey: GENERATION,
       rootPath
     })
-    expect(resolveAppImageGenerationOfExecutable('/usr/lib/orca-ide/orca-ide')).toBeNull()
+    expect(resolveAppImageGenerationOfExecutable('/usr/lib/omdx-ide/omdx-ide')).toBeNull()
     expect(resolveAppImageGenerationOfExecutable(join(rootPath, 'node'))).toBeNull()
   })
 
@@ -99,7 +99,7 @@ describe('AppImage generation leases', () => {
     ).resolves.toBeNull()
     await expect(
       leaseAppImageGenerationForCurrentProcess({
-        execPath: '/opt/Orca/orca-ide',
+        execPath: '/opt/Orca/omdx-ide',
         pid: 10,
         platform: 'linux',
         reader: live
@@ -198,7 +198,7 @@ describe('AppImage generation leases', () => {
 
   it('ignores leases on other generations', async () => {
     const { cacheRootPath, rootPath } = await makeCache()
-    const otherExec = join(cacheRootPath, NAMESPACE, 'c'.repeat(24), 'orca-ide')
+    const otherExec = join(cacheRootPath, NAMESPACE, 'c'.repeat(24), 'omdx-ide')
     const live = reader({ 10: { status: 'present', startTicks: '500' } })
     await leaseAppImageGenerationForCurrentProcess({
       execPath: otherExec,

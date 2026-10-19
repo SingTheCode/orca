@@ -41,7 +41,7 @@ export function AddRemoteHostServerFormPanel({
         <DialogDescription>
           {translate(
             'auto.components.sidebar.AddRemoteHostDialog.serverDescription',
-            'Pair with Orca running on another computer.'
+            'Pair with Oh My DevX running on another computer.'
           )}
         </DialogDescription>
       </DialogHeader>

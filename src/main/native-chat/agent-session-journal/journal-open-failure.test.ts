@@ -202,7 +202,7 @@ describe('createJournalOpenReadRefusals', () => {
       return error instanceof Error && error.cause instanceof Error ? error.cause.message : ''
     })
     expect(causes).toEqual([
-      expect.stringContaining("newer Orca's row at sequence 7"),
+      expect.stringContaining("newer Oh My DevX's row at sequence 7"),
       expect.stringContaining('damaged at sequence 3: sequence-gap')
     ])
   })
@@ -212,7 +212,7 @@ describe('createJournalOpenReadRefusals', () => {
     const log = recordingStructuredAgentSessionLogger()
     const refusals = createJournalOpenReadRefusals(log.logger)
     const newer = journalOpenRefusalError(
-      new AgentSessionJournalError('journal_read_only', 'a newer Orca wrote session-1')
+      new AgentSessionJournalError('journal_read_only', 'a newer Oh My DevX wrote session-1')
     )
     for (let attempt = 0; attempt < 3; attempt += 1) {
       expect(refusals.refusal('session-1', newer)).toBe(newer)
@@ -245,7 +245,7 @@ describe('a journal a newer Orca wrote', () => {
     // As the wire carries it (the mobile and older-client tests read this shape).
     expect(JSON.parse(JSON.stringify(journalOpenRefusal(readOnly())))).toEqual({
       code: 'agent_session_journal_unreadable',
-      message: 'Chats were saved by a newer Orca. Update Orca to keep using them.',
+      message: 'Chats were saved by a newer Oh My DevX. Update Oh My DevX to keep using them.',
       details: { reason: 'journalWrittenByNewerOrca' }
     })
     expect(journalOpenRefusalError(readOnly()).refusal).toMatchObject({

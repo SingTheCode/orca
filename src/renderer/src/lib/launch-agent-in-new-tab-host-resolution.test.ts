@@ -146,7 +146,7 @@ describe('launchAgentInNewTab execution host resolution', () => {
 
     await launchOnLinux()
 
-    expect(queuedCommand()).toBe("orca-ide claude-teams '--dangerously-skip-permissions'")
+    expect(queuedCommand()).toBe("omdx-ide claude-teams '--dangerously-skip-permissions'")
   })
 
   it('keeps a worktree on one SSH host remote while a rival row names another', async () => {
@@ -158,7 +158,7 @@ describe('launchAgentInNewTab execution host resolution', () => {
 
     await launchOnLinux()
 
-    expect(queuedCommand()).toBe("orca claude-teams '--dangerously-skip-permissions'")
+    expect(queuedCommand()).toBe("omdx claude-teams '--dangerously-skip-permissions'")
   })
 
   it('keeps a runtime host reaching a nested SSH target on the relay shim name', async () => {
@@ -169,7 +169,7 @@ describe('launchAgentInNewTab execution host resolution', () => {
 
     await launchOnLinux()
 
-    expect(queuedCommand()).toBe("orca claude-teams '--dangerously-skip-permissions'")
+    expect(queuedCommand()).toBe("omdx claude-teams '--dangerously-skip-permissions'")
   })
 
   it('keeps a runtime host with no nested SSH target on the local CLI name', async () => {
@@ -180,6 +180,6 @@ describe('launchAgentInNewTab execution host resolution', () => {
 
     await launchOnLinux()
 
-    expect(queuedCommand()).toBe("orca-ide claude-teams '--dangerously-skip-permissions'")
+    expect(queuedCommand()).toBe("omdx-ide claude-teams '--dangerously-skip-permissions'")
   })
 })

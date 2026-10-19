@@ -311,7 +311,7 @@ export async function repairKnownPoisonedInstallDirBeforeWindow(
 }
 
 const CAUSE =
-  "Windows permissions on Orca's install folder are blocking its own sandboxed processes from reading the files it shipped with."
+  "Windows permissions on Oh My DevX's install folder are blocking its own sandboxed processes from reading the files it shipped with."
 
 // Why the exact commands: the window is blank, so the dialog is the only place a user can be told what to run.
 export function describeInstallDirAclPoison(): InstallDirAclPoisonDiagnosis | null {
@@ -324,10 +324,10 @@ export function describeInstallDirAclPoison(): InstallDirAclPoisonDiagnosis | nu
   }
   const status =
     poison.stage === 'pending'
-      ? 'Orca is repairing the permissions now.'
-      : 'Orca could not repair them, which usually means the folder needs an administrator.'
+      ? 'Oh My DevX is repairing the permissions now.'
+      : 'Oh My DevX could not repair them, which usually means the folder needs an administrator.'
   return {
-    detail: `${CAUSE} ${status}\n\nRun these in an Administrator Command Prompt, then relaunch Orca:\n\n${commands.join('\n')}`,
+    detail: `${CAUSE} ${status}\n\nRun these in an Administrator Command Prompt, then relaunch Oh My DevX:\n\n${commands.join('\n')}`,
     commands
   }
 }

@@ -37,7 +37,7 @@ function getRealHomeHookStateDir(userDataPath: string): string {
 /** Another process saved hooks.json between Orca's read and its write. */
 export class HooksJsonChangedError extends Error {
   constructor() {
-    super('Codex hooks.json changed since Orca read it')
+    super('Codex hooks.json changed since Oh My DevX read it')
     this.name = 'HooksJsonChangedError'
   }
 }
@@ -51,7 +51,7 @@ export function readRealHomeHooksFileProblem(): string | null {
   }
   return isAddableHooksFile(config)
     ? null
-    : `Orca cannot add its hook to ${hooksJsonPath}, so Orca shows no status for ~/.codex`
+    : `Oh My DevX cannot add its hook to ${hooksJsonPath}, so Oh My DevX shows no status for ~/.codex`
 }
 
 // Why: an unparseable user file is never clobbered, and Codex skips a file with other root keys

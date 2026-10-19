@@ -42,7 +42,7 @@ export function captureRemoteCliBrowserRevocation(): (webContentsId?: number) =>
     if (active?.revoked?.aborted) {
       throw new BrowserError(
         DESKTOP_BROWSER_BRIDGE_UNAVAILABLE_CODE,
-        'The Orca desktop stopped sharing its browser before this command ran.'
+        'The Oh My DevX desktop stopped sharing its browser before this command ran.'
       )
     }
     // Why at execution: routing can be turned off while the command waits, remounting the page unrouted.
@@ -130,7 +130,7 @@ export function boundRemoteCliBrowserWork<T>(
       interrupt(
         new BrowserError(
           DESKTOP_BROWSER_BRIDGE_UNAVAILABLE_CODE,
-          'The Orca desktop stopped sharing its browser while this command ran.'
+          'The Oh My DevX desktop stopped sharing its browser while this command ran.'
         )
       )
     timer = setTimeout(

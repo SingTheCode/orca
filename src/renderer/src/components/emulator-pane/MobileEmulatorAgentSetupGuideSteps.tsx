@@ -27,7 +27,7 @@ export function MobileEmulatorAgentSetupGuideSteps({
       <p className="text-sm font-medium">
         {translate(
           'auto.components.emulator.pane.MobileEmulatorAgentSetupGuideSteps.21f5687c07',
-          'Orca CLI skill'
+          'Oh My DevX CLI skill'
         )}
       </p>
       <AgentSkillSetupPanel
@@ -36,20 +36,20 @@ export function MobileEmulatorAgentSetupGuideSteps({
         className="min-w-0"
         title={translate(
           'auto.components.emulator.pane.MobileEmulatorAgentSetupGuideSteps.21f5687c07',
-          'Orca CLI skill'
+          'Oh My DevX CLI skill'
         )}
         description={translate(
           'auto.components.emulator.pane.MobileEmulatorAgentSetupGuideSteps.64fb057667',
-          'Teaches agents the orca emulator commands for this worktree.'
+          'Teaches agents the omdx emulator commands for this worktree.'
         )}
         command={skillInstallCommand}
         terminalTitle={translate(
           'auto.components.emulator.pane.MobileEmulatorAgentSetupGuideSteps.5c59ea96ca',
-          'Mobile emulator Orca CLI skill setup'
+          'Mobile emulator Oh My DevX CLI skill setup'
         )}
         terminalAriaLabel={translate(
           'auto.components.emulator.pane.MobileEmulatorAgentSetupGuideSteps.bff5341ac3',
-          'Mobile emulator Orca CLI skill install terminal'
+          'Mobile emulator Oh My DevX CLI skill install terminal'
         )}
         terminalWorktreeId={terminalWorktreeId}
         terminalShellOverride={activeSkillRuntime.terminalShellOverride}

@@ -270,7 +270,7 @@ export function createRuntimeAutomationRunTerminalObserver(
       return await buildUnobservedObservation(
         runtime,
         handle,
-        'Orca stopped watching this run after 6h without a completion signal.'
+        'Oh My DevX stopped watching this run after 6h without a completion signal.'
       )
     }
   }

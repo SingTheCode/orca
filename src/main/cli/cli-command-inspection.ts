@@ -3,7 +3,11 @@ import { lstat, readFile, readlink } from 'node:fs/promises'
 import { basename, dirname, resolve } from 'node:path'
 import type { CliInstallMethod, CliInstallStatus } from '../../shared/cli-install-types'
 import { isAppImageExtractedLauncherPath } from './appimage-extracted-root'
-import { DEV_COMMAND_NAME, DEV_LAUNCHER_DIR } from './cli-install-constants'
+import {
+  DEV_COMMAND_NAME,
+  DEV_LAUNCHER_DIR,
+  LEGACY_DEV_LAUNCHER_NAMES
+} from './cli-install-constants'
 import { buildWindowsForwarder, extractManagedUnixLauncherTarget } from './cli-dev-launcher'
 import { isPermissionError } from '../win32-utils'
 import { isMissingError } from './cli-install-errors'
@@ -12,9 +16,16 @@ import { isPathInsideOrEqual, samePathEntry } from './cli-install-path-format'
 import { extractLegacyAppImageCliWrapperTarget } from './legacy-appimage-cli-wrapper'
 
 // Why: electron-builder's /opt directory name varies with productName sanitization, which is why
-// resources/linux/packaging/after-install.sh enumerates all three of these. A symlink into one is a
+// resources/linux/packaging/after-install.sh enumerates all of these (old Orca names included). A symlink into one is a
 // previous packaged Orca and is ours to reclaim; anything else stays a conflict.
-const PACKAGED_LINUX_LAUNCHER_DIRECTORIES = ['/opt/Orca', '/opt/orca-ide', '/opt/orca']
+const PACKAGED_LINUX_LAUNCHER_DIRECTORIES = [
+  '/opt/Oh My DevX',
+  '/opt/omdx-ide',
+  '/opt/omdx',
+  '/opt/Orca',
+  '/opt/orca-ide',
+  '/opt/orca'
+]
 
 export class CliCommandInspection extends CliInstallLocation {
   protected async inspectSymlink(
@@ -154,7 +165,12 @@ export class CliCommandInspection extends CliInstallLocation {
     resolvedTarget: string,
     packagedLauncherName: string
   ): boolean {
-    if (![packagedLauncherName, DEV_COMMAND_NAME].includes(basename(resolvedTarget))) {
+    const launcherNames: readonly string[] = [
+      packagedLauncherName,
+      DEV_COMMAND_NAME,
+      ...LEGACY_DEV_LAUNCHER_NAMES
+    ]
+    if (!launcherNames.includes(basename(resolvedTarget))) {
       return false
     }
 

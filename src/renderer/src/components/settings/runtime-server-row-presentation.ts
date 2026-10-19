@@ -50,7 +50,7 @@ export function getRuntimeServerVersionFooter(
       ? {
           text: translate(
             'auto.components.settings.RuntimeEnvironmentsPane.orcaVersionLastSeen',
-            'Orca v{{value0}} (last seen)',
+            'Oh My DevX v{{value0}} (last seen)',
             { value0: lastKnownVersion }
           ),
           showUpdateStatus: false
@@ -61,14 +61,14 @@ export function getRuntimeServerVersionFooter(
     text: entry.currentVersion
       ? translate(
           'auto.components.settings.RuntimeEnvironmentsPane.orcaVersion',
-          'Orca v{{value0}}',
+          'Oh My DevX v{{value0}}',
           {
             value0: entry.currentVersion
           }
         )
       : translate(
           'auto.components.settings.RuntimeEnvironmentsPane.versionUnavailable',
-          'Orca version unavailable'
+          'Oh My DevX version unavailable'
         ),
     showUpdateStatus: true
   }

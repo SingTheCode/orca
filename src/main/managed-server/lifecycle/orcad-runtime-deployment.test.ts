@@ -277,7 +277,7 @@ describe('createManagedOrcadEnvironment', () => {
     it('refuses an older build on a host a newer desktop stopped, naming both versions', async () => {
       const stopped = withDeactivatedVersionCommitted(servedBy('1.6.0', '0.1.0+new'))
       const { admitted, result } = await admitOn(stopped)
-      expect(admitted).toContain('Orca 1.6.0')
+      expect(admitted).toContain('Oh My DevX 1.6.0')
       expect(admitted).toContain('(1.5.0)')
       expect(result).toMatchObject({
         outcome: 'deferred',

@@ -163,7 +163,7 @@ function resolveAgentKeys(verb: SkillMutationVerb, flags: Map<string, string | b
     'invalid_environment',
     'No coding agent detected on this host, so there is no install target. Pass ' +
       '--agent <name>[,<name>...] to choose targets explicitly — --agent universal ' +
-      'writes only the shared .agents/skills directory that Orca reads.'
+      'writes only the shared .agents/skills directory that Oh My DevX reads.'
   )
 }
 
@@ -172,7 +172,7 @@ function buildNpxSkillsArgs(skillNames: string[], global: boolean, agents: strin
   if (!sourceCommit) {
     throw new RuntimeClientError(
       'invalid_environment',
-      'Could not read the commit this Orca CLI was built from, so there is no source to install skills from.'
+      'Could not read the commit this Oh My DevX CLI was built from, so there is no source to install skills from.'
     )
   }
   // Why: a cold package cache makes bare `npx` prompt before it will fetch
@@ -193,8 +193,8 @@ function formatSkillSelectionHelp(verb: SkillMutationVerb, skillNames: string[])
     `Choose one or more skills to ${verb}:`,
     ...skillNames.map((name) => `  ${name}`),
     '',
-    `Usage: orca skills ${verb} --skill <name> [--skill <name> ...]`,
-    `   or: orca skills ${verb} --all`
+    `Usage: omdx skills ${verb} --skill <name> [--skill <name> ...]`,
+    `   or: omdx skills ${verb} --all`
   ].join('\n')
 }
 
@@ -219,8 +219,8 @@ function createSkillMutationHandler(verb: SkillMutationVerb): CommandHandler {
     if (process.env.ORCA_CLI_CWD) {
       throw new RuntimeClientError(
         'invalid_environment',
-        `orca skills ${verb} writes to the machine that runs it, but this shell forwards ` +
-          `orca to the Orca host. Run the same orca skills ${verb} command on the machine ` +
+        `omdx skills ${verb} writes to the machine that runs it, but this shell forwards ` +
+          `omdx to the Oh My DevX host. Run the same omdx skills ${verb} command on the machine ` +
           "you want it on, where it can detect that host's agents."
       )
     }
@@ -246,7 +246,7 @@ function createSkillMutationHandler(verb: SkillMutationVerb): CommandHandler {
       // that stream is not JSON, so --json can't be honored here.
       throw new RuntimeClientError(
         'invalid_argument',
-        `orca skills ${verb} --json only supports --dry-run. Real ${verb}s stream ` +
+        `omdx skills ${verb} --json only supports --dry-run. Real ${verb}s stream ` +
           "npx's own output, which isn't JSON."
       )
     }

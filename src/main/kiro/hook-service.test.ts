@@ -128,7 +128,7 @@ describe('KiroHookService', () => {
 
     const result = service.getStatus()
     expect(result.state).toBe('partial')
-    expect(result.detail).toContain('later.json has no Orca hooks')
+    expect(result.detail).toContain('later.json has no Oh My DevX hooks')
   })
 
   it('reports a missing launcher as partial instead of installed', () => {

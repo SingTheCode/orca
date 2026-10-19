@@ -27,6 +27,20 @@ export function getLifecycleGroupRecipientError(type: DispatchMutationMessageTyp
   return `${type} messages belong to one exact Dispatch and cannot target a group address.`
 }
 
+// Why: emitted names are the omdx* commands; pre-rename orca* names stay accepted so an older CLI
+// talking to this runtime still validates.
+export const CompatibilityCliCommand = z.enum([
+  'omdx',
+  'omdx-ide',
+  'omdx-dev',
+  'orca',
+  'orca-ide',
+  'orca-dev'
+])
+export type CompatibilityCliCommand = z.infer<typeof CompatibilityCliCommand>
+export const CompatibilityWindowsCommand = z.enum(['omdx', 'omdx-ide', 'orca', 'orca-ide'])
+export type CompatibilityWindowsCommand = z.infer<typeof CompatibilityWindowsCommand>
+
 export const CheckParams = z
   .object({
     terminal: OptionalString,
@@ -42,7 +56,7 @@ export const CheckParams = z
     ack: OptionalString,
     compatibilityAck: OptionalString,
     compatibilityQuestionAck: OptionalString,
-    compatibilityCliCommand: z.enum(['orca', 'orca-ide', 'orca-dev']).optional(),
+    compatibilityCliCommand: CompatibilityCliCommand.optional(),
     run: OptionalString,
     wait: OptionalBoolean,
     timeoutMs: OptionalFiniteNumber
@@ -134,8 +148,8 @@ export const AskParams = z
     timeoutMs: OptionalFiniteNumber,
     from: OptionalString,
     run: OptionalString,
-    compatibilityCliCommand: z.enum(['orca', 'orca-ide', 'orca-dev']).optional(),
-    compatibilityWindowsCommand: z.enum(['orca', 'orca-ide']).optional()
+    compatibilityCliCommand: CompatibilityCliCommand.optional(),
+    compatibilityWindowsCommand: CompatibilityWindowsCommand.optional()
   })
   .superRefine((params, ctx) => {
     if ((params.question ? 1 : 0) + (params.resume ? 1 : 0) !== 1) {

@@ -60,7 +60,7 @@ function describeUnverifiableOwner(ownerLabel: string, reason: OwnerUsageFailure
   return reason === 'usage-not-published'
     ? translate(
         'auto.components.status.bar.tooltip.remoteOwnerNoUsage',
-        'Usage unavailable — {{server}} does not report usage. Update Orca on that host.',
+        'Usage unavailable — {{server}} does not report usage. Update Oh My DevX on that host.',
         { server: ownerLabel }
       )
     : translate(

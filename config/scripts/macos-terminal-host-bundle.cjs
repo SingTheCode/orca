@@ -1,4 +1,4 @@
-// The signed `io.github.singthecode.orca` helper that runs the terminal daemon on the pinned Node.
+// The signed `io.github.singthecode.omdx` helper that runs the terminal daemon on the pinned Node.
 // See docs/reference/macos-daemon-tcc-attribution.md.
 const { spawnSync } = require('node:child_process')
 const {

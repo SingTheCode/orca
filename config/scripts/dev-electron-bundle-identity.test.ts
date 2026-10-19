@@ -56,11 +56,13 @@ describe('dev-electron-bundle-identity', () => {
     expect(DEV_BUNDLE_DISPLAY_NAME).not.toBe('Electron')
   })
 
-  it('keeps the bundle display name in step with the name safeStorage keys off', () => {
-    // Two independently hardcoded 'Orca Dev' strings: this one names the bundle (notifications,
-    // System Settings), and getDevInstanceIdentity().appName drives app.setName, which decides the
-    // Keychain service name. Drift would split the two without anything else failing.
-    expect(DEV_BUNDLE_DISPLAY_NAME).toBe(getDevInstanceIdentity(true, {}).appName)
+  it('names the dev bundle after the product while the Keychain name stays legacy', () => {
+    // Why split: getDevInstanceIdentity().appName drives the pre-ready app.setName, which alone
+    // decides the Keychain service name ("Orca Dev Safe Storage"), so it stays 'Orca Dev' to keep
+    // existing dev secrets. The bundle name only labels notifications and System Settings, so it
+    // follows the product name ("Oh My DevX") and must not drift from it.
+    expect(DEV_BUNDLE_DISPLAY_NAME).toBe(`${getDevInstanceIdentity(false, {}).name} Dev`)
+    expect(getDevInstanceIdentity(true, {}).appName).toBe('Orca Dev')
   })
 
   it('produces byte-identical patches on two different branches', () => {

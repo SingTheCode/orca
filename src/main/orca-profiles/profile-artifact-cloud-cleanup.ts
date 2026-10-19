@@ -118,7 +118,9 @@ function assertArtifactCloudCleanupReady(
     marker?.phase === 'prepared' &&
     marker.targetIdentity === artifactCloudIdentity(currentCloud)
   ) {
-    throw new Error('The Orca profile transition must be retried before publishing artifacts.')
+    throw new Error(
+      'The Oh My DevX profile transition must be retried before publishing artifacts.'
+    )
   }
 }
 

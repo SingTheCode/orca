@@ -255,12 +255,16 @@ describe('orchestration session callers at the dispatch entry', () => {
       await expectRefusedWithNoEffects(
         'ffffffff-0000-4000-8000-000000000000',
         CODES.unknown,
-        /No Orca agent session .* exists on this host/
+        /No Oh My DevX agent session .* exists on this host/
       )
     })
 
     it('a terminal handle presented as a session id', async () => {
-      await expectRefusedWithNoEffects('term_4f2c9a0b', CODES.unknown, /not an Orca session ID/)
+      await expectRefusedWithNoEffects(
+        'term_4f2c9a0b',
+        CODES.unknown,
+        /not an Oh My DevX session ID/
+      )
     })
 
     it("a provider's session id, with a hint naming the Orca id", async () => {
@@ -271,7 +275,7 @@ describe('orchestration session callers at the dispatch entry', () => {
         ok: false,
         error: {
           code: CODES.providerId,
-          message: `${PROVIDER_ID_X} is the provider's own session id, which changes on /clear. This session's Orca session ID is orca_session_id:${SESSION_X}; set ORCA_AGENT_SESSION_ID=${SESSION_X} instead. No effects were applied.`,
+          message: `${PROVIDER_ID_X} is the provider's own session id, which changes on /clear. This session's Oh My DevX session ID is orca_session_id:${SESSION_X}; set ORCA_AGENT_SESSION_ID=${SESSION_X} instead. No effects were applied.`,
           data: { orcaSessionId: SESSION_X, effectsApplied: false }
         }
       })

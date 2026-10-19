@@ -69,7 +69,7 @@ describePosix('daemon shell-ready bash wrapper', () => {
     mkdirSync(cliBin, { recursive: true })
     mkdirSync(ambientBin)
     for (const bin of [cliBin, ambientBin]) {
-      const launcher = join(bin, 'orca-dev')
+      const launcher = join(bin, 'omdx-dev')
       writeFileSync(launcher, '#!/bin/sh\nexit 0\n')
       chmodSync(launcher, 0o755)
     }
@@ -89,7 +89,7 @@ describePosix('daemon shell-ready bash wrapper', () => {
     )
     const rcfile = join(userDataPath, 'cli-path-rcfile')
     writeFileSync(rcfile, content())
-    const result = spawnSync('bash', ['-c', '. "$1"; command -v orca-dev', 'bash', rcfile], {
+    const result = spawnSync('bash', ['-c', '. "$1"; command -v omdx-dev', 'bash', rcfile], {
       env,
       encoding: 'utf8',
       timeout: 5000
@@ -181,7 +181,7 @@ describePosix('daemon shell-ready bash wrapper', () => {
   )
 
   itWithBash(
-    'dispatches a non-empty preexec_functions against the real command, not Orca hooks',
+    'dispatches a non-empty preexec_functions against the real command, not Oh My DevX hooks',
     async () => {
       const { getDaemonBashShellReadyRcfileContent } = await importFreshDaemonBashRcfile()
       // Why: the epilogue chains bash-preexec's re-armed DEBUG trap, so a real preexec callback must fire against the user's command.

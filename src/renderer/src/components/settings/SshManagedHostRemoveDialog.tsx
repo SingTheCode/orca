@@ -45,7 +45,7 @@ export function SshManagedHostRemoveDialog({
           <DialogDescription>
             {translate(
               'auto.components.settings.sshManagedHostRemove.description',
-              '{{label}} runs a managed Orca server. Under Managed servers, use Stop… to remove the server from the host, or Forget… if the host is gone. Then you can remove this SSH host.',
+              '{{label}} runs a managed Oh My DevX server. Under Managed servers, use Stop… to remove the server from the host, or Forget… if the host is gone. Then you can remove this SSH host.',
               { label: label ?? '' }
             )}
           </DialogDescription>

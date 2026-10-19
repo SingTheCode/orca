@@ -12,7 +12,7 @@ describe('withRuntimeUnreachableHint', () => {
       'ws://127.0.0.1:42000'
     )
     expect(message).not.toMatch(/tailscale/i)
-    expect(message).toContain('The Orca server in the WSL distro Ubuntu isn’t answering')
+    expect(message).toContain('The Oh My DevX server in the WSL distro Ubuntu isn’t answering')
   })
 
   it('keeps the Tailscale hint for a network server', () => {
@@ -60,7 +60,7 @@ describe('withRuntimeUnreachableHint', () => {
         null
       )
     ).toBe(
-      'Timed out waiting for the remote Orca runtime. The Orca server in the WSL distro Debian isn’t answering; connect it again in Settings → Remote Orca Servers → WSL hosts.'
+      'Timed out waiting for the remote Orca runtime. The Oh My DevX server in the WSL distro Debian isn’t answering; connect it again in Settings → Remote Oh My DevX Servers → WSL hosts.'
     )
   })
 })

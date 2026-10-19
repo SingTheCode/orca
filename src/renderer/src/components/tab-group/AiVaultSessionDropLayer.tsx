@@ -226,7 +226,7 @@ export default function AiVaultSessionDropLayer({
         toast.error(
           translate(
             'auto.components.tab.group.AiVaultSessionDropLayer.oldPayload',
-            'This session was dragged from an older Orca window. Resume it from Session History instead.'
+            'This session was dragged from an older Oh My DevX window. Resume it from Session History instead.'
           )
         )
         return true
@@ -256,8 +256,8 @@ export default function AiVaultSessionDropLayer({
             // must fail loudly rather than silently resume under it.
             throw new Error(
               result.substituteCodexHome
-                ? 'This session was dragged from an older Orca window, so Orca cannot retarget it to the selected Codex account. Resume it from the Session History panel instead.'
-                : 'Orca could not prepare this legacy Codex session. Retry resume.'
+                ? 'This session was dragged from an older Oh My DevX window, so Oh My DevX cannot retarget it to the selected Codex account. Resume it from the Session History panel instead.'
+                : 'Oh My DevX could not prepare this legacy Codex session. Retry resume.'
             )
           }
           const providerSession = getAiVaultAgentProviderSession({

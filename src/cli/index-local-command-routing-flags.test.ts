@@ -262,7 +262,7 @@ describe('runtime-selector flags on locally pinned CLI commands', () => {
     const printed = JSON.parse(String(logSpy.mock.calls[0]?.[0]))
     expect(printed.ok).toBe(false)
     expect(printed.error.code).toBe('invalid_argument')
-    expect(printed.error.message).toContain('`--environment` does not retarget `orca host list`')
+    expect(printed.error.message).toContain('`--environment` does not retarget `omdx host list`')
     expect(process.exitCode).toBe(1)
     expect(callMock).not.toHaveBeenCalled()
     expect(runtimeClientConstructorMock).not.toHaveBeenCalledWith(null, 'm4air')
@@ -279,7 +279,7 @@ describe('runtime-selector flags on locally pinned CLI commands', () => {
     expect(printed.ok).toBe(false)
     expect(printed.error.code).toBe('invalid_argument')
     expect(printed.error.message).toContain(
-      '`--environment` does not retarget `orca environment list`'
+      '`--environment` does not retarget `omdx environment list`'
     )
     process.exitCode = 0
   })

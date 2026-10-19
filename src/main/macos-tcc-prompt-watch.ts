@@ -19,12 +19,12 @@ export type LogStreamChild = ChildProcessByStdio<Writable, Readable, Readable>
 
 /** Why: terminals run from the detached helper, which TCC can hold responsible independently. */
 const ORCA_RESPONSIBLE_IDENTIFIERS = new Set([
-  'io.github.singthecode.orca',
-  'io.github.singthecode.orca.helper',
-  'io.github.singthecode.orca.dev',
-  'io.github.singthecode.orca.dev.helper',
-  'io.github.singthecode.orca.local',
-  'io.github.singthecode.orca.local.helper'
+  'io.github.singthecode.omdx',
+  'io.github.singthecode.omdx.helper',
+  'io.github.singthecode.omdx.dev',
+  'io.github.singthecode.omdx.dev.helper',
+  'io.github.singthecode.omdx.local',
+  'io.github.singthecode.omdx.local.helper'
 ])
 
 /** Why: the prompt classes #9756 is about — other-apps' data plus the protected home folders agents sweep. */

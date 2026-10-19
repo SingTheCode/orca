@@ -50,7 +50,7 @@ export async function adoptRunningOrcadVersion(
     case 'unverifiable':
       throw new OrcadActiveReadinessError(
         'unverifiable',
-        `Orca ${record.active} runs this host's server, but its process state is unverifiable, ` +
+        `Oh My DevX ${record.active} runs this host's server, but its process state is unverifiable, ` +
           'so it was left as it is. Try connecting again.'
       )
     case 'recovery-refused':

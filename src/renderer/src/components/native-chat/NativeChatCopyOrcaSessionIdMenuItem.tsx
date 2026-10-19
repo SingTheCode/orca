@@ -14,20 +14,20 @@ export function NativeChatCopyOrcaSessionIdMenuItem({
     try {
       const orcaSessionId = await resolveOrcaSessionId()
       if (!orcaSessionId) {
-        throw new Error('no Orca session ID')
+        throw new Error('no Oh My DevX session ID')
       }
       await window.api.ui.writeClipboardText(orcaSessionId)
       toast.success(
         translate(
           'components.native-chat.contextMenu.orcaSessionIdCopied',
-          'Orca session ID copied'
+          'Oh My DevX session ID copied'
         )
       )
     } catch {
       toast.error(
         translate(
           'components.native-chat.contextMenu.orcaSessionIdCopyFailed',
-          'Unable to copy Orca session ID'
+          'Unable to copy Oh My DevX session ID'
         )
       )
     }
@@ -39,14 +39,14 @@ export function NativeChatCopyOrcaSessionIdMenuItem({
           <Copy />
           {translate(
             'components.native-chat.contextMenu.copyOrcaSessionId',
-            'Copy Orca Session ID'
+            'Copy Oh My DevX Session ID'
           )}
         </DropdownMenuItem>
       </TooltipTrigger>
       <TooltipContent side="right" sideOffset={8} className="max-w-[220px]">
         {translate(
           'components.native-chat.contextMenu.orcaSessionIdTooltip',
-          "Orca's ID for this chat, separate from the agent CLI's own session ID. Agents use it to refer to each other through Orca."
+          "Oh My DevX's ID for this chat, separate from the agent CLI's own session ID. Agents use it to refer to each other through Oh My DevX."
         )}
       </TooltipContent>
     </Tooltip>

@@ -189,7 +189,7 @@ launcher=${quotedLauncherPath}
 expected_runtime_identity=${expectedRuntimeIdentity}
 expected_launcher_identity=${expectedLauncherIdentity}
 fail() {
-  printf 'Orca CLI is unavailable; reopen Orca or register the CLI again.\\n' >&2
+  printf 'Oh My DevX CLI is unavailable; reopen Oh My DevX or register the CLI again.\\n' >&2
   exit 1
 }
 proc_stat_path="/proc/$runtime_pid/stat"
@@ -215,7 +215,7 @@ function ensureShimForLauncher(userDataPath: string, launcherPath: string): stri
 
 function ensureShimForScript(userDataPath: string, script: string): string | null {
   const shimDir = join(userDataPath, SHIM_DIR_NAME)
-  const shimPath = join(shimDir, 'orca')
+  const shimPath = join(shimDir, 'omdx')
   try {
     if (readShim(shimPath) !== script) {
       mkdirSync(shimDir, { recursive: true })

@@ -35,7 +35,7 @@ export async function prepareOrcadCliLauncher(): Promise<void> {
     launcherPath = await prepareWindowsLauncher(installRoot, entry, userDataPath, binDir)
     return
   }
-  const path = join(binDir, 'orca')
+  const path = join(binDir, 'omdx')
   const script = buildUnixCliLauncher(process.execPath, entry, userDataPath, 'node')
   await mkdir(binDir, { recursive: true })
   const current = await readFile(path, 'utf8').catch(() => null)
@@ -65,7 +65,7 @@ async function prepareWindowsLauncher(
   if (!existsSync(source)) {
     return null
   }
-  const path = join(binDir, 'orca.exe')
+  const path = join(binDir, 'omdx.exe')
   await mkdir(binDir, { recursive: true })
   await removeRetiredLaunchers(binDir)
   const binary = await readFile(source)
@@ -90,7 +90,11 @@ async function removeRetiredLaunchers(binDir: string): Promise<void> {
   const names = await readdir(binDir).catch(() => [])
   await Promise.all(
     names
-      .filter((name) => name.startsWith('orca.exe.') && name.endsWith(RETIRED_LAUNCHER_SUFFIX))
+      .filter(
+        (name) =>
+          (name.startsWith('omdx.exe.') || name.startsWith('orca.exe.')) &&
+          name.endsWith(RETIRED_LAUNCHER_SUFFIX)
+      )
       // One still running stays until a later start.
       .map((name) => rm(join(binDir, name), { force: true }).catch(() => {}))
   )

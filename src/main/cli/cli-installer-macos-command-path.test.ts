@@ -41,7 +41,7 @@ describe('CliInstaller', () => {
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
       // Simulate arm64: point defaultMacCommandPath at a dir that does not exist
       // in the fixture so existsSync(dirname(...)) returns false.
-      const absentUsrLocalBin = join(fixture.root, 'usr', 'local', 'bin', 'orca')
+      const absentUsrLocalBin = join(fixture.root, 'usr', 'local', 'bin', 'omdx')
       const installer = new CliInstaller({
         platform: 'darwin',
         isPackaged: true,
@@ -55,13 +55,13 @@ describe('CliInstaller', () => {
       })
 
       const status = await installer.getStatus()
-      expect(status.commandPath).toBe(join(homePath, '.local', 'bin', 'orca'))
+      expect(status.commandPath).toBe(join(homePath, '.local', 'bin', 'omdx'))
       expect(status.state).toBe('not_installed')
       expect(status.supported).toBe(true)
 
       const installed = await installer.install()
       expect(installed.state).toBe('installed')
-      expect(installed.commandPath).toBe(join(homePath, '.local', 'bin', 'orca'))
+      expect(installed.commandPath).toBe(join(homePath, '.local', 'bin', 'omdx'))
       expect(installed.pathConfigured).toBe(true)
     }
   )
@@ -76,7 +76,7 @@ describe('CliInstaller', () => {
       const usrLocalBin = join(fixture.root, 'usr', 'local', 'bin')
       await mkdir(usrLocalBin, { recursive: true })
 
-      const installPath = join(usrLocalBin, 'orca')
+      const installPath = join(usrLocalBin, 'omdx')
       const installer = new CliInstaller({
         platform: 'darwin',
         isPackaged: true,
@@ -105,9 +105,9 @@ describe('CliInstaller', () => {
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
       const usrLocalBin = join(fixture.root, 'usr', 'local', 'bin')
       const userLocalBin = join(homePath, '.local', 'bin')
-      const defaultInstallPath = join(usrLocalBin, 'orca')
-      const userInstallPath = join(userLocalBin, 'orca')
-      const launcherPath = join(resourcesPath, 'bin', 'orca')
+      const defaultInstallPath = join(usrLocalBin, 'omdx')
+      const userInstallPath = join(userLocalBin, 'omdx')
+      const launcherPath = join(resourcesPath, 'bin', 'omdx')
       await mkdir(usrLocalBin, { recursive: true })
       await mkdir(userLocalBin, { recursive: true })
       await symlink(launcherPath, userInstallPath)
@@ -146,10 +146,10 @@ describe('CliInstaller', () => {
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
       const usrLocalBin = join(fixture.root, 'usr', 'local', 'bin')
       const userLocalBin = join(homePath, '.local', 'bin')
-      const defaultInstallPath = join(usrLocalBin, 'orca')
-      const userInstallPath = join(userLocalBin, 'orca')
-      const launcherPath = join(resourcesPath, 'bin', 'orca')
-      const oldLauncherPath = join(fixture.root, 'Old.app', 'Contents', 'Resources', 'bin', 'orca')
+      const defaultInstallPath = join(usrLocalBin, 'omdx')
+      const userInstallPath = join(userLocalBin, 'omdx')
+      const launcherPath = join(resourcesPath, 'bin', 'omdx')
+      const oldLauncherPath = join(fixture.root, 'Old.app', 'Contents', 'Resources', 'bin', 'omdx')
       await mkdir(usrLocalBin, { recursive: true })
       await mkdir(userLocalBin, { recursive: true })
       await symlink(oldLauncherPath, userInstallPath)
@@ -191,9 +191,9 @@ describe('CliInstaller', () => {
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
       const usrLocalBin = join(fixture.root, 'usr', 'local', 'bin')
       const userLocalBin = join(homePath, '.local', 'bin')
-      const defaultInstallPath = join(usrLocalBin, 'orca')
-      const userInstallPath = join(userLocalBin, 'orca')
-      const launcherPath = join(resourcesPath, 'bin', 'orca')
+      const defaultInstallPath = join(usrLocalBin, 'omdx')
+      const userInstallPath = join(userLocalBin, 'omdx')
+      const launcherPath = join(resourcesPath, 'bin', 'omdx')
       await mkdir(usrLocalBin, { recursive: true })
       await mkdir(userLocalBin, { recursive: true })
       await symlink(launcherPath, defaultInstallPath)
@@ -227,9 +227,9 @@ describe('CliInstaller', () => {
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
       const usrLocalBin = join(fixture.root, 'usr', 'local', 'bin')
       const userLocalBin = join(homePath, '.local', 'bin')
-      const defaultInstallPath = join(usrLocalBin, 'orca')
-      const userInstallPath = join(userLocalBin, 'orca')
-      const launcherPath = join(resourcesPath, 'bin', 'orca')
+      const defaultInstallPath = join(usrLocalBin, 'omdx')
+      const userInstallPath = join(userLocalBin, 'omdx')
+      const launcherPath = join(resourcesPath, 'bin', 'omdx')
       await mkdir(usrLocalBin, { recursive: true })
       await mkdir(userLocalBin, { recursive: true })
       await symlink(launcherPath, userInstallPath)
@@ -266,9 +266,9 @@ describe('CliInstaller', () => {
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
       const usrLocalBin = join(fixture.root, 'usr', 'local', 'bin')
       const userLocalBin = join(homePath, '.local', 'bin')
-      const defaultInstallPath = join(usrLocalBin, 'orca')
-      const userInstallPath = join(userLocalBin, 'orca')
-      const launcherPath = join(resourcesPath, 'bin', 'orca')
+      const defaultInstallPath = join(usrLocalBin, 'omdx')
+      const userInstallPath = join(userLocalBin, 'omdx')
+      const launcherPath = join(resourcesPath, 'bin', 'omdx')
       await mkdir(usrLocalBin, { recursive: true })
       await mkdir(userLocalBin, { recursive: true })
       await writeFile(defaultInstallPath, '#!/usr/bin/env bash\necho other-orca\n', 'utf8')
@@ -306,9 +306,9 @@ describe('CliInstaller', () => {
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
       const usrLocalBin = join(fixture.root, 'usr', 'local', 'bin')
       const userLocalBin = join(homePath, '.local', 'bin')
-      const defaultInstallPath = join(usrLocalBin, 'orca')
-      const userInstallPath = join(userLocalBin, 'orca')
-      const launcherPath = join(resourcesPath, 'bin', 'orca')
+      const defaultInstallPath = join(usrLocalBin, 'omdx')
+      const userInstallPath = join(userLocalBin, 'omdx')
+      const launcherPath = join(resourcesPath, 'bin', 'omdx')
       await mkdir(usrLocalBin, { recursive: true })
       await mkdir(userLocalBin, { recursive: true })
       await writeFile(userInstallPath, '#!/usr/bin/env bash\necho other-orca\n', {
@@ -350,9 +350,9 @@ describe('CliInstaller', () => {
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
       const usrLocalBin = join(fixture.root, 'usr', 'local', 'bin')
       const userLocalBin = join(homePath, '.local', 'bin')
-      const defaultInstallPath = join(usrLocalBin, 'orca')
-      const userInstallPath = join(userLocalBin, 'orca')
-      const launcherPath = join(resourcesPath, 'bin', 'orca')
+      const defaultInstallPath = join(usrLocalBin, 'omdx')
+      const userInstallPath = join(userLocalBin, 'omdx')
+      const launcherPath = join(resourcesPath, 'bin', 'omdx')
       await mkdir(usrLocalBin, { recursive: true })
       await mkdir(userLocalBin, { recursive: true })
       await symlink(launcherPath, userInstallPath)
@@ -390,8 +390,8 @@ describe('CliInstaller', () => {
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
       const usrLocalBin = join(fixture.root, 'usr', 'local', 'bin')
       const userLocalBin = join(homePath, '.local', 'bin')
-      const defaultInstallPath = join(usrLocalBin, 'orca')
-      const userInstallPath = join(userLocalBin, 'orca')
+      const defaultInstallPath = join(usrLocalBin, 'omdx')
+      const userInstallPath = join(userLocalBin, 'omdx')
       await mkdir(usrLocalBin, { recursive: true })
       await mkdir(userLocalBin, { recursive: true })
       await writeFile(userInstallPath, '#!/usr/bin/env bash\necho other-orca\n', {
@@ -430,9 +430,9 @@ describe('CliInstaller', () => {
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
       const usrLocalBin = join(fixture.root, 'usr', 'local', 'bin')
       const userLocalBin = join(homePath, '.local', 'bin')
-      const defaultInstallPath = join(usrLocalBin, 'orca')
-      const userInstallPath = join(userLocalBin, 'orca')
-      const launcherPath = join(resourcesPath, 'bin', 'orca')
+      const defaultInstallPath = join(usrLocalBin, 'omdx')
+      const userInstallPath = join(userLocalBin, 'omdx')
+      const launcherPath = join(resourcesPath, 'bin', 'omdx')
       await mkdir(usrLocalBin, { recursive: true })
       await mkdir(userLocalBin, { recursive: true })
       await writeFile(userInstallPath, '#!/usr/bin/env bash\necho other-orca\n', 'utf8')
@@ -464,12 +464,12 @@ describe('CliInstaller', () => {
   // Why: when macCommandPath falls back to ~/.local/bin/orca on arm64, commandName
   // must still be 'orca' (not 'orca-ide' which is Linux-only).
   it.skipIf(process.platform === 'win32')(
-    'reports commandName as orca (not orca-ide) when falling back to ~/.local/bin on macOS',
+    'reports commandName as orca (not omdx-ide) when falling back to ~/.local/bin on macOS',
     async () => {
       const fixture = await makeFixture()
       const homePath = join(fixture.root, 'home')
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
-      const absentUsrLocalBin = join(fixture.root, 'usr', 'local', 'bin', 'orca')
+      const absentUsrLocalBin = join(fixture.root, 'usr', 'local', 'bin', 'omdx')
       const installer = new CliInstaller({
         platform: 'darwin',
         isPackaged: true,
@@ -483,7 +483,7 @@ describe('CliInstaller', () => {
       })
 
       const status = await installer.getStatus()
-      expect(status.commandName).toBe('orca')
+      expect(status.commandName).toBe('omdx')
     }
   )
 
@@ -495,7 +495,7 @@ describe('CliInstaller', () => {
       const fixture = await makeFixture()
       const homePath = join(fixture.root, 'home')
       const resourcesPath = await createPackagedMacLauncher(fixture.root)
-      const absentUsrLocalBin = join(fixture.root, 'usr', 'local', 'bin', 'orca')
+      const absentUsrLocalBin = join(fixture.root, 'usr', 'local', 'bin', 'omdx')
       const installer = new CliInstaller({
         platform: 'darwin',
         isPackaged: true,
@@ -515,7 +515,7 @@ describe('CliInstaller', () => {
 
       expect(s1.commandPath).toBe(s2.commandPath)
       expect(s2.commandPath).toBe(s3.commandPath)
-      expect(s1.commandPath).toBe(join(homePath, '.local', 'bin', 'orca'))
+      expect(s1.commandPath).toBe(join(homePath, '.local', 'bin', 'omdx'))
     }
   )
 
@@ -525,9 +525,9 @@ describe('CliInstaller', () => {
     async () => {
       const fixture = await makeFixture()
       const homePath = join(fixture.root, 'home')
-      const absentUsrLocalBin = join(fixture.root, 'usr', 'local', 'bin', 'orca')
+      const absentUsrLocalBin = join(fixture.root, 'usr', 'local', 'bin', 'omdx')
       const resourcesPath = join(fixture.root, 'resources')
-      const bundledLauncher = join(resourcesPath, 'bin', 'orca')
+      const bundledLauncher = join(resourcesPath, 'bin', 'omdx')
       await mkdir(join(resourcesPath, 'bin'), { recursive: true })
       await writeFile(bundledLauncher, '#!/usr/bin/env bash\necho orca\n', {
         encoding: 'utf8',
@@ -547,7 +547,7 @@ describe('CliInstaller', () => {
       })
 
       const status = await installer.getStatus()
-      expect(status.commandPath).toBe(join(homePath, '.local', 'bin', 'orca'))
+      expect(status.commandPath).toBe(join(homePath, '.local', 'bin', 'omdx'))
       expect(status.supported).toBe(true)
     }
   )

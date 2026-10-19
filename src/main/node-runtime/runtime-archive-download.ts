@@ -67,7 +67,7 @@ export class ReleaseMismatchError extends Error {}
  *  every other failure (proxy, DNS, TLS, a dropped connection) is one the network can fix. */
 export function downloadFailureMessage(label: string, error: unknown): string {
   return error instanceof ReleaseMismatchError
-    ? `The ${label} download didn't match the release Orca expects, so nothing was installed. Updating Orca may fix this.`
+    ? `The ${label} download didn't match the release Oh My DevX expects, so nothing was installed. Updating Oh My DevX may fix this.`
     : `Couldn't download ${label}. Check your network connection or proxy, then try again.`
 }
 

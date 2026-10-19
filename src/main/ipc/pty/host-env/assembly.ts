@@ -303,7 +303,7 @@ export function buildPtyHostEnv(
     baseEnv.BROWSER === undefined &&
     process.env.BROWSER === undefined
   ) {
-    const cliCommand = opts.isWsl ? getWslCliCommandName(opts.isPackaged) : 'orca'
+    const cliCommand = opts.isWsl ? getWslCliCommandName(opts.isPackaged) : 'omdx'
     baseEnv.BROWSER = `${cliCommand} open-url --url %s`
   }
   // Why the browser-relay flag: both mean a headless runtime whose viewer is another machine.

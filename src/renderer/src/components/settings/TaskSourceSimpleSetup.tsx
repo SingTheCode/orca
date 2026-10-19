@@ -31,11 +31,11 @@ export function CodeHostSetupSteps(
   const connectionDescription = props.unavailable
     ? translate(
         'auto.components.settings.TasksPane.connectionCheckUnavailable',
-        "Orca couldn't check this connection. Try again, or open Integrations for setup details."
+        "Oh My DevX couldn't check this connection. Try again, or open Integrations for setup details."
       )
     : translate(
         'auto.components.settings.TasksPane.connectCodeHostDescription',
-        'Install and authenticate the CLI under Integrations so Orca can load issues.'
+        'Install and authenticate the CLI under Integrations so Oh My DevX can load issues.'
       )
 
   return (

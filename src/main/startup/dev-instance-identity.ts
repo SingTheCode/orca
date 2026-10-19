@@ -2,8 +2,11 @@ import { createHash } from 'node:crypto'
 import path from 'node:path'
 import type { AppIdentity } from '../../shared/app-identity'
 
-const BASE_APP_NAME = 'Orca'
-const BASE_APP_USER_MODEL_ID = 'io.github.singthecode.orca'
+const BASE_APP_NAME = 'Oh My DevX'
+// Why separate from BASE_APP_NAME: the dev appName is applied pre-ready and names the macOS
+// safeStorage Keychain item ("Orca Dev Safe Storage"); renaming it would orphan dev secrets.
+const DEV_KEYCHAIN_APP_NAME = 'Orca Dev'
+const BASE_APP_USER_MODEL_ID = 'io.github.singthecode.omdx'
 const MAX_LABEL_LENGTH = 80
 
 export type DevInstanceIdentity = AppIdentity & {
@@ -93,7 +96,7 @@ export function getDevInstanceIdentity(
     // Why: one stable Keychain key ('Orca Dev Safe Storage') for all dev
     // branches; the per-branch identity still shows via `name` (window title,
     // app menu, renderer label).
-    appName: `${BASE_APP_NAME} Dev`,
+    appName: DEV_KEYCHAIN_APP_NAME,
     isDev: true,
     devLabel,
     devBranch: branch,

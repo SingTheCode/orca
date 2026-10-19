@@ -229,7 +229,7 @@ describe.skipIf(process.platform === 'win32')('Codex shell launch preflight', ()
     )
   })
 
-  it('does not trigger a preflight outside an Orca terminal', () => {
+  it('does not trigger a preflight outside an Oh My DevX terminal', () => {
     const root = mkdtempSync(join(tmpdir(), 'orca-codex-plain-shell-'))
     roots.push(root)
     const bin = join(root, 'bin')
@@ -433,10 +433,10 @@ describe('Codex shell launch preflight command', () => {
   }
 
   it.each([
-    { platform: 'darwin' as const, bundled: 'orca', isPackaged: true },
-    { platform: 'linux' as const, bundled: 'orca-ide', isPackaged: true },
-    { platform: 'win32' as const, bundled: 'orca.exe', isPackaged: true },
-    { platform: 'darwin' as const, bundled: 'orca', isPackaged: false }
+    { platform: 'darwin' as const, bundled: 'omdx', isPackaged: true },
+    { platform: 'linux' as const, bundled: 'omdx-ide', isPackaged: true },
+    { platform: 'win32' as const, bundled: 'omdx.exe', isPackaged: true },
+    { platform: 'darwin' as const, bundled: 'omdx', isPackaged: false }
   ])(
     'gives a native $platform pane no preflight: the app prepares its Codex home (packaged $isPackaged)',
     (config) => {
@@ -457,7 +457,7 @@ describe('Codex shell launch preflight command', () => {
 
   it('carries the packaged Windows launcher, as an absolute path, for WSLENV path translation', () => {
     const { resourcesPath } = makeCliRoot()
-    const launcherPath = join(resourcesPath, 'bin', 'orca.exe')
+    const launcherPath = join(resourcesPath, 'bin', 'omdx.exe')
     writeExecutable(launcherPath, '#!/bin/sh\nexit 0\n')
 
     const command = resolveCodexShellLaunchPreflightCommand(wslOptions(resourcesPath))
@@ -472,7 +472,7 @@ describe('Codex shell launch preflight command', () => {
   ])('skips the preflight when $label', (config) => {
     const { resourcesPath } = makeCliRoot()
     if (config.create === 'directory') {
-      mkdirSync(join(resourcesPath, 'bin', 'orca.exe'))
+      mkdirSync(join(resourcesPath, 'bin', 'omdx.exe'))
     }
 
     expect(resolveCodexShellLaunchPreflightCommand(wslOptions(resourcesPath))).toBeNull()
@@ -486,7 +486,7 @@ describe('Codex shell launch preflight command', () => {
     'does not enable an unsupported WSL preflight for %o',
     (override) => {
       const { resourcesPath } = makeCliRoot()
-      writeExecutable(join(resourcesPath, 'bin', 'orca.exe'), '#!/bin/sh\nexit 0\n')
+      writeExecutable(join(resourcesPath, 'bin', 'omdx.exe'), '#!/bin/sh\nexit 0\n')
 
       expect(
         resolveCodexShellLaunchPreflightCommand({ ...wslOptions(resourcesPath), ...override })

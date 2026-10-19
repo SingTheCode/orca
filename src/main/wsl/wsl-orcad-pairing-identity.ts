@@ -16,5 +16,8 @@ export async function verifyWslOrcadIdentity(
     ? verifyOrcadPairingIdentity(pairedRuntimeConnectionFromOffer(offer), {
         runtimeId: readiness.runtimeId || null
       })
-    : { verdict: 'foreign', detail: 'The Orca server in WSL published an invalid pairing offer.' }
+    : {
+        verdict: 'foreign',
+        detail: 'The Oh My DevX server in WSL published an invalid pairing offer.'
+      }
 }

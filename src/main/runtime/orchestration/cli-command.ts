@@ -3,16 +3,16 @@ import { isWslUncPath } from '../../../shared/wsl-paths'
 import { splitWorktreeIdForFilesystem } from '../../../shared/worktree/id'
 import { getAppEnvironment, hasAppEnvironment } from '../../../shared/app-environment'
 
-export type OrchestrationCliCommand = 'orca' | 'orca-dev' | 'orca-ide'
+export type OrchestrationCliCommand = 'omdx' | 'omdx-dev' | 'omdx-ide'
 
-/** Dev builds run the CLI as `orca-dev`; a packaged app, or a process with no app, must not advertise it. */
+/** Dev builds run the CLI as `omdx-dev`; a packaged app, or a process with no app, must not advertise it. */
 export function runtimeOrchestrationCliCommand(): OrchestrationCliCommand | undefined {
-  return hasAppEnvironment() && !getAppEnvironment().isPackaged() ? 'orca-dev' : undefined
+  return hasAppEnvironment() && !getAppEnvironment().isPackaged() ? 'omdx-dev' : undefined
 }
 
 /** What a local, non-WSL terminal is told to run; a structured session is always one. */
 export function localOrchestrationCliCommand(): OrchestrationCliCommand {
-  return runtimeOrchestrationCliCommand() ?? 'orca'
+  return runtimeOrchestrationCliCommand() ?? 'omdx'
 }
 
 export function resolveTerminalOrchestrationCliCommand(args: {
@@ -23,18 +23,18 @@ export function resolveTerminalOrchestrationCliCommand(args: {
   runtimeCliCommand?: OrchestrationCliCommand
 }): OrchestrationCliCommand {
   if (args.connectionId) {
-    return 'orca'
+    return 'omdx'
   }
   if (args.runtimeCliCommand) {
     return args.runtimeCliCommand
   }
   if (args.isWsl !== null && args.isWsl !== undefined) {
-    return args.isWsl ? 'orca-ide' : 'orca'
+    return args.isWsl ? 'omdx-ide' : 'omdx'
   }
   if (args.projectRuntime?.status === 'resolved' && args.projectRuntime.runtime.kind === 'wsl') {
-    return 'orca-ide'
+    return 'omdx-ide'
   }
 
   const worktreePath = splitWorktreeIdForFilesystem(args.worktreeId)?.worktreePath
-  return worktreePath && isWslUncPath(worktreePath) ? 'orca-ide' : 'orca'
+  return worktreePath && isWslUncPath(worktreePath) ? 'omdx-ide' : 'omdx'
 }

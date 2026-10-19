@@ -25,10 +25,10 @@ beforeEach(() => {
 
 describe('readMacosBundleId', () => {
   it('reads CFBundleIdentifier out of the bundle’s Info.plist', async () => {
-    runProcessMock.mockResolvedValue(processResult({ stdout: 'io.github.singthecode.orca\n' }))
+    runProcessMock.mockResolvedValue(processResult({ stdout: 'io.github.singthecode.omdx\n' }))
 
     await expect(readMacosBundleId('/Applications/Orca.app')).resolves.toBe(
-      'io.github.singthecode.orca'
+      'io.github.singthecode.omdx'
     )
     expect(runProcessMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -59,12 +59,12 @@ describe('resetMacosTccPermission', () => {
     runProcessMock.mockResolvedValue(processResult({}))
 
     await expect(
-      resetMacosTccPermission('SystemPolicyDocumentsFolder', 'io.github.singthecode.orca')
+      resetMacosTccPermission('SystemPolicyDocumentsFolder', 'io.github.singthecode.omdx')
     ).resolves.toEqual({ ok: true })
     expect(runProcessMock).toHaveBeenCalledWith(
       expect.objectContaining({
         program: '/usr/bin/tccutil',
-        args: ['reset', 'SystemPolicyDocumentsFolder', 'io.github.singthecode.orca']
+        args: ['reset', 'SystemPolicyDocumentsFolder', 'io.github.singthecode.omdx']
       })
     )
   })
@@ -98,7 +98,7 @@ describe('resetMacosTccPermission', () => {
     runProcessMock.mockResolvedValue(result)
 
     await expect(
-      resetMacosTccPermission('SystemPolicyDownloadsFolder', 'io.github.singthecode.orca')
+      resetMacosTccPermission('SystemPolicyDownloadsFolder', 'io.github.singthecode.omdx')
     ).resolves.toEqual({ ok: false, detail })
   })
 
@@ -106,7 +106,7 @@ describe('resetMacosTccPermission', () => {
     runProcessMock.mockRejectedValue(new Error('EACCES'))
 
     await expect(
-      resetMacosTccPermission('SystemPolicyDocumentsFolder', 'io.github.singthecode.orca')
+      resetMacosTccPermission('SystemPolicyDocumentsFolder', 'io.github.singthecode.omdx')
     ).resolves.toEqual({ ok: false, detail: 'EACCES' })
   })
 })

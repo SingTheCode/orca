@@ -34,10 +34,10 @@ const electronBuilderConfig = require('../electron-builder.config.cjs')
 
 const usageDescriptions = electronBuilderConfig.mac.extendInfo
 const appInfo = {
-  CFBundleIdentifier: 'io.github.singthecode.orca',
+  CFBundleIdentifier: 'io.github.singthecode.omdx',
   CFBundleShortVersionString: '1.4.300'
 }
-const expectations = { appId: 'io.github.singthecode.orca', usageDescriptions, minimumOs: '13.5' }
+const expectations = { appId: 'io.github.singthecode.omdx', usageDescriptions, minimumOs: '13.5' }
 
 describe('terminal host Info.plist', () => {
   const info = buildMacTerminalHostInfo({ appInfo, usageDescriptions, minimumOs: '13.5' })
@@ -45,7 +45,7 @@ describe('terminal host Info.plist', () => {
   it("carries the app's identifier, every purpose string and the Node floor", () => {
     expect(info).toMatchObject({
       ...usageDescriptions,
-      CFBundleIdentifier: 'io.github.singthecode.orca',
+      CFBundleIdentifier: 'io.github.singthecode.omdx',
       CFBundleName: 'Orca',
       CFBundleDisplayName: 'Orca',
       CFBundleExecutable: 'orca-terminal-host',
@@ -62,7 +62,7 @@ describe('terminal host Info.plist', () => {
       findMacTerminalHostInfoProblems(
         {
           ...info,
-          CFBundleIdentifier: 'io.github.singthecode.orca.helper',
+          CFBundleIdentifier: 'io.github.singthecode.omdx.helper',
           CFBundleURLTypes: [],
           CFBundleDocumentTypes: [],
           UTExportedTypeDeclarations: [],
@@ -72,7 +72,7 @@ describe('terminal host Info.plist', () => {
         expectations
       )
     ).toEqual([
-      'CFBundleIdentifier is io.github.singthecode.orca.helper, expected io.github.singthecode.orca',
+      'CFBundleIdentifier is io.github.singthecode.omdx.helper, expected io.github.singthecode.omdx',
       'declares CFBundleURLTypes',
       'declares CFBundleDocumentTypes',
       'declares UTExportedTypeDeclarations',

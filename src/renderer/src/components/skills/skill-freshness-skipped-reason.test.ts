@@ -27,7 +27,7 @@ describe('skippedReason', () => {
   it('leads with the harder blocker when several placements are off', () => {
     expect(skippedReason([row('duplicate'), row('read-only')])).toContain('read-only location')
     expect(skippedReason([row('duplicate'), row('external-link')])).toContain(
-      'pointing outside Orca’s skill folders'
+      'pointing outside Oh My DevX’s skill folders'
     )
   })
 

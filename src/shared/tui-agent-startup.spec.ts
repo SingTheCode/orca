@@ -280,7 +280,7 @@ describe('tui agent startup plans', () => {
       allowEmptyPromptLaunch: true
     })
 
-    expect(plan?.launchCommand).toBe('orca-ide claude-teams')
+    expect(plan?.launchCommand).toBe('omdx-ide claude-teams')
   })
 
   it('uses the plain orca shim for Claude Agent Teams on Linux SSH remotes', () => {
@@ -297,7 +297,7 @@ describe('tui agent startup plans', () => {
       allowEmptyPromptLaunch: true
     })
 
-    expect(plan?.launchCommand).toBe('orca claude-teams')
+    expect(plan?.launchCommand).toBe('omdx claude-teams')
   })
 
   it('keeps the Windows orca.cmd shim for Claude Agent Teams on SSH remotes', () => {
@@ -312,7 +312,7 @@ describe('tui agent startup plans', () => {
       allowEmptyPromptLaunch: true
     })
 
-    expect(plan?.launchCommand).toBe('orca.cmd claude-teams')
+    expect(plan?.launchCommand).toBe('omdx.cmd claude-teams')
   })
 
   it('keeps the Linux orca-ide wrapper for local (non-remote) Claude Agent Teams', () => {
@@ -328,7 +328,7 @@ describe('tui agent startup plans', () => {
       allowEmptyPromptLaunch: true
     })
 
-    expect(plan?.launchCommand).toBe('orca-ide claude-teams')
+    expect(plan?.launchCommand).toBe('omdx-ide claude-teams')
   })
 
   it('launches OpenClaude as a distinct argv agent', () => {

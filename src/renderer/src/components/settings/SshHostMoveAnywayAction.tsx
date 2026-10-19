@@ -75,7 +75,7 @@ export function SshHostMoveAnywayAction({
             <DialogDescription>
               {translate(
                 'auto.components.settings.moveAnyway.description',
-                'Orca moves this host to its managed server without the saved items below. They stay on this computer and don’t appear on the managed server. Unsaved edits are kept, never deleted.'
+                'Oh My DevX moves this host to its managed server without the saved items below. They stay on this computer and don’t appear on the managed server. Unsaved edits are kept, never deleted.'
               )}
             </DialogDescription>
           </DialogHeader>

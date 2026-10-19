@@ -122,7 +122,7 @@ export function SshHostFields({
           <p className="text-xs text-muted-foreground">
             {translate(
               'auto.components.sidebar.AddRemoteHostDialog.identityFileFromConfigHint',
-              'Left empty on purpose: Orca uses every key ~/.ssh/config resolves for {{value0}}. Type a path to use just that key.',
+              'Left empty on purpose: Oh My DevX uses every key ~/.ssh/config resolves for {{value0}}. Type a path to use just that key.',
               { value0: configIdentityAlias }
             )}
           </p>
@@ -178,7 +178,10 @@ export function RemoteServerFields({
     >
       <div className="space-y-1.5">
         <Label htmlFor="add-server-name">
-          {translate('auto.components.sidebar.AddRemoteHostDialog.serverName', 'Name in Orca')}
+          {translate(
+            'auto.components.sidebar.AddRemoteHostDialog.serverName',
+            'Name in Oh My DevX'
+          )}
         </Label>
         <Input
           id="add-server-name"
@@ -212,7 +215,7 @@ export function RemoteServerFields({
         <p id="add-server-pairing-code-help" className="text-xs text-muted-foreground">
           {translate(
             'auto.components.sidebar.AddRemoteHostDialog.pairingHelpSuffix',
-            'Create this under Settings → Remote Orca Servers → Share this host on the other computer.'
+            'Create this under Settings → Remote Oh My DevX Servers → Share this host on the other computer.'
           )}
         </p>
         {inputError ? (

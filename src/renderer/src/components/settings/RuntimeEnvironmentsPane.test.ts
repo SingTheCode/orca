@@ -219,7 +219,7 @@ describe('RuntimeEnvironmentsPane host details', () => {
     expect(getHostDetailsDescription(details({ status: 'ready' }))).toContain(
       'SSH transport is connected'
     )
-    expect(getHostDetailsSummary(details({ status: 'ready' }))).toBe('Orca unavailable')
+    expect(getHostDetailsSummary(details({ status: 'ready' }))).toBe('Oh My DevX unavailable')
     expect(getRuntimeServerConnectionState(undefined)).toBe('checking')
     expect(getRuntimeServerConnectionState(details({ status: 'loading' }))).toBe('checking')
     expect(getRuntimeServerConnectionState(details({ status: 'error', error: 'offline' }))).toBe(
@@ -249,7 +249,7 @@ describe('RuntimeEnvironmentsPane host details', () => {
       error: 'runtime.status.get timed out'
     })
 
-    expect(getHostDetailsSummary(failedProbe)).toBe('Orca unavailable')
+    expect(getHostDetailsSummary(failedProbe)).toBe('Oh My DevX unavailable')
     expect(getHostDetailsDescription(failedProbe)).toContain('SSH transport is connected')
     expect(getHostDetailsDescription(failedProbe)).toContain('runtime.status.get timed out')
     expect(getRuntimeServerConnectionState(failedProbe)).toBe('runtime-unavailable')
@@ -295,7 +295,7 @@ describe('RuntimeEnvironmentsPane host details', () => {
     )
     expect(getActiveServerModeDescription(true)).toContain('stay on their own host')
     expect(getActiveServerModeDescription(false)).toContain('default Host')
-    expect(getActiveServerModeDescription(false)).toContain('paired Orca runtime')
+    expect(getActiveServerModeDescription(false)).toContain('paired Oh My DevX runtime')
   })
 
   it('blocks removing the active server independently of local-runtime availability', () => {
