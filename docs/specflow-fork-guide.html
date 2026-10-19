@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orca fork 작업 설명서</title>
+<style>
+  :root { --bg:#0f1115; --surface:#171a21; --border:#2a2f3a; --fg:#e6e8ee; --muted:#9aa3b2; --accent:#6aa9ff; --ok:#3fb950; --warn:#d29922; }
+  @media (prefers-color-scheme: light) { :root { --bg:#fafbfc; --surface:#fff; --border:#d8dde5; --fg:#1d232c; --muted:#5b6573; --accent:#1f6feb; --ok:#1a7f37; --warn:#9a6700; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.7 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif; background:var(--bg); color:var(--fg); }
+  main { max-width:960px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:28px; margin:0 0 6px; }
+  h2 { font-size:20px; margin:44px 0 12px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  h3 { font-size:16px; margin:22px 0 6px; }
+  .lead { color:var(--muted); margin:0 0 20px; }
+  code { font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1px 5px; }
+  pre { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px; overflow-x:auto; }
+  pre code { border:0; padding:0; background:none; }
+  table { width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:14px; }
+  th,td { text-align:left; vertical-align:top; padding:8px 10px; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-size:13px; }
+  .note { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--warn); border-radius:6px; padding:12px 14px; margin:14px 0; }
+  .ok { color:var(--ok); font-weight:600; }
+  ol li, ul li { margin:4px 0; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Orca fork 작업 설명서</h1>
+<p class="lead">저장소 <code>github.com/SingTheCode/orca</code> · 브랜치 <code>specflow-harness</code> · 로컬 <code>~/dev/orca</code> · 2026-10-19</p>
+
+<p>Orca(stablyai/orca, MIT)를 fork해서 사내 개발 환경에 맞게 네 가지를 바꿨습니다. 앱 정체성을 fork 소유로 옮겼고, omp를 기본 에이전트로 지정했고, omp가 DevX 게이트웨이 모델을 역할별로 쓰도록 했고, 사내 Jira에 PAT 하나로 연결되게 했습니다. SpecFlow의 서버·DB·화면 코드는 옮기지 않았습니다. 나머지 기능(grill-me, 티켓 생성, 동기화, Registry)의 계획은 <code>docs/specflow-fork-plan.html</code>에 있습니다.</p>
+
+<h2>1. 앱 정체성 (fork 소유로 전환)</h2>
+<p>fork 빌드가 upstream 앱으로 인식되거나 upstream 업데이트에 덮이지 않도록 번들 ID와 업데이트 경로를 바꿨습니다.</p>
+<table>
+  <thead><tr><th>항목</th><th>이전</th><th>이후</th></tr></thead>
+  <tbody>
+    <tr><td>번들 ID (appId)</td><td><code>com.stablyai.orca</code></td><td><code>io.github.singthecode.orca</code></td></tr>
+    <tr><td>파생 ID</td><td><code>com.stablyai.orca.helper</code>, <code>.dev</code>, <code>.computer-use</code>, <code>.terminal.*</code>, <code>.serve</code></td><td>같은 접미사로 <code>io.github.singthecode.orca.*</code></td></tr>
+    <tr><td>업데이트 피드</td><td><code>github.com/stablyai/orca/releases</code></td><td><code>github.com/SingTheCode/orca/releases</code></td></tr>
+    <tr><td>electron-builder publish</td><td><code>owner: 'stablyai'</code></td><td><code>owner: 'SingTheCode'</code></td></tr>
+  </tbody>
+</table>
+<ul>
+  <li>릴리스 저장소는 <code>src/shared/release-channel.ts</code>의 <code>RELEASE_OWNER</code> 한 곳에서 정합니다. 업데이터(<code>updater-setup.ts</code>, <code>updater-release-feed.ts</code>, <code>updater-prerelease-feed.ts</code>)와 agent-state-rules 다운로드가 모두 이 값을 씁니다.</li>
+  <li>앱 이름(<code>productName: 'Orca'</code>)과 사용자 데이터 경로(<code>~/Library/Application Support/orca</code>)는 그대로 뒀습니다. CLI와 daemon이 이 경로를 하드코딩해 찾기 때문에 바꾸면 기존 설정과 연결이 끊깁니다.</li>
+  <li><code>stablyai.orca-*</code> 형태의 번들 플러그인 키는 플러그인 게시자 ID라 앱 정체성과 무관해서 바꾸지 않았습니다.</li>
+</ul>
+<div class="note">GitHub releases에 서명된 빌드를 올리기 전까지 자동 업데이트는 "새 버전 없음"으로 끝납니다. 사내 배포 전에 Apple Developer ID 서명·공증과 Windows 코드 서명을 설정해야 합니다. 번들 ID가 바뀌어 macOS 권한(손쉬운 사용, 화면 기록 등)은 새로 허용해야 합니다.</div>
+<div class="note"><b>기존 Orca와 같이 쓰지 마세요.</b> 번들 ID는 다르지만 사용자 데이터 폴더(<code>~/Library/Application Support/orca</code>)는 upstream Orca와 같습니다. 그래서 설정, 런타임 정보, Jira 토큰, 터미널 daemon 상태를 한 프로필로 공유합니다.
+<ul>
+  <li>동시에 실행은 되지 않습니다. Electron 단일 실행 잠금이 이 폴더 기준이라, 하나가 켜져 있으면 다른 쪽은 기존 창을 띄우고 종료됩니다.</li>
+  <li>번갈아 실행하면 위험합니다. 터미널 daemon의 launchd 이름이 앱 ID로 시작해서(<code>io.github.singthecode.orca.terminal.*</code> / <code>com.stablyai.orca.terminal.*</code>), 같은 프로필에 daemon이 두 개 남을 수 있습니다.</li>
+  <li>upstream Orca는 계속 자동 업데이트되므로, 더 새로운 상태 스키마나 daemon 프로토콜로 프로필을 쓴 뒤 fork가 그 데이터를 읽게 될 수 있습니다.</li>
+</ul>
+fork로 옮길 때는 기존 Orca를 종료하고 Applications에서 제거한 다음 fork를 설치하세요. 두 앱을 함께 써야 한다면 프로필 폴더 분리(CLI·daemon·codex 경로 포함)를 별도 작업으로 진행해야 합니다.</div>
+
+<h2>2. omp 기본 에이전트</h2>
+<p><code>src/shared/default-global-settings.ts</code>에서 새 프로필의 <code>defaultTuiAgent</code>를 <code>null</code>(자동)에서 <code>'omp'</code>로 바꿨습니다.</p>
+<ul>
+  <li>새 워크스페이스나 에이전트 탭을 열면 omp가 먼저 선택됩니다.</li>
+  <li>omp가 설치돼 있지 않으면 기존 자동 선택 순서(claude, codex …)로 넘어갑니다.</li>
+  <li>이미 저장된 프로필의 선택은 바꾸지 않습니다. 기존 사용자는 설정 → 에이전트에서 직접 omp를 고르면 됩니다.</li>
+</ul>
+
+<h2>3. DevX Role 기본 세팅</h2>
+<p>Orca는 omp를 띄울 때 상태 표시용 확장을 <code>~/.omp/agent/extensions/</code>에 설치합니다. 여기에 <code>orca-devx-roles.ts</code>를 추가했습니다(소스: <code>src/main/pi/devx-roles-extension-source.ts</code>).</p>
+<h3>동작</h3>
+<ol>
+  <li>omp에 <code>devx</code> provider를 등록합니다. 주소는 devx-proxy <code>http://localhost:18888/v1</code>입니다.</li>
+  <li>모델 목록은 프록시의 <code>/v1/models</code>에서 받고, 각 모델의 컨텍스트 크기와 기능은 omp 내장 카탈로그로 채웁니다.</li>
+  <li>사용자가 <code>config.yml</code>에서 지정하지 않은 역할에만 아래 프리셋을 적용합니다. 실행 중에만 적용하고 파일에는 쓰지 않습니다.</li>
+</ol>
+<table>
+  <thead><tr><th>역할</th><th>모델</th><th>용도</th></tr></thead>
+  <tbody>
+    <tr><td>default, task</td><td><code>devx/vertex_ai/claude-opus-5-5:medium</code></td><td>기본 대화, 서브에이전트</td></tr>
+    <tr><td>slow, plan</td><td><code>devx/vertex_ai/claude-opus-5-5:xhigh</code></td><td>깊은 분석, plan mode</td></tr>
+    <tr><td>smol, tiny</td><td><code>devx/azure_openai/gpt-6-luna:high</code></td><td>가벼운 작업</td></tr>
+    <tr><td>commit</td><td><code>devx/azure_openai/gpt-5.6-luna:high</code></td><td>커밋 메시지</td></tr>
+    <tr><td>vision</td><td><code>devx/azure_openai/gpt-6.1-sol:medium</code></td><td>이미지 이해</td></tr>
+  </tbody>
+</table>
+<h3>사용 조건</h3>
+<ul>
+  <li>devx-proxy가 <code>localhost:18888</code>에서 실행 중이어야 합니다. 꺼져 있으면 devx 모델 목록이 비어 omp가 다른 provider를 찾습니다.</li>
+  <li>역할을 바꾸고 싶으면 <code>~/.omp/agent/config.yml</code>의 <code>modelRoles</code>에 적으면 됩니다. 사용자가 적은 값이 항상 우선합니다.</li>
+  <li>프리셋을 쓰지 않으려면 확장 파일을 지우면 됩니다. Orca가 다음 omp 실행 때 다시 설치하므로, 영구히 끄려면 파일 첫 줄의 <code>@orca-managed-pi-extension</code> 표시를 지우세요(사용자 소유로 간주되어 덮어쓰지 않습니다).</li>
+</ul>
+
+<h2>4. 사내 Jira PAT 연결</h2>
+<p>Orca에는 원래 Jira Server/DC를 PAT(Bearer)로 붙는 기능이 있습니다. fork에서는 연결 창 기본값만 사내 환경에 맞췄습니다(<code>src/renderer/src/components/jira-connect-dialog.tsx</code>).</p>
+<h3>연결 방법</h3>
+<ol>
+  <li>사내 Jira(<code>https://jira.sinc.co.kr</code>) → 프로필 → <b>Personal Access Tokens</b>에서 토큰을 만듭니다.</li>
+  <li>Orca → 설정 → <b>작업 소스</b> → <b>Jira 연결</b>(이미 연결된 사이트가 있으면 <b>Jira 사이트 추가</b>)을 누릅니다.</li>
+  <li>창이 Self-hosted, 개인 액세스 토큰, 사이트 URL이 채워진 상태로 열립니다. 토큰만 붙여 넣고 연결합니다.</li>
+</ol>
+<ul>
+  <li>토큰은 <code>~/.orca/jira-tokens/</code>에 암호화되어 저장되고, 요청은 <code>/rest/api/2</code>에 <code>Authorization: Bearer</code>로 나갑니다.</li>
+  <li>Atlassian Cloud로 바꾸면 사내 URL은 비워지고, 직접 입력한 URL은 유지됩니다.</li>
+  <li>연결 후에는 기존 Orca 기능을 그대로 씁니다: Jira 작업 목록·보드(상태별 컬럼, 카드 이동 시 상태 전환), <code>orca jira</code> CLI(검색, 생성, 상태 변경, 코멘트).</li>
+</ul>
+
+<h2>검증 결과</h2>
+<table>
+  <thead><tr><th>확인 항목</th><th>결과</th></tr></thead>
+  <tbody>
+    <tr><td>dev 앱에서 omp 실행</td><td class="ok">omp가 <code>DEVX-PONG devx/vertex_ai/claude-opus-5-5</code>로 응답, 확장 파일 설치 확인</td></tr>
+    <tr><td>dev 앱 기본 에이전트</td><td class="ok"><code>defaultTuiAgent = "omp"</code></td></tr>
+    <tr><td>dev 앱 Jira 연결 창</td><td class="ok">Self-hosted · 개인 액세스 토큰 · <code>https://jira.sinc.co.kr</code> 기본값</td></tr>
+    <tr><td>사내 Jira API</td><td class="ok">Server 9.12.6, Orca가 쓰는 REST 경로 모두 존재</td></tr>
+    <tr><td>사용자 설정 보존</td><td class="ok">빈 omp 홈에서 확장만으로 devx 역할 적용, <code>config.yml</code> 미변경</td></tr>
+    <tr><td>단위 테스트</td><td>관련 테스트 통과. upstream에서도 실패하는 3건(<code>posix-command-path-lookup</code>, <code>orca-runtime</code> 2건)은 그대로</td></tr>
+  </tbody>
+</table>
+<p>실제 PAT로 사내 Jira에 연결하는 단계는 토큰이 필요해 직접 해보지 않았습니다.</p>
+
+<h2>변경 파일</h2>
+<table>
+  <thead><tr><th>영역</th><th>파일</th></tr></thead>
+  <tbody>
+    <tr><td>앱 정체성</td><td><code>config/electron-builder.config.cjs</code>, <code>src/shared/release-channel.ts</code>, <code>src/main/updater*</code>, appId를 쓰는 macOS/daemon/CLI 소스와 테스트 (총 약 49개 파일)</td></tr>
+    <tr><td>omp 기본값</td><td><code>src/shared/default-global-settings.ts</code></td></tr>
+    <tr><td>DevX Role</td><td><code>src/main/pi/devx-roles-extension-source.ts</code>(신규), <code>src/main/pi/titlebar-extension-service.ts</code></td></tr>
+    <tr><td>Jira</td><td><code>src/renderer/src/components/jira-connect-dialog.tsx</code>, <code>jira-connect-scoped-token.test.tsx</code></td></tr>
+  </tbody>
+</table>
+
+<h2>개발자용: 빌드와 실행</h2>
+<pre><code>cd ~/dev/orca
+pnpm install
+pnpm dev                    # dev 앱 실행
+pnpm run build:cli          # orca-dev CLI
+node config/scripts/orca-dev.mjs agent launch --agent omp --prompt "hi" --json
+pnpm run build:mac          # 로컬 macOS 빌드 (서명 없이)</code></pre>
+<p>upstream 변경을 받을 때는 <code>git fetch upstream &amp;&amp; git merge upstream/main</code> 후, 새로 생긴 <code>com.stablyai.orca</code> 참조가 있는지 <code>git grep com.stablyai.orca</code>로 확인하세요.</p>
+
+</main>
+</body>
+</html>
