@@ -1,16 +1,22 @@
 import { net } from 'electron'
 import { parse } from 'yaml'
 import { compareVersions, isPrereleaseVersion, isValidVersion } from './updater-fallback'
+import { MAIN_RELEASE_DOWNLOAD_BASE, MAIN_RELEASE_REPO } from '../shared/release-channel'
 
-const ATOM_FEED_URL = 'https://github.com/stablyai/orca/releases.atom'
-const RELEASES_DOWNLOAD_BASE = 'https://github.com/stablyai/orca/releases/download'
+const ATOM_FEED_URL = `https://github.com/${MAIN_RELEASE_REPO}/releases.atom`
+const RELEASES_DOWNLOAD_BASE = MAIN_RELEASE_DOWNLOAD_BASE
 const FETCH_TIMEOUT_MS = 5000
 const MAX_MANIFEST_PROBE_CANDIDATES = 6
 
 // Why: GitHub's atom feed lists every release (prerelease or stable) in a
 // single flat list. Each entry has a /releases/tag/<tag> URL we can mine
 // without any channel filtering.
-const TAG_HREF_RE = /href="https:\/\/github\.com\/stablyai\/orca\/releases\/tag\/([^"]+)"/g
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')
+}
+const RELEASE_URL_PREFIX = escapeRegExp(`https://github.com/${MAIN_RELEASE_REPO}/releases/`)
+const TAG_HREF_RE = new RegExp(`href="${RELEASE_URL_PREFIX}tag/([^"]+)"`, 'g')
+const RELEASE_ASSET_URL_RE = new RegExp(`^${RELEASE_URL_PREFIX}download/`, 'i')
 
 export function getReleaseDownloadUrl(tag: string): string {
   return `${RELEASES_DOWNLOAD_BASE}/${encodeURIComponent(tag)}`
@@ -151,9 +157,7 @@ function getGitHubReleaseAssetReadiness(assetUrl: string): Promise<ReleaseReadin
 async function getReleaseAssetReadiness(tag: string, assetName: string): Promise<ReleaseReadiness> {
   const isRelativeAsset = !/^https?:\/\//i.test(assetName)
   const isGitHubReleaseAsset =
-    process.platform === 'win32' &&
-    (isRelativeAsset ||
-      /^https:\/\/github\.com\/stablyai\/orca\/releases\/download\//i.test(assetName))
+    process.platform === 'win32' && (isRelativeAsset || RELEASE_ASSET_URL_RE.test(assetName))
   const assetUrl = isRelativeAsset
     ? getReleaseAssetUrl(tag, assetName.split('/').findLast(Boolean) ?? assetName)
     : assetName

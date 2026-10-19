@@ -25,9 +25,11 @@ beforeEach(() => {
 
 describe('readMacosBundleId', () => {
   it('reads CFBundleIdentifier out of the bundle’s Info.plist', async () => {
-    runProcessMock.mockResolvedValue(processResult({ stdout: 'com.stablyai.orca\n' }))
+    runProcessMock.mockResolvedValue(processResult({ stdout: 'io.github.singthecode.orca\n' }))
 
-    await expect(readMacosBundleId('/Applications/Orca.app')).resolves.toBe('com.stablyai.orca')
+    await expect(readMacosBundleId('/Applications/Orca.app')).resolves.toBe(
+      'io.github.singthecode.orca'
+    )
     expect(runProcessMock).toHaveBeenCalledWith(
       expect.objectContaining({
         program: '/usr/libexec/PlistBuddy',
@@ -57,12 +59,12 @@ describe('resetMacosTccPermission', () => {
     runProcessMock.mockResolvedValue(processResult({}))
 
     await expect(
-      resetMacosTccPermission('SystemPolicyDocumentsFolder', 'com.stablyai.orca')
+      resetMacosTccPermission('SystemPolicyDocumentsFolder', 'io.github.singthecode.orca')
     ).resolves.toEqual({ ok: true })
     expect(runProcessMock).toHaveBeenCalledWith(
       expect.objectContaining({
         program: '/usr/bin/tccutil',
-        args: ['reset', 'SystemPolicyDocumentsFolder', 'com.stablyai.orca']
+        args: ['reset', 'SystemPolicyDocumentsFolder', 'io.github.singthecode.orca']
       })
     )
   })
@@ -96,7 +98,7 @@ describe('resetMacosTccPermission', () => {
     runProcessMock.mockResolvedValue(result)
 
     await expect(
-      resetMacosTccPermission('SystemPolicyDownloadsFolder', 'com.stablyai.orca')
+      resetMacosTccPermission('SystemPolicyDownloadsFolder', 'io.github.singthecode.orca')
     ).resolves.toEqual({ ok: false, detail })
   })
 
@@ -104,7 +106,7 @@ describe('resetMacosTccPermission', () => {
     runProcessMock.mockRejectedValue(new Error('EACCES'))
 
     await expect(
-      resetMacosTccPermission('SystemPolicyDocumentsFolder', 'com.stablyai.orca')
+      resetMacosTccPermission('SystemPolicyDocumentsFolder', 'io.github.singthecode.orca')
     ).resolves.toEqual({ ok: false, detail: 'EACCES' })
   })
 })
