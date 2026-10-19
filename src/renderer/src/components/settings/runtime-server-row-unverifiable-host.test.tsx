@@ -180,7 +180,7 @@ it('tells one revoked story instead of a disconnected one', () => {
   expect(screen.queryByText('Disconnected')).toBeNull()
   expect(screen.queryByText('Status unavailable')).toBeNull()
   expect(screen.queryByText('Offline')).toBeNull()
-  expect(screen.queryByText('Orca v1.4.229 (last seen)')).not.toBeNull()
+  expect(screen.queryByText('Oh My DevX v1.4.229 (last seen)')).not.toBeNull()
   expect(screen.queryByRole('button', { name: /re-pair/i })).not.toBeNull()
   expect(screen.queryByRole('button', { name: /^connect$/i })).toBeNull()
 })

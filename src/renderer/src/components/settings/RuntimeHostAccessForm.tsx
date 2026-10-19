@@ -74,7 +74,7 @@ export function RuntimeHostAccessForm({
           <li>
             {translate(
               'auto.components.settings.RuntimeHostAccessForm.stepOpenShare',
-              'Open Settings → Remote Orca Servers → Share this host.'
+              'Open Settings → Remote Oh My DevX Servers → Share this host.'
             )}
           </li>
           <li>
@@ -86,7 +86,7 @@ export function RuntimeHostAccessForm({
           <li>
             {translate(
               'auto.components.settings.RuntimeHostAccessForm.stepCopyLink',
-              'Generate the link, then copy the “Pair another Orca client” link.'
+              'Generate the link, then copy the “Pair another Oh My DevX client” link.'
             )}
           </li>
         </ol>
@@ -95,7 +95,7 @@ export function RuntimeHostAccessForm({
       <div className="grid gap-3 sm:grid-cols-[minmax(0,180px)_minmax(0,1fr)]">
         <div className="space-y-2">
           <Label htmlFor="runtime-server-name">
-            {translate('auto.components.settings.RuntimeHostAccessForm.name', 'Name in Orca')}
+            {translate('auto.components.settings.RuntimeHostAccessForm.name', 'Name in Oh My DevX')}
           </Label>
           <Input
             id="runtime-server-name"
@@ -111,7 +111,7 @@ export function RuntimeHostAccessForm({
           <p className="text-xs text-muted-foreground">
             {translate(
               'auto.components.settings.RuntimeHostAccessForm.nameHelp',
-              'This only changes how the computer appears in Orca.'
+              'This only changes how the computer appears in Oh My DevX.'
             )}
           </p>
         </div>
@@ -138,7 +138,7 @@ export function RuntimeHostAccessForm({
           <p id="runtime-server-access-link-help" className="text-xs text-muted-foreground">
             {translate(
               'auto.components.settings.RuntimeHostAccessForm.accessLinkHelp',
-              'Orca shows the destination before connecting. Credentials stay hidden.'
+              'Oh My DevX shows the destination before connecting. Credentials stay hidden.'
             )}
           </p>
           {inputError ? (
@@ -273,7 +273,7 @@ export function RuntimeHostAccessForm({
           <p className="mt-2 text-muted-foreground">
             {translate(
               'auto.components.settings.RuntimeHostAccessForm.headlessHelp',
-              'Using headless orca serve? Run orca serve --pairing-address <reachable-host> on the other computer.'
+              'Using headless omdx serve? Run omdx serve --pairing-address <reachable-host> on the other computer.'
             )}
           </p>
         )}

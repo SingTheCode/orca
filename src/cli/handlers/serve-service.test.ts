@@ -12,7 +12,7 @@ import {
 import { resolveServiceCommand } from '../runtime/serve-app-launcher'
 import { serveSupervisorBrakePath } from '../runtime/serve-supervisor-brake'
 
-describe('orca serve service', () => {
+describe('omdx serve service', () => {
   let home: string
   let bin: string
   let calls: string[]
@@ -22,10 +22,10 @@ describe('orca serve service', () => {
     home = await mkdtemp(join(tmpdir(), 'orca-serve-service-'))
     bin = join(home, 'bin')
     await mkdir(bin)
-    await writeFile(join(bin, 'orca'), '#!/bin/sh\n')
-    await chmod(join(bin, 'orca'), 0o755)
-    await writeFile(join(bin, 'orca-ide'), '#!/bin/sh\n')
-    await chmod(join(bin, 'orca-ide'), 0o755)
+    await writeFile(join(bin, 'omdx'), '#!/bin/sh\n')
+    await chmod(join(bin, 'omdx'), 0o755)
+    await writeFile(join(bin, 'omdx-ide'), '#!/bin/sh\n')
+    await chmod(join(bin, 'omdx-ide'), 0o755)
     calls = []
     answers = new Map()
   })
@@ -55,9 +55,9 @@ describe('orca serve service', () => {
     await writeFile(serveSupervisorBrakePath(join(home, 'profile')), '{}')
     const result = await installServeService({ command: null, dryRun: false }, deps('darwin'))
     const unitPath = String(result.unitPath)
-    expect(await readFile(unitPath, 'utf8')).toContain(`<string>${join(bin, 'orca')}</string>`)
+    expect(await readFile(unitPath, 'utf8')).toContain(`<string>${join(bin, 'omdx')}</string>`)
     expect(calls).toEqual([
-      expect.stringMatching(/^launchctl bootout gui\/501\/io\.github\.singthecode\.orca\.serve\./),
+      expect.stringMatching(/^launchctl bootout gui\/501\/io\.github\.singthecode\.omdx\.serve\./),
       `launchctl bootstrap gui/501 ${unitPath}`
     ])
     expect(existsSync(serveSupervisorBrakePath(join(home, 'profile')))).toBe(false)
@@ -121,19 +121,19 @@ describe('orca serve service', () => {
   it('never picks a version-scoped launcher from the profile or a mounted AppImage', async () => {
     const scoped = join(home, 'profile', 'cli', 'bin')
     await mkdir(scoped, { recursive: true })
-    await writeFile(join(scoped, 'orca'), '#!/bin/sh\n')
-    await chmod(join(scoped, 'orca'), 0o755)
+    await writeFile(join(scoped, 'omdx'), '#!/bin/sh\n')
+    await chmod(join(scoped, 'omdx'), 0o755)
     expect(
       resolveServiceCommand(null, {
         platform: 'darwin',
         env: { PATH: `${scoped}:${bin}`, ORCA_USER_DATA_PATH: join(home, 'profile') }
       })
-    ).toBe(join(bin, 'orca'))
-    // Linux takes only orca-ide, never a bare `orca` (often the screen reader).
+    ).toBe(join(bin, 'omdx'))
+    // Linux takes only omdx-ide, never a bare `omdx`.
     const onlyOrca = join(home, 'only-orca')
     await mkdir(onlyOrca)
-    await writeFile(join(onlyOrca, 'orca'), '#!/bin/sh\n')
-    await chmod(join(onlyOrca, 'orca'), 0o755)
+    await writeFile(join(onlyOrca, 'omdx'), '#!/bin/sh\n')
+    await chmod(join(onlyOrca, 'omdx'), 0o755)
     expect(() =>
       resolveServiceCommand(null, {
         platform: 'linux',
@@ -151,7 +151,7 @@ describe('orca serve service', () => {
       resolveServiceCommand(null, { platform: 'darwin', env: { PATH: '/nonexistent' } })
     ).toThrow(/PATH/)
   })
-  it('names the command to run when only a server-only orca exists here', async () => {
+  it('names the command to run when only a server-only omdx exists here', async () => {
     // The `orca` an SSH-launched Orca server puts on a remote host runs on plain Node.
     const serverCli = (platform: NodeJS.Platform, path: string): ServeServiceDeps => {
       const base = deps(platform)
@@ -164,10 +164,10 @@ describe('orca serve service', () => {
     await chmod(join(scoped, 'orca'), 0o755)
     await expect(
       installServeService({ command: null, dryRun: false }, serverCli('linux', scoped))
-    ).rejects.toThrow(/install the Orca app.*`orca-ide serve service install`/i)
+    ).rejects.toThrow(/install the Oh My DevX app.*`omdx-ide serve service install`/i)
     await expect(
       installServeService({ command: null, dryRun: true }, serverCli('darwin', scoped))
-    ).rejects.toThrow(/`orca serve service install`/)
+    ).rejects.toThrow(/`omdx serve service install`/)
     expect(calls).toEqual([])
     // An installed app's launcher on PATH (or named by --command) still works from that terminal.
     await expect(
@@ -175,7 +175,7 @@ describe('orca serve service', () => {
     ).resolves.toMatchObject({ dryRun: true })
     await expect(
       installServeService(
-        { command: join(bin, 'orca-ide'), dryRun: true },
+        { command: join(bin, 'omdx-ide'), dryRun: true },
         serverCli('linux', scoped)
       )
     ).resolves.toMatchObject({ dryRun: true })
@@ -191,6 +191,6 @@ describe('orca serve service', () => {
         platform: 'darwin',
         env: { ORCA_USER_DATA_PATH: join(home, 'profile') }
       })
-    ).toThrow(/one Orca version/)
+    ).toThrow(/one Oh My DevX version/)
   })
 })

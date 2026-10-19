@@ -14,7 +14,7 @@ import {
   type PressAndHoldRecord
 } from './macos-press-and-hold-default'
 
-const ORCA_DOMAIN = 'io.github.singthecode.orca'
+const ORCA_DOMAIN = 'io.github.singthecode.omdx'
 
 type HostOverrides = Partial<PressAndHoldHost> & { record?: PressAndHoldRecord | null }
 
@@ -142,11 +142,11 @@ describe('ensureMacPressAndHoldDefault', () => {
     })
 
     it('accepts Orca and its channel-scoped bundles, and nothing else', () => {
-      expect(isOrcaPreferencesDomain('io.github.singthecode.orca')).toBe(true)
-      expect(isOrcaPreferencesDomain('io.github.singthecode.orca.dev')).toBe(true)
+      expect(isOrcaPreferencesDomain('io.github.singthecode.omdx')).toBe(true)
+      expect(isOrcaPreferencesDomain('io.github.singthecode.omdx.dev')).toBe(true)
       expect(isOrcaPreferencesDomain('com.github.Electron')).toBe(false)
       // Why: a prefix test without the dot would accept a lookalike bundle id.
-      expect(isOrcaPreferencesDomain('io.github.singthecode.orcafake')).toBe(false)
+      expect(isOrcaPreferencesDomain('io.github.singthecode.omdxfake')).toBe(false)
     })
   })
 
@@ -246,10 +246,10 @@ describe('readBundleIdentifierFromExecutablePath', () => {
   it('reads CFBundleIdentifier from the plist beside the executable', () => {
     const exe = bundleWithPlist(
       '<plist><dict>\n<key>CFBundleName</key>\n<string>Orca</string>\n' +
-        '<key>CFBundleIdentifier</key>\n\t<string>io.github.singthecode.orca</string>\n</dict></plist>'
+        '<key>CFBundleIdentifier</key>\n\t<string>io.github.singthecode.omdx</string>\n</dict></plist>'
     )
 
-    expect(readBundleIdentifierFromExecutablePath(exe)).toBe('io.github.singthecode.orca')
+    expect(readBundleIdentifierFromExecutablePath(exe)).toBe('io.github.singthecode.omdx')
   })
 
   it('returns null when the plist is missing or carries no identifier', () => {

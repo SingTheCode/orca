@@ -20,8 +20,8 @@ export function orcadMigrationConflictGuidance(error: unknown): string | null {
   const terminals = LINKED_PROJECT_TERMINALS.exec(message)
   if (terminals) {
     return (
-      `Terminals an older version of Orca started in ${terminals[1]} are still running, and this ` +
-      'host’s managed server already has that project from another Orca desktop. Close them or ' +
+      `Terminals an older version of Oh My DevX started in ${terminals[1]} are still running, and this ` +
+      'host’s managed server already has that project from another Oh My DevX desktop. Close them or ' +
       'end them on the host, then reconnect, or remove that project from this desktop and ' +
       'connect again.'
     )
@@ -29,7 +29,7 @@ export function orcadMigrationConflictGuidance(error: unknown): string | null {
   const unowned = UNOWNED_TERMINALS.exec(message)
   if (unowned) {
     return (
-      'A terminal an older version of Orca started on this host is still running, and Orca can’t ' +
+      'A terminal an older version of Oh My DevX started on this host is still running, and Oh My DevX can’t ' +
       'tell which project it belongs to. Close it or end it on the host, ' +
       `then reconnect. Or, to use this host’s managed server’s copy of ${unowned[1]}, remove that ` +
       'project from this desktop and connect again.'
@@ -43,7 +43,7 @@ export function orcadMigrationConflictGuidance(error: unknown): string | null {
   switch (kind) {
     case 'repository_path':
       return (
-        `This host’s managed server already has a project at ${subject}, which another Orca desktop ` +
+        `This host’s managed server already has a project at ${subject}, which another Oh My DevX desktop ` +
         'added while this one was moving it. Retrying won’t clear it. To use the server’s project, ' +
         `remove that project from this desktop and connect again. (${code})`
       )

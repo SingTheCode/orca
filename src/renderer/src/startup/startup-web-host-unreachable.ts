@@ -52,18 +52,21 @@ export function announceWebHostUnreachableAtStartup(signal: AbortSignal): void {
   const reload = (): void => {
     void window.api.app.relaunch()
   }
-  toast.error(translate('auto.startup.webHostUnreachable.title', "Couldn't reach your Orca host"), {
-    description: translate(
-      'auto.startup.webHostUnreachable.description',
-      "Nothing was lost. Orca will reload when the host answers, and won't save changes until then."
-    ),
-    duration: Infinity,
-    dismissible: true,
-    action: {
-      label: translate('auto.startup.webHostUnreachable.retry', 'Retry now'),
-      onClick: reload
+  toast.error(
+    translate('auto.startup.webHostUnreachable.title', "Couldn't reach your Oh My DevX host"),
+    {
+      description: translate(
+        'auto.startup.webHostUnreachable.description',
+        "Nothing was lost. Oh My DevX will reload when the host answers, and won't save changes until then."
+      ),
+      duration: Infinity,
+      dismissible: true,
+      action: {
+        label: translate('auto.startup.webHostUnreachable.retry', 'Retry now'),
+        onClick: reload
+      }
     }
-  })
+  )
   let reloading = false
   let unsubscribe: (() => void) | undefined
   const reloadOnce = (snapshots: readonly RuntimeHostStatusSnapshot[]): void => {

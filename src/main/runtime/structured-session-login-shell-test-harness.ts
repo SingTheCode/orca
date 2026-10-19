@@ -1,5 +1,5 @@
 /**
- * A structured session's child env beside a HOME whose login profiles put a stand-in global `orca`
+ * A structured session's child env beside a HOME whose login profiles put a stand-in global `omdx`
  * first, as `/usr/local/bin` often is. Shared by the bash suite (every lane) and the zsh suite
  * (the real-shell lane, which installs zsh).
  */
@@ -33,9 +33,9 @@ export function createLoginShellHarness(): LoginShellHarness {
   for (const dir of [home, globalBin, appCliBin]) {
     mkdirSync(dir, { recursive: true })
   }
-  writeStub(join(globalBin, 'orca'), 'global')
-  writeStub(join(appCliBin, 'orca'), 'app')
-  writeStub(join(appCliBin, 'orca-dev'), 'app')
+  writeStub(join(globalBin, 'omdx'), 'global')
+  writeStub(join(appCliBin, 'omdx'), 'app')
+  writeStub(join(appCliBin, 'omdx-dev'), 'app')
   const prependGlobal = `export PATH="${globalBin}:$PATH"\n`
   writeFileSync(join(home, '.zprofile'), prependGlobal)
   writeFileSync(join(home, '.bash_profile'), prependGlobal)

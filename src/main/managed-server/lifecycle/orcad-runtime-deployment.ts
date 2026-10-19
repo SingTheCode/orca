@@ -90,10 +90,10 @@ export async function createManagedOrcadEnvironment(
     await claims.flush(args.signal)
     const targetGeneration = claimed.generation
     if (targetGeneration === undefined) {
-      throw new Error('The managed Orca SSH registration has no durable generation.')
+      throw new Error('The managed Oh My DevX SSH registration has no durable generation.')
     }
     if (registered && getOrcadSshDeployment(registered)?.sshTargetGeneration !== targetGeneration) {
-      throw new Error('The saved managed Orca server has a stale SSH target generation.')
+      throw new Error('The saved managed Oh My DevX server has a stale SSH target generation.')
     }
     let environmentRegistered = false
     try {
@@ -116,7 +116,7 @@ export async function createManagedOrcadEnvironment(
         await ensureOrcadManagedTunnel(userDataPath, registered.id)
         const activeVersion = context.activationRecord.active
         if (!activeVersion) {
-          throw new Error('The managed Orca server has no active runtime version.')
+          throw new Error('The managed Oh My DevX server has no active runtime version.')
         }
         return {
           outcome: 'already-current',

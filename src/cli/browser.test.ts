@@ -38,7 +38,7 @@ import { main } from './index'
 import { RuntimeClientError } from './runtime-client'
 import { buildWorktree, okFixture, queueFixtures, worktreeListFixture } from './test-fixtures'
 
-describe('orca cli browser page targeting', () => {
+describe('omdx cli browser page targeting', () => {
   beforeEach(() => {
     callMock.mockReset()
   })
@@ -314,7 +314,7 @@ describe('orca cli browser page targeting', () => {
   })
 })
 
-describe('orca cli browser identity', () => {
+describe('omdx cli browser identity', () => {
   beforeEach(() => {
     callMock.mockReset()
   })
@@ -380,11 +380,11 @@ describe('orca cli browser identity', () => {
     await main(['browser', 'identity', 'get'], '/tmp/not-an-orca-worktree')
 
     expect(callMock).toHaveBeenCalledTimes(1)
-    expect(error).toHaveBeenCalledWith(expect.stringContaining('Update or restart Orca'))
+    expect(error).toHaveBeenCalledWith(expect.stringContaining('Update or restart Oh My DevX'))
   })
 })
 
-describe('orca cli browser profile management', () => {
+describe('omdx cli browser profile management', () => {
   beforeEach(() => {
     callMock.mockReset()
   })
@@ -462,7 +462,7 @@ describe('orca cli browser profile management', () => {
   })
 })
 
-describe('orca cli browser tab profiles', () => {
+describe('omdx cli browser tab profiles', () => {
   beforeEach(() => {
     callMock.mockReset()
   })
@@ -584,7 +584,7 @@ describe('orca cli browser tab profiles', () => {
   })
 })
 
-describe('orca cli browser cookies', () => {
+describe('omdx cli browser cookies', () => {
   beforeEach(() => {
     callMock.mockReset()
     process.exitCode = undefined
@@ -659,7 +659,7 @@ describe('orca cli browser cookies', () => {
   })
 })
 
-describe('orca cli browser waits and viewport flags', () => {
+describe('omdx cli browser waits and viewport flags', () => {
   beforeEach(() => {
     callMock.mockReset()
     process.exitCode = undefined
@@ -723,14 +723,16 @@ describe('orca cli browser waits and viewport flags', () => {
     callMock.mockRejectedValueOnce(
       new RuntimeClientError(
         'runtime_timeout',
-        'Timed out waiting for the Orca runtime to respond.'
+        'Timed out waiting for the Oh My DevX runtime to respond.'
       )
     )
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     await main(['wait', '--selector', '#ready', '--worktree', 'all'], '/tmp/not-an-orca-worktree')
 
-    expect(errorSpy).toHaveBeenCalledWith('Timed out waiting for the Orca runtime to respond.')
+    expect(errorSpy).toHaveBeenCalledWith(
+      'Timed out waiting for the Oh My DevX runtime to respond.'
+    )
   })
 
   it('passes the mobile viewport flag through to browser.viewport', async () => {

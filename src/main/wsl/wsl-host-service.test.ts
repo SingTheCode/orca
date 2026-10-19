@@ -311,7 +311,7 @@ describe('WslHostService', () => {
     await expect(service.add({ distro: 'Debian' })).resolves.toEqual({
       ok: false,
       kind: 'server-files-missing',
-      message: 'This build of Orca can’t run WSL hosts (server files missing).'
+      message: 'This build of Oh My DevX can’t run WSL hosts (server files missing).'
     })
     expect(connector.listDistros).not.toHaveBeenCalled()
     await expect(service.connect('wsl:ubuntu')).rejects.toThrow('server files missing')

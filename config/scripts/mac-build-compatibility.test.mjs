@@ -14,7 +14,7 @@ describe('mac build compatibility metadata', () => {
       })
     ).toMatchObject({
       formatVersion: 1,
-      appId: 'io.github.singthecode.orca',
+      appId: 'io.github.singthecode.omdx',
       buildId: '1.2.3-local.1-abc123-arm64',
       version: '1.2.3-local.1',
       commit: 'abc123',

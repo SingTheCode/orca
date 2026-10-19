@@ -49,7 +49,7 @@ describe('orcad profile CLI launcher', () => {
       await writeCli()
       await prepareOrcadCliLauncher()
       const launcher = getOrcadCliLauncherPath()
-      expect(launcher).toBe(join(roots.profile, 'cli', 'bin', 'orca'))
+      expect(launcher).toBe(join(roots.profile, 'cli', 'bin', 'omdx'))
       if (!launcher) {
         throw new Error('CLI launcher is missing')
       }
@@ -71,7 +71,7 @@ describe('orcad profile CLI launcher', () => {
   )
 
   it.skipIf(process.platform === 'win32')(
-    "passes a person's own Orca settings through, adding only the profile",
+    "passes a person's own Oh My DevX settings through, adding only the profile",
     async () => {
       const path = join(roots.install, ...ORCAD_CLI_ENTRY_FILENAME.split('/'))
       await mkdir(dirname(path), { recursive: true })
@@ -143,7 +143,7 @@ describe('orcad profile CLI launcher', () => {
       await writeLauncher('native launcher v1')
       await prepareOrcadCliLauncher()
       const launcher = getOrcadCliLauncherPath()
-      expect(launcher).toBe(join(binDir(), 'orca.exe'))
+      expect(launcher).toBe(join(binDir(), 'omdx.exe'))
       expect(await readFile(launcher!, 'utf8')).toBe('native launcher v1')
       expect(await readConfig()).toBe(
         [
@@ -155,7 +155,7 @@ describe('orcad profile CLI launcher', () => {
       )
       // cmd.exe reparses `%*`, so no batch or PowerShell proxy may shadow the exe.
       expect((await readdir(binDir())).sort()).toEqual(
-        [ORCAD_WINDOWS_CLI_LAUNCHER_CONFIG_FILENAME, 'orca.exe'].sort()
+        [ORCAD_WINDOWS_CLI_LAUNCHER_CONFIG_FILENAME, 'omdx.exe'].sort()
       )
     })
 
@@ -167,11 +167,11 @@ describe('orcad profile CLI launcher', () => {
       await writeCli()
       await writeLauncher('native launcher v2')
       await prepareOrcadCliLauncher()
-      expect(await readFile(join(binDir(), 'orca.exe'), 'utf8')).toBe('native launcher v2')
+      expect(await readFile(join(binDir(), 'omdx.exe'), 'utf8')).toBe('native launcher v2')
       expect(await readConfig()).toContain(`cli=${join(roots.install, 'out', 'cli', 'index.js')}`)
     })
 
-    it('leaves a slot without the native launcher with no orca command', async () => {
+    it('leaves a slot without the native launcher with no omdx command', async () => {
       await writeCli()
       await prepareOrcadCliLauncher()
       expect(getOrcadCliLauncherPath()).toBeNull()

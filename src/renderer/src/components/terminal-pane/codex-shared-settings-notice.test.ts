@@ -53,10 +53,10 @@ describe('useCodexSharedSettingsNotice', () => {
     await setNoticeState({ agentStatusByPaneKey: { 'tab-1:leaf': { agentType: 'codex' } } })
 
     expect(toastInfoMock).toHaveBeenCalledTimes(1)
-    expect(toastInfoMock).toHaveBeenCalledWith('Codex in Orca now uses ~/.codex', {
+    expect(toastInfoMock).toHaveBeenCalledWith('Codex in Oh My DevX now uses ~/.codex', {
       id: 'codex-shared-settings-notice',
       description:
-        'Codex may ask again to trust folders or approve commands. Re-add any MCP servers you added only in Orca.',
+        'Codex may ask again to trust folders or approve commands. Re-add any MCP servers you added only in Oh My DevX.',
       duration: Infinity
     })
     expect(isSeen()).toBe(true)

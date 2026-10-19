@@ -281,7 +281,7 @@ describe('run-electron-vite-dev', () => {
     expect(envSnapshot.worktreeName).toBe('payment-ui')
     expect(envSnapshot.repoRoot).toBe(resolve('.'))
     expect(envSnapshot.badgeLabel).toBeNull()
-    expect(envSnapshot.dockTitle).toBe('Orca: feature/billing-shell')
+    expect(envSnapshot.dockTitle).toBe('Oh My DevX: feature/billing-shell')
     expect(envSnapshot.stableName).toBeNull()
     expect(envSnapshot.electronExecPath).toBeNull()
 
@@ -289,7 +289,7 @@ describe('run-electron-vite-dev', () => {
   })
 
   it.skipIf(process.platform === 'win32')(
-    'prepares userData orca and orca-dev wrappers for dev terminals',
+    'prepares userData omdx and omdx-dev wrappers for dev terminals',
     async () => {
       const tempDir = mkdtempSync(join(tmpdir(), 'orca-dev-wrapper-'))
       const userDataPath = join(tempDir, 'userData')
@@ -323,8 +323,8 @@ describe('run-electron-vite-dev', () => {
       })
 
       const trackedPids = trackPidFile(pidFile)
-      const devWrapper = readFileSync(join(userDataPath, 'cli', 'bin', 'orca-dev'), 'utf8')
-      const publicAliasWrapper = readFileSync(join(userDataPath, 'cli', 'bin', 'orca'), 'utf8')
+      const devWrapper = readFileSync(join(userDataPath, 'cli', 'bin', 'omdx-dev'), 'utf8')
+      const publicAliasWrapper = readFileSync(join(userDataPath, 'cli', 'bin', 'omdx'), 'utf8')
       expect(publicAliasWrapper).toBe(devWrapper)
       expect(publicAliasWrapper).toContain('ORCA_USER_DATA_PATH')
       expect(publicAliasWrapper).toContain('out/cli/index.js')

@@ -91,9 +91,12 @@ function orcaStopRow(cause: string): AgentJournalStatusItem {
 
 describe('the row an Orca stop leaves', () => {
   it.each([
-    ['update', 'Orca on studio-mac restarted for an update while this response was in progress.'],
-    ['quit', 'Orca on studio-mac was closed while this response was in progress.'],
-    ['crash', 'Orca on studio-mac stopped unexpectedly while this response was in progress.']
+    [
+      'update',
+      'Oh My DevX on studio-mac restarted for an update while this response was in progress.'
+    ],
+    ['quit', 'Oh My DevX on studio-mac was closed while this response was in progress.'],
+    ['crash', 'Oh My DevX on studio-mac stopped unexpectedly while this response was in progress.']
   ])('names a %s and the machine, muted', (cause, sentence) => {
     renderStatus(orcaStopRow(cause), 'studio-mac')
     const row = screen.getByText(`${sentence} You can continue in this conversation.`)
@@ -105,7 +108,7 @@ describe('the row an Orca stop leaves', () => {
     renderStatus(orcaStopRow('update'), 'studio-mac', true)
     expect(
       screen.getByText(
-        'Orca on studio-mac restarted for an update while this response was in progress.'
+        'Oh My DevX on studio-mac restarted for an update while this response was in progress.'
       )
     ).toBeInTheDocument()
   })
@@ -117,7 +120,7 @@ describe('the row an Orca stop leaves', () => {
       continueNow
     })
     const sentence = screen.getByText(
-      'Orca on studio-mac was closed while this response was in progress.'
+      'Oh My DevX on studio-mac was closed while this response was in progress.'
     )
     const button = screen.getByRole('button', { name: 'Continue' })
     // Beside the words that say why, in the same card.
@@ -136,8 +139,8 @@ describe('the row an Orca stop leaves', () => {
   it("says a remote host's Orca stopped, not that it was closed", () => {
     renderStatus(orcaStopRow('quit'), 'QA SSH', true, true)
     expect(
-      screen.getByText('Orca on QA SSH stopped while this response was in progress.').parentElement
-        ?.parentElement
+      screen.getByText('Oh My DevX on QA SSH stopped while this response was in progress.')
+        .parentElement?.parentElement
     ).toHaveClass('text-chat-foreground-faint')
     expect(screen.queryByText(/was closed/)).toBeNull()
   })
@@ -145,13 +148,13 @@ describe('the row an Orca stop leaves', () => {
   it("keeps this desktop's quit as closed", () => {
     renderStatus(orcaStopRow('quit'), 'studio-mac', true, false)
     expect(
-      screen.getByText('Orca on studio-mac was closed while this response was in progress.')
+      screen.getByText('Oh My DevX on studio-mac was closed while this response was in progress.')
     ).toBeInTheDocument()
   })
 
   it.each([
-    ['update', 'Orca on QA SSH restarted for an update while this response was in progress.'],
-    ['crash', 'Orca on QA SSH stopped unexpectedly while this response was in progress.']
+    ['update', 'Oh My DevX on QA SSH restarted for an update while this response was in progress.'],
+    ['crash', 'Oh My DevX on QA SSH stopped unexpectedly while this response was in progress.']
   ])("keeps a remote host's %s words", (cause, sentence) => {
     renderStatus(orcaStopRow(cause), 'QA SSH', true, true)
     expect(screen.getByText(sentence)).toBeInTheDocument()
@@ -170,7 +173,7 @@ describe('the row an Orca stop leaves', () => {
     renderStatus(represented, 'studio-mac', true)
     expect(
       screen.getByText(
-        'Orca on studio-mac stopped unexpectedly while this response was in progress.'
+        'Oh My DevX on studio-mac stopped unexpectedly while this response was in progress.'
       ).parentElement?.parentElement
     ).toHaveClass('text-chat-foreground-faint')
     cleanup()
@@ -197,7 +200,7 @@ describe('the row an Orca stop leaves', () => {
     renderStatus(orcaStopRow('update'), null, true, true)
     expect(
       screen.getByText(
-        'Orca on the remote server restarted for an update while this response was in progress.'
+        'Oh My DevX on the remote server restarted for an update while this response was in progress.'
       )
     ).toBeInTheDocument()
     expect(screen.queryByText(LEGACY_TEXT)).toBeNull()

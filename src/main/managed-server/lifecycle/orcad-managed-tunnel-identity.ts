@@ -35,7 +35,7 @@ export class OrcadManagedIdentityError extends Error {
   constructor(remotePort: number, detail: string) {
     super(
       `${ORCAD_IDENTITY_MISMATCH_CODE}: the server on remote port ${remotePort} is not this ` +
-        `managed Orca server (another Orca may be using that port): ${detail}`
+        `managed Oh My DevX server (another Oh My DevX may be using that port): ${detail}`
     )
     this.name = 'OrcadManagedIdentityError'
   }
@@ -104,7 +104,10 @@ export function deployedOrcadTunnelChecks(
         ? verifyOrcadPairingIdentity(pairedRuntimeConnectionFromOffer(pairing), {
             runtimeId: readiness.runtimeId || null
           })
-        : { verdict: 'foreign', detail: 'The managed Orca server published an invalid pairing.' }
+        : {
+            verdict: 'foreign',
+            detail: 'The managed Oh My DevX server published an invalid pairing.'
+          }
     }
   }
 }

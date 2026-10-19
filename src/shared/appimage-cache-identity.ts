@@ -10,7 +10,8 @@ import { basename, dirname, isAbsolute, join, resolve, sep } from 'node:path'
 import { APPIMAGE_NODE_RUNTIME_SEGMENTS } from './appimage-node-runtime'
 
 const CACHE_KEY_PATTERN = /^[0-9a-f]{24}$/u
-const LINUX_EXECUTABLE_NAME = 'orca-ide'
+// Why both: a generation unpacked by a pre-rename build names its executable `orca-ide`.
+const LINUX_EXECUTABLE_NAMES: ReadonlySet<string> = new Set(['omdx-ide', 'orca-ide'])
 // Why a versioned key: builds before generation leases prune every generation in
 // digest(appImagePath) except their own, including one a newer build still runs from. They never
 // scan this namespace. Rolling back to such a build reopens that window for its own namespace only.
@@ -55,10 +56,10 @@ export type AppImageGenerationLocation = {
   rootPath: string
 }
 
-/** The generation root an executable runs from: its `orca-ide`, or its bundled Node (the daemon). */
+/** The generation root an executable runs from: its `omdx-ide`, or its bundled Node (the daemon). */
 function generationRootOfExecutable(execPath: string): string | null {
   const resolved = resolve(execPath)
-  if (basename(resolved) === LINUX_EXECUTABLE_NAME) {
+  if (LINUX_EXECUTABLE_NAMES.has(basename(resolved))) {
     return dirname(resolved)
   }
   const nodeSuffix = join('resources', ...APPIMAGE_NODE_RUNTIME_SEGMENTS)

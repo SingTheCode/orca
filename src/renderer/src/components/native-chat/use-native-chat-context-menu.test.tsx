@@ -410,7 +410,7 @@ describe('useNativeChatContextMenu', () => {
     expect(markup).not.toContain('Fork Agent Session')
   })
 
-  describe('Copy Orca Session ID', () => {
+  describe('Copy Oh My DevX Session ID', () => {
     const orcaSessionId = 'orca_session_id:4a1f6c2e-8b3d-4e7a-9c15-0d2b6e8f1a37'
     const writeClipboardText = vi.fn()
 
@@ -428,26 +428,28 @@ describe('useNativeChatContextMenu', () => {
 
     function copyItem(): ItemProps | undefined {
       return items.list.find(
-        (candidate) => childrenText(candidate.children) === 'Copy Orca Session ID'
+        (candidate) => childrenText(candidate.children) === 'Copy Oh My DevX Session ID'
       )
     }
 
-    it('copies the Orca session ID in a chat tab, explaining what it is', async () => {
+    it('copies the Oh My DevX session ID in a chat tab, explaining what it is', async () => {
       renderToStaticMarkup(<Harness structured orcaSessionId={orcaSessionId} />)
 
       copyItem()?.onSelect?.()
 
-      await vi.waitFor(() => expect(toasts.success).toHaveBeenCalledWith('Orca session ID copied'))
+      await vi.waitFor(() =>
+        expect(toasts.success).toHaveBeenCalledWith('Oh My DevX session ID copied')
+      )
       expect(writeClipboardText).toHaveBeenCalledWith(orcaSessionId)
       expect(tooltips.list.map(childrenText)).toContain(
-        "Orca's ID for this chat, separate from the agent CLI's own session ID. Agents use it to refer to each other through Orca."
+        "Oh My DevX's ID for this chat, separate from the agent CLI's own session ID. Agents use it to refer to each other through Oh My DevX."
       )
     })
 
-    it('is absent for a chat with no Orca session ID', () => {
+    it('is absent for a chat with no Oh My DevX session ID', () => {
       renderToStaticMarkup(<Harness structured />)
 
-      expect(labels()).not.toContain('Copy Orca Session ID')
+      expect(labels()).not.toContain('Copy Oh My DevX Session ID')
     })
 
     it('reports a failed copy instead of claiming success', async () => {
@@ -457,7 +459,7 @@ describe('useNativeChatContextMenu', () => {
       copyItem()?.onSelect?.()
 
       await vi.waitFor(() =>
-        expect(toasts.error).toHaveBeenCalledWith('Unable to copy Orca session ID')
+        expect(toasts.error).toHaveBeenCalledWith('Unable to copy Oh My DevX session ID')
       )
       expect(toasts.success).not.toHaveBeenCalled()
     })

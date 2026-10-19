@@ -44,7 +44,7 @@ describe('runtime server version footer', () => {
         accessRevoked: true,
         lastKnownVersion: '1.4.229'
       })
-    ).toEqual({ text: 'Orca v1.4.229 (last seen)', showUpdateStatus: false })
+    ).toEqual({ text: 'Oh My DevX v1.4.229 (last seen)', showUpdateStatus: false })
   })
 
   it('hides the footer when revoked and no version was ever verified', () => {
@@ -62,7 +62,7 @@ describe('runtime server version footer', () => {
         accessRevoked: false,
         lastKnownVersion: '1.4.229'
       })
-    ).toEqual({ text: 'Orca version unavailable', showUpdateStatus: true })
+    ).toEqual({ text: 'Oh My DevX version unavailable', showUpdateStatus: true })
   })
 
   it('reports the live version and update status when the probe answered', () => {
@@ -71,6 +71,6 @@ describe('runtime server version footer', () => {
         accessRevoked: true,
         lastKnownVersion: '1.4.229'
       })
-    ).toEqual({ text: 'Orca v1.5.0', showUpdateStatus: true })
+    ).toEqual({ text: 'Oh My DevX v1.5.0', showUpdateStatus: true })
   })
 })

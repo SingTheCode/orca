@@ -85,13 +85,13 @@ export async function prepareEphemeralVmWorkspaceTarget(
       await assertRuntimeEnvironmentCapability(
         environmentId,
         PROJECT_HOST_SETUP_RUNTIME_CAPABILITY,
-        'The recipe-created Orca server does not support project setup.'
+        'The recipe-created Oh My DevX server does not support project setup.'
       )
       if (checkoutMode === 'provisioned-root') {
         await assertRuntimeEnvironmentCapability(
           environmentId,
           WORKTREE_PROVISIONED_ROOT_RUNTIME_CAPABILITY,
-          'The Orca server on this VM cannot adopt a provisioned root. Update Orca on the VM.'
+          'The Oh My DevX server on this VM cannot adopt a provisioned root. Update Oh My DevX on the VM.'
         )
       }
     } catch (error) {

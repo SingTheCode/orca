@@ -183,7 +183,7 @@ export function scanChromiumCookieRows(
     return {
       ok: false,
       reason:
-        'This Orca client cannot report cookies skipped for an unreadable site partition. Update Orca on this device and try again.'
+        'This Oh My DevX client cannot report cookies skipped for an unreadable site partition. Update Oh My DevX on this device and try again.'
     }
   }
   return null

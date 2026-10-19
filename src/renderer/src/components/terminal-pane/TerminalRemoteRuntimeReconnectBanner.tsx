@@ -82,7 +82,7 @@ export function TerminalRemoteRuntimeReconnectBanner({
             {retrying
               ? translate(
                   'auto.components.terminal.pane.TerminalRemoteRuntimeReconnectBanner.retryingBody',
-                  'Orca is retrying automatically. This terminal will resume if the connection returns.'
+                  'Oh My DevX is retrying automatically. This terminal will resume if the connection returns.'
                 )
               : translate(
                   'auto.components.terminal.pane.TerminalRemoteRuntimeReconnectBanner.disconnectedBody',

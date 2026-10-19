@@ -259,7 +259,7 @@ export const WORKTREE_HANDLERS: Record<string, CommandHandler> = {
     if (!hostId) {
       throw new RuntimeClientError(
         'worktree_host_unresolved',
-        'Orca cannot tell which host owns this workspace. Refresh projects and try again.'
+        'Oh My DevX cannot tell which host owns this workspace. Refresh projects and try again.'
       )
     }
     // Why (#19334): the waiver only ever applies to a hook that ran, so without --run-hooks it
@@ -285,7 +285,7 @@ export const WORKTREE_HANDLERS: Record<string, CommandHandler> = {
     printPreservedBranchWarning(result.result, json)
     printResult(result, json, (value) =>
       value.removing
-        ? `removed: ${value.removed}\nOrca is still deleting the checkout in the background.`
+        ? `removed: ${value.removed}\nOh My DevX is still deleting the checkout in the background.`
         : `removed: ${value.removed}`
     )
   }

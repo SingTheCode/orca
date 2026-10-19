@@ -23,7 +23,7 @@ describe('readServeInstallEvidence', () => {
   })
 
   const shipIt = (b: string): string =>
-    `${b}/Contents/Frameworks/Squirrel.framework/Resources/ShipIt io.github.singthecode.orca.ShipIt /state.plist`
+    `${b}/Contents/Frameworks/Squirrel.framework/Resources/ShipIt io.github.singthecode.omdx.ShipIt /state.plist`
 
   it('holds while ShipIt replaces this bundle, and when the check cannot run', async () => {
     await expect(

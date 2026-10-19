@@ -25,13 +25,13 @@ describe('SSH host server status line', () => {
       })
     ).toEqual({
       tone: 'warning',
-      text: 'Orca couldn’t confirm that the managed server is answering.',
+      text: 'Oh My DevX couldn’t confirm that the managed server is answering.',
       detail
     })
   })
 
   it.each([
-    'The managed Orca server process is live but is not answering.',
+    'The managed Oh My DevX server process is live but is not answering.',
     'SSH operation was cancelled',
     'SSH transport closed before the server answered'
   ])('does not infer process exit from unverifiable contact: %s', (detail) => {
@@ -46,7 +46,7 @@ describe('SSH host server status line', () => {
       })
     ).toEqual({
       tone: 'warning',
-      text: 'Orca couldn’t confirm that the managed server is answering.',
+      text: 'Oh My DevX couldn’t confirm that the managed server is answering.',
       detail
     })
   })
@@ -71,7 +71,7 @@ describe('SSH host server status line', () => {
       sshHostServerStatusLine(plain, {
         managedServer: { kind: 'managed', environmentId: 'e', update }
       })
-    expect(managed({ state: 'host-newer' })?.text).toContain('from a newer Orca')
+    expect(managed({ state: 'host-newer' })?.text).toContain('from a newer Oh My DevX')
     expect(managed({ state: 'deferred', detail: '2 terminals are running.' })).toMatchObject({
       tone: 'muted',
       detail: '2 terminals are running.'
@@ -111,7 +111,7 @@ describe('SSH host server status line', () => {
       })
     expect(linked(2)).toEqual({
       tone: 'warning',
-      text: 'This host’s Orca server already had /root/app, /root/tool, so this desktop now uses the server’s copy. This desktop’s tabs and 2 automations there were not moved, and worktrees it created there show as external worktrees.'
+      text: 'This host’s Oh My DevX server already had /root/app, /root/tool, so this desktop now uses the server’s copy. This desktop’s tabs and 2 automations there were not moved, and worktrees it created there show as external worktrees.'
     })
     expect(linked(0)?.text).not.toContain('automation')
   })
@@ -144,7 +144,7 @@ describe('SSH host server status line', () => {
     })
     expect(line).toEqual({
       tone: 'destructive',
-      text: 'This host isn’t supported by this version of Orca (the host is missing system libraries the server needs). To keep using it, install an older version of Orca.'
+      text: 'This host isn’t supported by this version of Oh My DevX (the host is missing system libraries the server needs). To keep using it, install an older version of Oh My DevX.'
     })
     expect(line?.text).not.toContain('relay')
   })
@@ -164,7 +164,7 @@ describe('SSH host server status line', () => {
     for (const line of [live, recorded]) {
       expect(line).toMatchObject({
         tone: 'destructive',
-        text: expect.stringContaining('install an older version of Orca')
+        text: expect.stringContaining('install an older version of Oh My DevX')
       })
     }
   })
@@ -176,7 +176,7 @@ describe('SSH host server status line', () => {
         reason: 'relay_terminals_live',
         terminals: 1,
         bridged: true,
-        detail: 'Terminals an older version of Orca started in /root/repo are still running…'
+        detail: 'Terminals an older version of Oh My DevX started in /root/repo are still running…'
       }
     })
     expect(line).toMatchObject({ tone: 'warning' })
@@ -196,9 +196,9 @@ describe('SSH host server status line', () => {
         managedServer: { kind: 'relay', reason: 'relay_terminals_live', terminals }
       })?.text
     expect(live(1)).toBe(
-      '1 terminal started by an older version of Orca is still running on this host, and it doesn’t stop on its own. Close it in that version of Orca or end it on the host, then reconnect.'
+      '1 terminal started by an older version of Oh My DevX is still running on this host, and it doesn’t stop on its own. Close it in that version of Oh My DevX or end it on the host, then reconnect.'
     )
-    expect(live(2)).toContain('2 terminals started by an older version of Orca')
+    expect(live(2)).toContain('2 terminals started by an older version of Oh My DevX')
     // Why: an absent count is unreported, never zero open terminals.
     expect(live(undefined)).not.toMatch(/\d/)
     expect(
@@ -243,7 +243,7 @@ describe('SSH host server status line', () => {
     const state = {
       managedServer: { kind: 'relay' as const, reason: 'orcad_unavailable' as const }
     }
-    expect(sshConnectFailureText(state, 'raw')).toContain('install an older version of Orca')
+    expect(sshConnectFailureText(state, 'raw')).toContain('install an older version of Oh My DevX')
     expect(sshConnectFailureText(undefined, 'raw')).toBe('raw')
   })
 

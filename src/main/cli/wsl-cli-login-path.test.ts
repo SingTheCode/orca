@@ -13,12 +13,12 @@ import { WslCliUnreachableError } from './wsl-cli-status'
 // #14288 / #29497: which status calls pay the login-PATH probe, and how a slow
 // distro or blocking ~/.profile is reported.
 
-const launcherPath = 'C:\\Users\\me\\AppData\\Local\\Programs\\Orca\\resources\\bin\\orca.exe'
+const launcherPath = 'C:\\Users\\me\\AppData\\Local\\Programs\\Orca\\resources\\bin\\omdx.exe'
 
 function makeHostStatus(): CliInstallStatus {
   return {
     platform: 'win32',
-    commandName: 'orca',
+    commandName: 'omdx',
     commandPath: launcherPath,
     pathDirectory: 'C:\\Users\\me\\AppData\\Local\\Programs\\Orca\\resources\\bin',
     pathConfigured: true,

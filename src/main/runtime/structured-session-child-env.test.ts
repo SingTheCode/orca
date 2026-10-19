@@ -62,7 +62,7 @@ afterEach(() => {
 
 describe('sealStructuredSessionChild identity', () => {
   it("gives an ordinary chat session its own id and this app's CLI, and no terminal identity", () => {
-    // The id names the caller, so a bare `orca orchestration check` acts as this session instead of
+    // The id names the caller, so a bare `omdx orchestration check` acts as this session instead of
     // guessing a terminal — every guess landed on a sibling pane, and `check` consumed its mail.
     pinPlatform('linux')
     installFakeAppEnvironment({ isPackaged: () => true, getPath: () => USER_DATA })
@@ -73,7 +73,7 @@ describe('sealStructuredSessionChild identity', () => {
       ORCA_AGENT_SESSION_ID: SESSION_ID,
       // For a CLI that predates the id, which refuses on it instead of guessing a sibling.
       ORCA_STRUCTURED_SESSION: '1',
-      ORCA_CLI_COMMAND: join(SHIM_DIR, 'orca'),
+      ORCA_CLI_COMMAND: join(SHIM_DIR, 'omdx'),
       ORCA_CLI_BIN_DIR: SHIM_DIR,
       // The instance that minted the id, so any current CLI dials it rather than the default.
       ORCA_USER_DATA_PATH: USER_DATA,
@@ -107,7 +107,7 @@ describe('sealStructuredSessionChild identity', () => {
     }
   )
 
-  it('replaces an id inherited from an Orca launched inside another session', () => {
+  it('replaces an id inherited from an Oh My DevX launched inside another session', () => {
     installFakeAppEnvironment({ isPackaged: () => false, getPath: () => USER_DATA })
     const env = sealedChildEnv(SESSION_ID, {
       ORCA_AGENT_SESSION_ID: 'a0b1c2d3-0000-4000-8000-00000000abcd',
@@ -158,12 +158,12 @@ describe('sealStructuredSessionChild identity', () => {
     })
 
     it('on packaged Linux, through the bare-orca shim, named by absolute path', () => {
-      // Without this the child's first `orca orchestration check` execs GNOME Orca — the CLI
+      // Without this the child's first `omdx orchestration check` execs GNOME Orca — the CLI
       // installs as `orca-ide` on Linux (stablyai/orca#7904) — and the dispatch hangs to timeout.
       pinPlatform('linux')
       installFakeAppEnvironment({ isPackaged: () => true, getPath: () => USER_DATA })
       const env = sealedChildEnv(SESSION_ID, { PATH: '/usr/bin:/bin' })
-      expect(env.ORCA_CLI_COMMAND).toBe(join(SHIM_DIR, 'orca'))
+      expect(env.ORCA_CLI_COMMAND).toBe(join(SHIM_DIR, 'omdx'))
       expect(env.PATH).toBe(`${SHIM_DIR}:/usr/bin:/bin`)
     })
 
@@ -172,7 +172,7 @@ describe('sealStructuredSessionChild identity', () => {
       installFakeAppEnvironment({ isPackaged: () => true, getPath: () => USER_DATA })
       const env = sealedChildEnv(SESSION_ID, { PATH: '/usr/bin' })
       expect(env.PATH).toBe(`${join(RESOURCES, 'bin')}:/usr/bin`)
-      expect(env.ORCA_CLI_COMMAND).toBe(join(RESOURCES, 'bin', 'orca'))
+      expect(env.ORCA_CLI_COMMAND).toBe(join(RESOURCES, 'bin', 'omdx'))
     })
 
     it('on packaged Windows, through the bundled CLI dir under the env block spelling', () => {
@@ -182,7 +182,7 @@ describe('sealStructuredSessionChild identity', () => {
       expect(env.Path).toBe(`${join(RESOURCES, 'bin')};C:\\Windows`)
       expect(env.PATH).toBeUndefined()
       // The native launcher: `orca.cmd` refuses message bodies cmd.exe would mangle.
-      expect(env.ORCA_CLI_COMMAND).toBe(join(RESOURCES, 'bin', 'orca.exe'))
+      expect(env.ORCA_CLI_COMMAND).toBe(join(RESOURCES, 'bin', 'omdx.exe'))
       expect(env.ORCA_CLI_BIN_DIR).toBeUndefined()
     })
 
@@ -191,7 +191,7 @@ describe('sealStructuredSessionChild identity', () => {
       installFakeAppEnvironment({ isPackaged: () => false, getPath: () => USER_DATA })
       const env = sealedChildEnv(SESSION_ID, { PATH: '/usr/bin' })
       expect(env.PATH).toBe(`${join(USER_DATA, 'cli', 'bin')}:/usr/bin`)
-      expect(env.ORCA_CLI_COMMAND).toBe(join(USER_DATA, 'cli', 'bin', 'orca-dev'))
+      expect(env.ORCA_CLI_COMMAND).toBe(join(USER_DATA, 'cli', 'bin', 'omdx-dev'))
     })
   })
 

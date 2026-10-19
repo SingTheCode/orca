@@ -146,7 +146,7 @@ async function wakeIfStopped(
       const cause = idle
         ? `it had stopped after idling at ${idle.stoppedAt}`
         : 'it had stopped without an idle-stop record (crash, signal or host restart)'
-      console.info(`[ssh] Started the managed Orca server on ${label}; ${cause}.`)
+      console.info(`[ssh] Started the managed Oh My DevX server on ${label}; ${cause}.`)
       return { state: 'started', boundPort: orcadBoundPort(wake.readiness) }
     }
     // A live process that did not answer may still be starting; it is not restarted.
@@ -155,15 +155,15 @@ async function wakeIfStopped(
       if (await input.probe(input.environment, PROBE_TIMEOUT_MS)) {
         return { state: 'serving' }
       }
-      const detail = 'The managed Orca server process is live but is not answering.'
-      console.warn(`[ssh] The managed Orca server on ${label} is not answering: ${detail}`)
+      const detail = 'The managed Oh My DevX server process is live but is not answering.'
+      console.warn(`[ssh] The managed Oh My DevX server on ${label} is not answering: ${detail}`)
       return { state: 'unverifiable', detail }
     }
     const detail = wake.outcome === 'recovery-refused' ? wake.reason : wakeRefusal(wake.outcome)
-    console.warn(`[ssh] The managed Orca server on ${label} is not answering: ${detail}`)
+    console.warn(`[ssh] The managed Oh My DevX server on ${label} is not answering: ${detail}`)
     return { state: 'unverifiable', detail }
   } catch (error) {
-    console.warn(`[ssh] Could not start the managed Orca server on ${label}:`, error)
+    console.warn(`[ssh] Could not start the managed Oh My DevX server on ${label}:`, error)
     return { state: 'unverifiable', detail: error instanceof Error ? error.message : String(error) }
   }
 }

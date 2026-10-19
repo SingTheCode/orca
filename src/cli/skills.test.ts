@@ -109,7 +109,7 @@ vi.mock('./runtime-client', async () => {
 import { dispatch } from './dispatch'
 import { main } from './index'
 
-describe('orca skills CLI', () => {
+describe('omdx skills CLI', () => {
   beforeEach(() => {
     vi.restoreAllMocks()
     runtimeClientConstructorMock.mockClear()
@@ -232,7 +232,7 @@ describe('orca skills CLI', () => {
     await main(['--help'], '/tmp/repo')
 
     expect(String(logSpy.mock.calls[0]?.[0])).toContain(
-      'Usage: orca skills get <topic> [--full | --reference <name>] [--json]'
+      'Usage: omdx skills get <topic> [--full | --reference <name>] [--json]'
     )
     expect(String(logSpy.mock.calls[1]?.[0])).toContain(
       'Commands:\n  installed          List installed skill selectors'
@@ -241,10 +241,10 @@ describe('orca skills CLI', () => {
       'get                Print a version-matched skill guide'
     )
     expect(String(logSpy.mock.calls[1]?.[0])).toContain(
-      'install            Install bundled Orca skills'
+      'install            Install bundled Oh My DevX skills'
     )
     expect(String(logSpy.mock.calls[1]?.[0])).toContain(
-      'update             Update Orca skills to the version this Orca build ships'
+      'update             Update Oh My DevX skills to the version this Oh My DevX build ships'
     )
     expect(String(logSpy.mock.calls[2]?.[0])).toContain('Skills:\n  skills installed')
     expect(String(logSpy.mock.calls[2]?.[0])).toContain('skills update')
@@ -275,8 +275,8 @@ describe('orca skills CLI', () => {
         '  gamma',
         '  zeta',
         '',
-        'Usage: orca skills install --skill <name> [--skill <name> ...]',
-        '   or: orca skills install --all',
+        'Usage: omdx skills install --skill <name> [--skill <name> ...]',
+        '   or: omdx skills install --all',
         ''
       ].join('\n')
     )
@@ -340,7 +340,7 @@ describe('orca skills CLI', () => {
           error: {
             code: 'invalid_argument',
             message:
-              "orca skills install --json only supports --dry-run. Real installs stream npx's " +
+              "omdx skills install --json only supports --dry-run. Real installs stream npx's " +
               "own output, which isn't JSON."
           },
           _meta: { runtimeId: null }
@@ -558,8 +558,8 @@ describe('orca skills CLI', () => {
         '  gamma',
         '  zeta',
         '',
-        'Usage: orca skills update --skill <name> [--skill <name> ...]',
-        '   or: orca skills update --all',
+        'Usage: omdx skills update --skill <name> [--skill <name> ...]',
+        '   or: omdx skills update --all',
         ''
       ].join('\n')
     )
@@ -617,7 +617,7 @@ describe('orca skills CLI', () => {
     )
   })
 
-  it('refuses a real run when the shell forwards orca to the Orca host', async () => {
+  it('refuses a real run when the shell forwards omdx to the Orca host', async () => {
     vi.stubEnv('ORCA_CLI_CWD', '/home/alice/wt')
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
@@ -988,7 +988,7 @@ describe('orca skills CLI', () => {
           error: {
             code: 'invalid_argument',
             message:
-              "orca skills update --json only supports --dry-run. Real updates stream npx's " +
+              "omdx skills update --json only supports --dry-run. Real updates stream npx's " +
               "own output, which isn't JSON."
           },
           _meta: { runtimeId: null }

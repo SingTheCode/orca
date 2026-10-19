@@ -75,11 +75,11 @@ export function maybeRedirectCliLaunch(
     return { redirected: false }
   }
   if (env[REDIRECT_ATTEMPT_ENV] === '1') {
-    process.stderr.write('Unable to start the Orca CLI through Electron node mode.\n')
+    process.stderr.write('Unable to start the Oh My DevX CLI through Electron node mode.\n')
     return { redirected: true, status: 1 }
   }
   if (!exists(cliEntryPath)) {
-    process.stderr.write(`Unable to locate the Orca CLI entrypoint at ${cliEntryPath}\n`)
+    process.stderr.write(`Unable to locate the Oh My DevX CLI entrypoint at ${cliEntryPath}\n`)
     return { redirected: true, status: 1 }
   }
 
@@ -159,7 +159,7 @@ function execDirectServe(
     execve(execPath, [execPath, cliEntryPath, ...serve.args], childEnv)
   } catch (error) {
     process.stderr.write(
-      `[serve] Serving in-process; could not start the Orca CLI: ${error instanceof Error ? error.message : String(error)}\n`
+      `[serve] Serving in-process; could not start the Oh My DevX CLI: ${error instanceof Error ? error.message : String(error)}\n`
     )
   }
 }

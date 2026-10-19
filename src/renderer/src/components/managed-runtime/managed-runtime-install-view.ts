@@ -111,7 +111,7 @@ function settledView(state: ManagedRuntimeInstallState, agent: string): ManagedR
         { agent }
       ),
       state.available
-        ? translate('components.managed-runtime.installManaged', "Install Orca's copy")
+        ? translate('components.managed-runtime.installManaged', "Install Oh My DevX's copy")
         : null
     )
   }

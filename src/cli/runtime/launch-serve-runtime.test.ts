@@ -44,7 +44,7 @@ function electronChild(): void {
   })
 }
 
-describe('orca serve host selection', () => {
+describe('omdx serve host selection', () => {
   let stderr: string[]
 
   beforeEach(() => {
@@ -89,7 +89,7 @@ describe('orca serve host selection', () => {
       serveWithOrcadMock.mockClear()
       await expect(serveOrcaApp({ supervise: true })).resolves.toBe(0)
       expect(serveWithOrcadMock).not.toHaveBeenCalled()
-      expect(stderr.join('')).toContain('Another Orca serves this profile')
+      expect(stderr.join('')).toContain('Another Oh My DevX serves this profile')
     } finally {
       await rm(root, { recursive: true, force: true })
     }

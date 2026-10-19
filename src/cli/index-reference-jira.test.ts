@@ -340,7 +340,7 @@ describe('Jira reference keys', () => {
   it('requires Jira agent capability before resolving keys', async () => {
     responses({ 'status.get': { capabilities: [WORKTREE_LINKED_ITEMS_DELTA_RUNTIME_CAPABILITY] } })
     await main(addArgs, '/tmp/api')
-    expect(console.error).toHaveBeenCalledWith(expect.stringContaining('Update Orca'))
+    expect(console.error).toHaveBeenCalledWith(expect.stringContaining('Update Oh My DevX'))
     expect(mocks.callMock).not.toHaveBeenCalledWith('jira.status')
     expectNoWrite()
   })

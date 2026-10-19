@@ -12,16 +12,19 @@ export function isWebPairingRefusedAtStartup(error: unknown): error is Error {
 }
 
 export function announceWebPairingRefusedAtStartup(error: Error): void {
-  toast.error(translate('auto.startup.webPairingRefused.title', 'Orca refused this browser'), {
-    // The error already carries the reason-specific, translated guidance.
-    description: error.message,
-    duration: Infinity,
-    dismissible: true,
-    action: {
-      label: translate('auto.startup.webPairingRefused.retry', 'Try again'),
-      onClick: () => {
-        void window.api.app.relaunch()
+  toast.error(
+    translate('auto.startup.webPairingRefused.title', 'Oh My DevX refused this browser'),
+    {
+      // The error already carries the reason-specific, translated guidance.
+      description: error.message,
+      duration: Infinity,
+      dismissible: true,
+      action: {
+        label: translate('auto.startup.webPairingRefused.retry', 'Try again'),
+        onClick: () => {
+          void window.api.app.relaunch()
+        }
       }
     }
-  })
+  )
 }

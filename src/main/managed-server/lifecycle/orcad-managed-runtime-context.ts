@@ -31,7 +31,9 @@ export function requireManagedOrcadInfrastructure() {
   const targetStore = requireManagedOrcadTargetStore()
   const connectionManager = getSshConnectionManager()
   if (!connectionManager) {
-    throw new Error('SSH is unavailable on this client; the managed Orca server is unverifiable.')
+    throw new Error(
+      'SSH is unavailable on this client; the managed Oh My DevX server is unverifiable.'
+    )
   }
   return { connectionManager, targetStore, claims: targetStore.getOrcadRuntimeClaims() }
 }
@@ -39,7 +41,9 @@ export function requireManagedOrcadInfrastructure() {
 export function requireManagedOrcadTargetStore() {
   const targetStore = getSshTargetRegistryStore()
   if (!targetStore) {
-    throw new Error('SSH target state is unavailable; the managed Orca server is unverifiable.')
+    throw new Error(
+      'SSH target state is unavailable; the managed Oh My DevX server is unverifiable.'
+    )
   }
   return targetStore
 }
@@ -68,7 +72,7 @@ export async function resolveLinkedOrcadContext(
     target.generation !== deployment.sshTargetGeneration ||
     getManagedOrcadFenceEnvironmentId(target) !== environment.id
   ) {
-    throw new Error('The managed Orca server SSH registration is no longer valid.')
+    throw new Error('The managed Oh My DevX server SSH registration is no longer valid.')
   }
   const connection = await connectionManager.connect(target)
   return resolveOrcadRemoteContext(target, sshOrcadHostTransport(connection), signal)
@@ -144,8 +148,8 @@ export function managedOrcadDeployPolicy(
     // An explicit force runs this version anyway, as `environment update --force` does.
     admitRecord: (record, candidateVersion) =>
       !force && refuseOrcadHostDowngrade(record, candidateVersion, appVersion)
-        ? `Orca ${record.activeAppVersion} last ran this host's server, newer than this ` +
-          `Orca (${appVersion}). Update Orca to start it.`
+        ? `Oh My DevX ${record.activeAppVersion} last ran this host's server, newer than this ` +
+          `Oh My DevX (${appVersion}). Update Oh My DevX to start it.`
         : null
   }
 }

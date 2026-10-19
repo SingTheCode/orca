@@ -182,7 +182,7 @@ export async function stopOrphanedOrcaSshForward(
     return false
   }
   console.warn(
-    `[ssh] Stopping a forward a previous Orca left on 127.0.0.1:${localPort} (pid ${orphan.pid})`
+    `[ssh] Stopping a forward a previous Oh My DevX left on 127.0.0.1:${localPort} (pid ${orphan.pid})`
   )
   const startedAtMs = await deps.readStartTimeMs(orphan.pid)
   try {

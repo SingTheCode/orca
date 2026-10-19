@@ -198,7 +198,7 @@ describe('registerAutoUpdaterHandlers linux package artifact tracking', () => {
 
       expect(context.sendStatus).toHaveBeenLastCalledWith({
         state: 'error',
-        message: 'Quit Orca before running the system package install command.',
+        message: 'Quit Oh My DevX before running the system package install command.',
         recovery: {
           kind: 'linux-package-install',
           packageType,
@@ -220,7 +220,7 @@ describe('registerAutoUpdaterHandlers linux package artifact tracking', () => {
     const status = {
       state: 'error',
       message:
-        'The downloaded package metadata could not be verified. Quit Orca before downloading and installing the update from the official release page.',
+        'The downloaded package metadata could not be verified. Quit Oh My DevX before downloading and installing the update from the official release page.',
       version: '1.0.61',
       retryable: false
     }
@@ -261,7 +261,7 @@ describe('registerAutoUpdaterHandlers linux package artifact tracking', () => {
     expect(context.sendStatus).toHaveBeenLastCalledWith({
       state: 'error',
       message:
-        'Orca could not verify the installed Linux package format, so it will not install this update automatically. Download the update from the official release page and install it manually.',
+        'Oh My DevX could not verify the installed Linux package format, so it will not install this update automatically. Download the update from the official release page and install it manually.',
       version: '1.0.61',
       retryable: false
     })
@@ -294,7 +294,7 @@ describe('registerAutoUpdaterHandlers linux package artifact tracking', () => {
     expect(getArtifact()).toEqual(expect.objectContaining({ version: '1.0.61' }))
     expect(context.sendStatus).toHaveBeenLastCalledWith({
       state: 'error',
-      message: 'Quit Orca before running the system package install command.',
+      message: 'Quit Oh My DevX before running the system package install command.',
       recovery: {
         kind: 'linux-package-install',
         packageType: 'deb',
@@ -317,7 +317,7 @@ describe('registerAutoUpdaterHandlers linux package artifact tracking', () => {
     expect(getArtifact()).toEqual(expect.objectContaining({ version: '1.0.61' }))
     expect(context.sendStatus).toHaveBeenLastCalledWith({
       state: 'error',
-      message: 'Quit Orca before running the system package install command.',
+      message: 'Quit Oh My DevX before running the system package install command.',
       recovery: {
         kind: 'linux-package-install',
         packageType: 'deb',
@@ -394,7 +394,7 @@ describe('registerAutoUpdaterHandlers linux package artifact tracking', () => {
     expect(getArtifact()).toEqual(expect.objectContaining({ version: '1.0.61' }))
     expect(context.sendStatus).toHaveBeenLastCalledWith({
       state: 'error',
-      message: 'Quit Orca before running the system package install command.',
+      message: 'Quit Oh My DevX before running the system package install command.',
       recovery: {
         kind: 'linux-package-install',
         packageType: 'deb',
@@ -452,7 +452,7 @@ describe('registerAutoUpdaterHandlers linux package artifact tracking', () => {
       await vi.waitFor(() =>
         expect(context.sendStatus).toHaveBeenLastCalledWith({
           state: 'error',
-          message: 'Quit Orca before running the system package install command.',
+          message: 'Quit Oh My DevX before running the system package install command.',
           recovery: {
             kind: 'linux-package-install',
             packageType: 'deb',

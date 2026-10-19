@@ -78,7 +78,7 @@ function getManagedScript(target: 'local' | 'posix' = 'local'): string {
 }
 
 function noAgentsDetail(agentsDir: string): string {
-  return `No custom Kiro agents in ${agentsDir}. Kiro's built-in default agent cannot carry hooks; create one with \`kiro-cli agent create\` and make it the default so Orca can track Kiro's status`
+  return `No custom Kiro agents in ${agentsDir}. Kiro's built-in default agent cannot carry hooks; create one with \`kiro-cli agent create\` and make it the default so Oh My DevX can track Kiro's status`
 }
 
 type AgentFileRead =
@@ -147,7 +147,7 @@ function buildStatus(agentsDir: string, files: AgentFileRead[]): AgentHookInstal
     } else if (present.size > 0) {
       problems.push(`${file.fileName} is missing managed hooks for: ${missing.join(', ')}`)
     } else {
-      problems.push(`${file.fileName} has no Orca hooks`)
+      problems.push(`${file.fileName} has no Oh My DevX hooks`)
     }
   }
   if (problems.length === 0) {

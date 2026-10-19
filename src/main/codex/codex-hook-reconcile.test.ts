@@ -404,7 +404,7 @@ describe('reconcileCodexHooks', () => {
     mocks.deriveCodexHookHashes.mockResolvedValue({
       kind: 'refused',
       codexVersion: 'codex-cli 0.120.0',
-      failure: 'Codex 0.120.0 is too old for Orca status; update Codex'
+      failure: 'Codex 0.120.0 is too old for Oh My DevX status; update Codex'
     })
 
     await start()
@@ -420,7 +420,7 @@ describe('reconcileCodexHooks', () => {
 
     expect(existsSync(codexHome())).toBe(false)
     expect(readCurrentCodexHookStatus().detail).toBe(
-      `Orca could not find Codex at ${mocks.codexPath}`
+      `Oh My DevX could not find Codex at ${mocks.codexPath}`
     )
   })
 
@@ -547,7 +547,7 @@ describe('a ~/.codex/hooks.json Orca cannot add to', () => {
       expect(readFileSync(hooksPath(), 'utf-8')).toBe(content)
       expect(existsSync(tomlPath())).toBe(false)
       expect(readRealHomeHooksFileProblem()).toBe(
-        `Orca cannot add its hook to ${hooksPath()}, so Orca shows no status for ~/.codex`
+        `Oh My DevX cannot add its hook to ${hooksPath()}, so Oh My DevX shows no status for ~/.codex`
       )
 
       writeHooks({})

@@ -34,12 +34,12 @@ function notFromOrcaTooltip(lockSource: string | null): string {
   return lockSource
     ? translate(
         'auto.components.skills.SkillUpdateRow.notFromOrcaSourceTip',
-        'Installed from {{value0}}. Selecting it replaces it with Orca’s version.',
+        'Installed from {{value0}}. Selecting it replaces it with Oh My DevX’s version.',
         { value0: lockSource }
       )
     : translate(
         'auto.components.skills.SkillUpdateRow.notFromOrcaNoRecordTip',
-        'No Orca install record for this copy. Selecting it replaces it with Orca’s version.'
+        'No Oh My DevX install record for this copy. Selecting it replaces it with Oh My DevX’s version.'
       )
 }
 
@@ -70,7 +70,7 @@ function StateBadge({
             tabIndex={0}
             className="inline-flex shrink-0 cursor-help items-center gap-1 rounded-sm text-xs font-normal text-muted-foreground outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
           >
-            {translate('auto.components.skills.SkillUpdateRow.notFromOrca', 'Not from Orca')}
+            {translate('auto.components.skills.SkillUpdateRow.notFromOrca', 'Not from Oh My DevX')}
             <Info className="size-3" />
           </span>
         </TooltipTrigger>

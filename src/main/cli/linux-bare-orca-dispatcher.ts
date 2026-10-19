@@ -59,7 +59,7 @@ export type LinuxBareOrcaDispatcherResult = {
 export async function installLinuxBareOrcaDispatcher(
   options: LinuxBareOrcaDispatcherOptions
 ): Promise<LinuxBareOrcaDispatcherResult> {
-  const dispatcherPath = join(options.homePath ?? homedir(), '.local', 'bin', 'orca')
+  const dispatcherPath = join(options.homePath ?? homedir(), '.local', 'bin', 'omdx')
   if (existsSync(dispatcherPath) && !(await isOwnedDispatcher(dispatcherPath))) {
     return { state: 'skipped-foreign', dispatcherPath, target: null }
   }

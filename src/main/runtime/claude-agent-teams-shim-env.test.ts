@@ -35,7 +35,7 @@ describe('claude agent teams shim env', () => {
     // Why: the plan writes its tmux shim under ~/.orca.
     vi.stubEnv('HOME', root)
     vi.stubEnv('USERPROFILE', root)
-    const cliName = process.platform === 'win32' ? 'orca-dev.cmd' : 'orca-dev'
+    const cliName = process.platform === 'win32' ? 'omdx-dev.cmd' : 'omdx-dev'
     const cliPath = join(root, cliName)
     await writeFile(cliPath, '#!/usr/bin/env sh\n', 'utf8')
     if (process.platform !== 'win32') {
@@ -86,7 +86,7 @@ describe('claude agent teams shim env', () => {
   it('resolves the dev CLI wrapper for the tmux callback binary', async () => {
     const root = await mkdtemp(join(tmpdir(), 'orca-agent-teams-cli-'))
     roots.push(root)
-    const cliName = process.platform === 'win32' ? 'orca-dev.cmd' : 'orca-dev'
+    const cliName = process.platform === 'win32' ? 'omdx-dev.cmd' : 'omdx-dev'
     const cliPath = join(root, cliName)
     await writeFile(cliPath, '#!/usr/bin/env sh\n', 'utf8')
     if (process.platform !== 'win32') {
@@ -149,7 +149,7 @@ describe('claude agent teams shim env', () => {
   })
 
   it.skipIf(process.platform === 'win32')(
-    'never runs a cwd-resolved orca when the shim bin is unqualified',
+    'never runs a cwd-resolved omdx when the shim bin is unqualified',
     async () => {
       const root = await mkdtemp(join(tmpdir(), 'orca-agent-teams-shim-'))
       roots.push(root)

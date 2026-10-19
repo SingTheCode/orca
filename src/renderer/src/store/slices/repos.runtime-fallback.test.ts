@@ -193,7 +193,7 @@ describe('repo slice runtime folder fallback', () => {
     expect(toastError).toHaveBeenCalledWith(
       'Failed to add project',
       expect.objectContaining({
-        description: 'Update Orca server to open non-Git folders on this runtime.'
+        description: 'Update Oh My DevX server to open non-Git folders on this runtime.'
       })
     )
   })

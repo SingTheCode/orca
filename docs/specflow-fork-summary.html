@@ -45,7 +45,7 @@
 <table>
   <thead><tr><th>항목</th><th>내용</th></tr></thead>
   <tbody>
-    <tr><td>앱 정체성</td><td>번들 ID <code>com.stablyai.orca</code> → <code>io.github.singthecode.orca</code>. 업데이트 피드와 배포 대상은 <code>SingTheCode/orca</code> releases. 소유자 이름은 <code>src/shared/release-channel.ts</code>의 <code>RELEASE_OWNER</code> 한 곳에서 관리</td></tr>
+    <tr><td>앱 정체성</td><td>번들 ID <code>com.stablyai.orca</code> → <code>io.github.singthecode.omdx</code>. 업데이트 피드와 배포 대상은 <code>SingTheCode/orca</code> releases. 소유자 이름은 <code>src/shared/release-channel.ts</code>의 <code>RELEASE_OWNER</code> 한 곳에서 관리</td></tr>
     <tr><td>omp 기본 에이전트</td><td>새 프로필의 <code>defaultTuiAgent</code>를 <code>'omp'</code>로. omp가 없으면 기존 자동 선택으로 대체</td></tr>
     <tr><td>devx Role</td><td>omp 실행 시 <code>~/.omp/agent/extensions/orca-devx-roles.ts</code> 설치. devx-proxy(<code>localhost:18888</code>)를 provider로 등록하고, 사용자가 비워 둔 역할에만 프리셋 적용. 사용자 설정 파일은 수정하지 않음</td></tr>
     <tr><td>사내 Jira</td><td>Jira 연결 창이 Self-hosted + 개인 액세스 토큰 + <code>https://jira.sinc.co.kr</code>로 미리 채워진 채 열림. 토큰만 붙여 넣으면 됨</td></tr>
@@ -55,7 +55,7 @@
 <h2>검증</h2>
 <ul>
   <li>dev 앱에서 omp 실행 → <code>DEVX-PONG devx/vertex_ai/claude-opus-5-5</code> 응답 (omp 세션 기록으로 확인)</li>
-  <li>dev 앱 번들 ID <code>io.github.singthecode.orca.dev</code>, 기본 에이전트 <code>omp</code>, Jira 창 기본값 확인</li>
+  <li>dev 앱 번들 ID <code>io.github.singthecode.omdx.dev</code>, 기본 에이전트 <code>omp</code>, Jira 창 기본값 확인</li>
   <li>사내 Jira는 Server 9.12.6이며 Orca가 쓰는 REST 경로가 모두 존재</li>
   <li>테스트: 옛 피드 주소를 쓰던 업데이터 테스트 79건을 새 주소로 고친 뒤 통과. 시작 관련 테스트 1건은 대규모 병렬 실행에서만 실패하고 단독 실행에서는 통과</li>
   <li>타입체크: upstream에 원래 있던 오류 1건 외 신규 오류 없음</li>

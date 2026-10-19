@@ -72,7 +72,7 @@ describe('pane-scoped terminal title', () => {
     const { setPaneTitle: _unused, ...legacyNotifier } = notifier
     runtime.setNotifier(legacyNotifier)
     await expect(runtime.setPaneTitle(handle, 'REVIEWER')).rejects.toThrow(
-      'require a running Orca desktop'
+      'require a running Oh My DevX desktop'
     )
   })
 

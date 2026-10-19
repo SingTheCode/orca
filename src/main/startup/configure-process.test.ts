@@ -17,7 +17,8 @@ vi.mock('electron', () => {
       disableHardwareAcceleration: vi.fn(),
       commandLine: {
         appendSwitch: vi.fn(),
-        getSwitchValue: vi.fn(() => '')
+        getSwitchValue: vi.fn(() => ''),
+        hasSwitch: vi.fn((_name: string) => false)
       }
     }
   }
@@ -352,11 +353,25 @@ describe('configureDevUserDataPath', () => {
     expect(app.setPath).toHaveBeenCalledWith('userData', join('/tmp/app-data', 'orca-dev'))
   })
 
-  it('leaves packaged runs on the default userData path', async () => {
+  it('pins packaged runs to the legacy orca userData folder', async () => {
     const { app } = await import('electron')
     const { configureDevUserDataPath } = await import('./configure-process')
 
     vi.mocked(app.setPath).mockClear()
+    configureDevUserDataPath(false)
+
+    // Why: productName is now "Oh My DevX", but the CLI and daemon still resolve appData/orca.
+    expect(app.setPath).toHaveBeenCalledWith('userData', join('/tmp/app-data', 'orca'))
+  })
+
+  it('lets an explicit --user-data-dir win for packaged runs', async () => {
+    const { app } = await import('electron')
+    const { configureDevUserDataPath } = await import('./configure-process')
+
+    vi.mocked(app.setPath).mockClear()
+    vi.mocked(app.commandLine.hasSwitch).mockImplementationOnce(
+      (name: string) => name === 'user-data-dir'
+    )
     configureDevUserDataPath(false)
 
     expect(app.setPath).not.toHaveBeenCalled()

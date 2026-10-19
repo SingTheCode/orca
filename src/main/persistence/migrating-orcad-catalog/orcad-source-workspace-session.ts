@@ -53,7 +53,7 @@ export type OrcadMigrationSourceWorkspaceSessionInspection = {
   leftBehindItems: string[]
 }
 
-const UNREADABLE_SESSION = 'saved tabs Orca could not read'
+const UNREADABLE_SESSION = 'saved tabs Oh My DevX could not read'
 
 /** Fails closed: a session shape no collector expects blocks the move instead of failing connect. */
 export function collectOrcadMigrationSourceWorkspaceSession(

@@ -23,7 +23,7 @@ import { formatManagedServerStatus } from './managed-server-format'
 import { reportAfterClosedConnection } from './managed-server-reconnect'
 
 const UNSUPPORTED_MESSAGE =
-  'This Orca runtime cannot manage servers over SSH. Run this on the computer whose Orca desktop app deployed the server, after updating Orca there.'
+  'This Oh My DevX runtime cannot manage servers over SSH. Run this on the computer whose Oh My DevX desktop app deployed the server, after updating Oh My DevX there.'
 
 // Why 20 minutes: the desktop runs the whole action inline, and a Windows runtime promotion (5 min)
 // plus a readiness wait (5 min) on a slow host already outlast the 60 s RPC default.
@@ -58,7 +58,7 @@ async function callManagedServer<TResult>(
     if (!readOnly && error instanceof RuntimeClientError && error.code === 'runtime_timeout') {
       throw new RuntimeClientError(
         'managed_server_in_progress',
-        'Stopped waiting, but the desktop may still be running this action. Check `orca environment status` before retrying.'
+        'Stopped waiting, but the desktop may still be running this action. Check `omdx environment status` before retrying.'
       )
     }
     throw error
@@ -101,7 +101,7 @@ function report<TResult extends Outcome, TSettled extends TResult['outcome']>(
 ): void {
   const result = response.result
   if (!isSettled(result, settled)) {
-    const reason = result.reason ?? `The managed Orca server action was ${result.outcome}.`
+    const reason = result.reason ?? `The managed Oh My DevX server action was ${result.outcome}.`
     const step = nextStep?.(result)
     throw new RuntimeClientError(
       `managed_server_${result.outcome}`,
@@ -240,7 +240,7 @@ export const MANAGED_SERVER_HANDLERS: Record<string, CommandHandler> = {
         case 'canceled':
           return `Stop withdrawn; the server keeps serving ${result.activeVersion}.`
         case 'already-stopped':
-          return 'orcad had already exited. Run `orca environment stop --yes` to unlink it.'
+          return 'orcad had already exited. Run `omdx environment stop --yes` to unlink it.'
         case 'none':
           return 'No stop is pending.'
       }

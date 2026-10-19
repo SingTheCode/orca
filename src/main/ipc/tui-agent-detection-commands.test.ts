@@ -32,6 +32,24 @@ describe('tui agent detection commands', () => {
     expect(commands).toEqual([
       {
         id: 'claude-agent-teams',
+        cmd: 'omdx',
+        requiredCommands: ['claude'],
+        unsupportedRuntimes: ['win32', 'wsl']
+      },
+      {
+        id: 'claude-agent-teams',
+        cmd: 'omdx-dev',
+        requiredCommands: ['claude'],
+        unsupportedRuntimes: ['win32', 'wsl']
+      },
+      {
+        id: 'claude-agent-teams',
+        cmd: 'omdx-ide',
+        requiredCommands: ['claude'],
+        unsupportedRuntimes: ['win32', 'wsl']
+      },
+      {
+        id: 'claude-agent-teams',
         cmd: 'orca',
         requiredCommands: ['claude'],
         unsupportedRuntimes: ['win32', 'wsl']
@@ -50,12 +68,19 @@ describe('tui agent detection commands', () => {
       }
     ])
     expect(getTuiAgentDetectionProbeCommands(commands, 'linux')).toEqual([
-      'orca',
+      'omdx',
       'claude',
+      'omdx-dev',
+      'omdx-ide',
+      'orca',
       'orca-dev',
       'orca-ide'
     ])
-    expect(resolveDetectedTuiAgentIds(commands, new Set(['orca']), 'linux')).toEqual([])
+    expect(resolveDetectedTuiAgentIds(commands, new Set(['omdx']), 'linux')).toEqual([])
+    expect(resolveDetectedTuiAgentIds(commands, new Set(['omdx', 'claude']), 'linux')).toEqual([
+      'claude-agent-teams'
+    ])
+    // Legacy pre-rename CLI names still count.
     expect(resolveDetectedTuiAgentIds(commands, new Set(['orca', 'claude']), 'linux')).toEqual([
       'claude-agent-teams'
     ])

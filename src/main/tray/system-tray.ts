@@ -48,9 +48,9 @@ let nativeThemeUpdatedListener: (() => void) | null = null
 // tooltip carries the worktree/branch label so hovering tells them apart.
 function baseTooltip(): string {
   if (!devIndicator) {
-    return 'Orca'
+    return 'Oh My DevX'
   }
-  return devIndicator.label ? `Orca DEV (${devIndicator.label})` : 'Orca DEV'
+  return devIndicator.label ? `Oh My DevX DEV (${devIndicator.label})` : 'Oh My DevX DEV'
 }
 
 // Why: on Windows the notification area expects a 16px icon; the app icon PNG
@@ -89,7 +89,7 @@ function applyTrayImage(): void {
         tray.setToolTip(
           devIndicator
             ? `${baseTooltip()} - ${translateMain('tray.activityWaitingSuffix', 'activity waiting')}`
-            : translateMain('tray.activityWaiting', 'Orca - activity waiting')
+            : translateMain('tray.activityWaiting', 'Oh My DevX - activity waiting')
         )
         return
       } catch (error) {
@@ -279,7 +279,7 @@ function buildTrayMenu(opts: SystemTrayOptions): Menu {
         ] satisfies Electron.MenuItemConstructorOptions[])
       : []),
     {
-      label: translateMain('tray.openOrca', 'Open Orca'),
+      label: translateMain('tray.openOrca', 'Open Oh My DevX'),
       click: safeMenuAction(() => opts.onOpen())
     },
     { type: 'separator' },

@@ -74,8 +74,8 @@ test.describe('macOS press-and-hold default', () => {
     expect(record.domain).toBe(state.bundleIdentifier)
 
     const ownsDomain =
-      record.domain === 'io.github.singthecode.orca' ||
-      record.domain!.startsWith('io.github.singthecode.orca.')
+      record.domain === 'io.github.singthecode.omdx' ||
+      record.domain!.startsWith('io.github.singthecode.omdx.')
     if (ownsDomain) {
       // A packaged or dev-identity bundle: the write path is live and must have settled.
       expect(['applied', 'kept-user-preference']).toContain(record.decision)

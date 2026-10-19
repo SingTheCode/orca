@@ -43,7 +43,7 @@ const RECIPE_JSON = JSON.stringify({
   }),
   projectRoot: '/workspace/repo'
 })
-const SERVE_INSTALL_STATUS = '[serve] orca CLI install: installed'
+const SERVE_INSTALL_STATUS = '[serve] omdx CLI install: installed'
 const SSH_PRIVATE_KEY = 'TOP-SECRET-PRIVATE-KEY'
 const SSH_AUTHORIZATION = 'Bearer TOP-SECRET-AUTHORIZATION'
 const SSH_PASSPHRASE = 'TOP-SECRET-PASSPHRASE'
@@ -87,7 +87,7 @@ function restoreEnv(key: string, value: string | undefined): void {
 function firstServeSpawnArgs(): string[] {
   const args: unknown = spawnMock.mock.calls[0]?.[1]
   if (!Array.isArray(args)) {
-    throw new Error('orca serve did not spawn its server')
+    throw new Error('omdx serve did not spawn its server')
   }
   return args.map(String)
 }
@@ -127,13 +127,13 @@ describe('serveOrcaApp', () => {
     )
   })
 
-  it('names what to run when this orca is not an Orca app (an SSH host server CLI)', () => {
+  it('names what to run when this omdx is not an Orca app (an SSH host server CLI)', () => {
     delete process.env.ORCA_APP_EXECUTABLE
     const previous = process.env.ELECTRON_RUN_AS_NODE
     delete process.env.ELECTRON_RUN_AS_NODE
     try {
       expect(() => serveOrcaApp({ supervise: true })).toThrow(
-        /Install the Orca app on this machine/
+        /Install the Oh My DevX app on this machine/
       )
       expect(spawnMock).not.toHaveBeenCalled()
     } finally {
@@ -691,7 +691,7 @@ describe('serveOrcaApp', () => {
 
     await expect(result).rejects.toMatchObject({
       code: 'runtime_serve_failed',
-      message: 'Orca serve exited before printing valid recipe JSON with code 0.'
+      message: 'Oh My DevX serve exited before printing valid recipe JSON with code 0.'
     })
     expect(stdoutSpy).not.toHaveBeenCalled()
     expect(stderrSpy).toHaveBeenCalledTimes(5)

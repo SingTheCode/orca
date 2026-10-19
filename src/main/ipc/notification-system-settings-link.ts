@@ -1,6 +1,6 @@
 import { shell } from 'electron'
 
-const MACOS_PACKAGED_BUNDLE_ID = 'io.github.singthecode.orca'
+const MACOS_PACKAGED_BUNDLE_ID = 'io.github.singthecode.omdx'
 const MACOS_NOTIFICATION_SETTINGS_URL =
   'x-apple.systempreferences:com.apple.Notifications-Settings.extension'
 

@@ -23,7 +23,7 @@ describe('prependOrcaCliDirToChildPath', () => {
   it.each(['linux', 'darwin'] as const)(
     'uses the %s execution host CLI and profile over inherited values',
     (platform) => {
-      const launcher = join(USER_DATA, 'cli', 'bin', 'orca')
+      const launcher = join(USER_DATA, 'cli', 'bin', 'omdx')
       installFakeAppEnvironment({ getCliLauncherPath: () => launcher })
       const env: Record<string, string> = {
         PATH: `/usr/bin:${join(USER_DATA, 'cli', 'bin')}::/bin`,
@@ -48,12 +48,12 @@ describe('prependOrcaCliDirToChildPath', () => {
   )
   it('puts a Windows execution host CLI first on Path without a POSIX restore dir', () => {
     const binDir = join(USER_DATA, 'cli', 'bin')
-    const launcher = join(binDir, 'orca.exe')
+    const launcher = join(binDir, 'omdx.exe')
     installFakeAppEnvironment({ getCliLauncherPath: () => launcher })
     const env: Record<string, string> = {
       Path: `C:\\Windows;${binDir};;C:\\Tools`,
       ORCA_USER_DATA_PATH: 'C:\\parent\\profile',
-      ORCA_CLI_COMMAND: 'C:\\parent\\orca.exe',
+      ORCA_CLI_COMMAND: 'C:\\parent\\omdx.exe',
       ORCA_CLI_BIN_DIR: '/parent/bin'
     }
     expect(

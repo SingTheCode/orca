@@ -19,7 +19,7 @@ export type CliErrorContext = {
 type ContextRecovery = { nextSteps: readonly string[] } & Record<string, unknown>
 
 const STALE_HANDLE_SERVER_HINT =
-  'Terminal handles belong to the Orca server that issued them. If this handle came from a paired server (for example `orca terminal list --environment <server>`), pass the same --environment <server> to this command.'
+  'Terminal handles belong to the Oh My DevX server that issued them. If this handle came from a paired server (for example `omdx terminal list --environment <server>`), pass the same --environment <server> to this command.'
 
 function contextRecovery(
   code: string | undefined,
@@ -66,7 +66,7 @@ export function formatCliError(error: unknown, context: CliErrorContext = {}): s
     if (hasOrchestrationRequestId(error.data)) {
       return message
     }
-    return `${message}\nOrca is not running. Run 'orca open' first.`
+    return `${message}\nOh My DevX is not running. Run 'omdx open' first.`
   }
   // Why: error-specific recovery must win over the generic computer fallback.
   // Classified from the whole error, not just `.code`: a hop that flattens the class leaves only the token.
@@ -90,7 +90,7 @@ export function formatCliError(error: unknown, context: CliErrorContext = {}): s
     error instanceof RuntimeRpcFailureError &&
     error.response.error.code === 'runtime_unavailable'
   ) {
-    return `${message}\nOrca is not running. Run 'orca open' first.`
+    return `${message}\nOh My DevX is not running. Run 'omdx open' first.`
   }
   if (error instanceof RuntimeRpcFailureError) {
     return formatMessageWithNextSteps(message, nextStepsFromData(error.response.error.data))

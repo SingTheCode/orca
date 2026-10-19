@@ -51,7 +51,7 @@ async function callProjectHostSetup<TResult>(
     if (error instanceof RuntimeClientError && error.code === 'method_not_found') {
       throw new RuntimeClientError(
         'incompatible_runtime',
-        'This Orca server does not support project host setup yet. Update Orca on the server and try again.'
+        'This Oh My DevX server does not support project host setup yet. Update Oh My DevX on the server and try again.'
       )
     }
     throw error

@@ -15,7 +15,7 @@ import { openServeBundlePark } from './serve-bundle-park'
 import { superviseServeService } from './serve-supervised-service'
 import { createSupervisedParkWatch } from './serve-supervised-park-watch'
 
-const LABEL = 'io.github.singthecode.orca.serve.default'
+const LABEL = 'io.github.singthecode.omdx.serve.default'
 
 describe('openServeBundlePark', () => {
   let root: string

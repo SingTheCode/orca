@@ -423,7 +423,7 @@ describe('SkillFreshnessUpdateDialog', () => {
     await renderDialog()
     await openViaRequest()
 
-    expect(container?.textContent).toContain('All installed Orca skills are up to date.')
+    expect(container?.textContent).toContain('All installed Oh My DevX skills are up to date.')
     expect(findButton('Update 1 skill')).toBeUndefined()
   })
 
@@ -480,7 +480,7 @@ describe('SkillFreshnessUpdateDialog', () => {
     await renderDialog()
     await openViaRequest()
 
-    expect(container?.textContent).toContain('All installed Orca skills are up to date.')
+    expect(container?.textContent).toContain('All installed Oh My DevX skills are up to date.')
     expect(container?.querySelector('[data-skill-row="computer-use"]')).toBeNull()
   })
 
@@ -514,7 +514,7 @@ describe('SkillFreshnessUpdateDialog', () => {
     expect(row?.textContent).toContain('/home/projects/work/.agents/skills/computer-use')
   })
 
-  it('preselects Orca-owned updates and leaves same-named skills from elsewhere unticked', async () => {
+  it('preselects Oh My DevX-owned updates and leaves same-named skills from elsewhere unticked', async () => {
     mocks.inventory = {
       schemaVersion: 1,
       installations: [
@@ -547,13 +547,13 @@ describe('SkillFreshnessUpdateDialog', () => {
     expect(checked('computer-use')).toBe('false')
     expect(checked('linear-tickets')).toBe('false')
     expect(container?.querySelector('[data-skill-row="computer-use"]')?.textContent).toContain(
-      'Not from Orca'
+      'Not from Oh My DevX'
     )
     expect(container?.querySelector('[data-skill-row="orca-cli"]')?.textContent).toContain(
       'Update available'
     )
     expect(container?.textContent).toContain('2 updates available')
-    expect(container?.textContent).toContain('2 skills not installed by Orca are unselected.')
+    expect(container?.textContent).toContain('2 skills not installed by Oh My DevX are unselected.')
 
     await clickButton('Update 2 skills')
     expect(skillsApi.startUpdateRun).toHaveBeenLastCalledWith(['orca-cli', 'orchestration'])
@@ -578,7 +578,7 @@ describe('SkillFreshnessUpdateDialog', () => {
     })
 
     expect(foreign?.getAttribute('aria-checked')).toBe('true')
-    expect(container?.textContent).not.toContain('not installed by Orca')
+    expect(container?.textContent).not.toContain('not installed by Oh My DevX')
     await clickButton('Update 2 skills')
     // Display order, Orca's first; the runner canonicalizes.
     expect(skillsApi.startUpdateRun).toHaveBeenLastCalledWith(['orca-cli', 'computer-use'])
@@ -634,7 +634,7 @@ describe('SkillFreshnessUpdateDialog', () => {
     expect(skillsApi.startUpdateRun).toHaveBeenLastCalledWith(['computer-use'])
   })
 
-  it('reads Orca’s skills as current when only a foreign copy is outdated', async () => {
+  it('reads Oh My DevX’s skills as current when only a foreign copy is outdated', async () => {
     mocks.inventory = {
       schemaVersion: 1,
       installations: [
@@ -648,8 +648,8 @@ describe('SkillFreshnessUpdateDialog', () => {
     await renderDialog()
     await openViaRequest()
 
-    expect(container?.textContent).toContain('All installed Orca skills are up to date.')
-    expect(container?.textContent).toContain('1 skill not installed by Orca is unselected.')
+    expect(container?.textContent).toContain('All installed Oh My DevX skills are up to date.')
+    expect(container?.textContent).toContain('1 skill not installed by Oh My DevX is unselected.')
     expect(findButton('Update skills')?.disabled).toBe(true)
   })
 
@@ -665,7 +665,7 @@ describe('SkillFreshnessUpdateDialog', () => {
     await rerender()
 
     expect(container?.textContent).not.toContain('0 updates available')
-    expect(container?.textContent).toContain('Checking installed Orca skills…')
+    expect(container?.textContent).toContain('Checking installed Oh My DevX skills…')
     // The action keeps its place rather than reflowing the footer, but cannot
     // fire against bytes that are being re-read.
     const update = findButton('Update 1 skill')
@@ -820,11 +820,11 @@ describe('SkillFreshnessUpdateDialog', () => {
     await openViaRequest()
 
     expect(container?.textContent).toContain(
-      'Orca could not finish checking plugin-managed skills.'
+      'Oh My DevX could not finish checking plugin-managed skills.'
     )
     expect(container?.textContent).toContain('/home/.codex/plugins/cache/vendor/locked')
     expect(container?.textContent).toContain('EACCES')
-    expect(container?.textContent).not.toContain('All installed Orca skills are up to date.')
+    expect(container?.textContent).not.toContain('All installed Oh My DevX skills are up to date.')
     // Why: the fabricated per-skill path is exactly what this change removed — the
     // unreadable folder must never be rendered as a copy of a named skill.
     expect(container?.textContent).not.toContain(
@@ -855,9 +855,11 @@ describe('SkillFreshnessUpdateDialog', () => {
       await renderDialog()
       await openViaRequest()
 
-      expect(container?.textContent).not.toContain('All installed Orca skills are up to date.')
+      expect(container?.textContent).not.toContain(
+        'All installed Oh My DevX skills are up to date.'
+      )
       expect(container?.textContent).toContain(
-        'Orca could not finish checking plugin-managed skills.'
+        'Oh My DevX could not finish checking plugin-managed skills.'
       )
       // Why: the headline alone would pass with the folder list gone, leaving the user
       // told the scan stopped but never told where. Assert the diagnostic renders too.
@@ -887,9 +889,9 @@ describe('SkillFreshnessUpdateDialog', () => {
     await renderDialog()
     await openViaRequest()
 
-    expect(container?.textContent).toContain('All installed Orca skills are up to date.')
+    expect(container?.textContent).toContain('All installed Oh My DevX skills are up to date.')
     expect(container?.textContent).not.toContain(
-      'Orca could not finish checking plugin-managed skills.'
+      'Oh My DevX could not finish checking plugin-managed skills.'
     )
     expect(container?.textContent).toContain('/home/.codex/plugins/cache/vendor/deep')
     expect(container?.textContent).toContain('scan depth limit')

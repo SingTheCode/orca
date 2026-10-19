@@ -15,7 +15,7 @@ public enum PermissionStatusSnapshotProbe {
     public typealias Probe = @Sendable () -> Bool
 
     private static let probeQueue = DispatchQueue(
-        label: "io.github.singthecode.orca.computer-use-permission-status",
+        label: "io.github.singthecode.omdx.computer-use-permission-status",
         attributes: .concurrent
     )
 
@@ -54,7 +54,7 @@ public final class PermissionStatusRefreshCoordinator: @unchecked Sendable {
 
     public init(
         workerQueue: DispatchQueue = DispatchQueue(
-            label: "io.github.singthecode.orca.computer-use-permission-refresh",
+            label: "io.github.singthecode.omdx.computer-use-permission-refresh",
             qos: .userInitiated
         ),
         callbackQueue: DispatchQueue = .main,

@@ -211,7 +211,7 @@ describe('browser process user-agent startup ordering', () => {
     const platform = vi.spyOn(process, 'platform', 'get').mockReturnValue('darwin')
     mocks.backgroundLaunch.mockReturnValueOnce(false)
     mocks.admission.mockImplementationOnce(() => {
-      throw new Error('Stop Orca and orcad before retrying profile recovery')
+      throw new Error('Stop Oh My DevX and orcad before retrying profile recovery')
     })
     const error = vi.spyOn(console, 'error').mockImplementation(() => {})
     try {
@@ -219,8 +219,8 @@ describe('browser process user-agent startup ordering', () => {
         runMainProcessPreflight({ focusExistingWindow: vi.fn(), requestDesktopActivation: vi.fn() })
       ).toBe(false)
       expect(mocks.showErrorBox).toHaveBeenCalledWith(
-        'Orca could not start',
-        expect.stringContaining('Stop Orca and orcad before retrying profile recovery')
+        'Oh My DevX could not start',
+        expect.stringContaining('Stop Oh My DevX and orcad before retrying profile recovery')
       )
       expect(mocks.app.isReady).not.toHaveBeenCalled()
     } finally {
@@ -244,7 +244,7 @@ describe('browser process user-agent startup ordering', () => {
         runMainProcessPreflight({ focusExistingWindow: vi.fn(), requestDesktopActivation: vi.fn() })
       ).toBe(false)
       expect(mocks.showErrorBox).toHaveBeenCalledWith(
-        'Orca could not start',
+        'Oh My DevX could not start',
         'Another orcad (pid 7)'
       )
       expect(mocks.app.exit.mock.calls).toEqual([[3]])
@@ -383,7 +383,7 @@ it('defers a Linux desktop startup failure until Electron is ready', async () =>
     await ready
     await Promise.resolve()
     expect(mocks.showErrorBox).toHaveBeenCalledWith(
-      'Orca could not start',
+      'Oh My DevX could not start',
       expect.stringContaining('Linux pre-ready failure')
     )
     expect(mocks.app.exit).toHaveBeenCalledWith(1)

@@ -245,7 +245,7 @@ describe('a worker result reaches the structured chat that coordinates it', () =
     expect(db.getUndeliveredUnreadMessages(`run:${runId}`, undefined, {})).toHaveLength(1)
   })
 
-  it('points a held pointer once more after Orca restarts, under a new id', async () => {
+  it('points a held pointer once more after Oh My DevX restarts, under a new id', async () => {
     observationClock.start()
     await openChat(COORDINATOR)
     const { runId, taskId } = await coordinatorRunAndTask()

@@ -72,24 +72,26 @@ export async function deriveCodexHookHashes(
     }
     if (hashes === 'inconsistent') {
       return refused(
-        `${describeCodexVersion(codexVersion)} hashes Orca's status hook differently by its file or position, so Orca does not approve it`
+        `${describeCodexVersion(codexVersion)} hashes Oh My DevX's status hook differently by its file or position, so Oh My DevX does not approve it`
       )
     }
     if (hashes === 'unloaded') {
       // Why pending: an empty or reshaped answer says nothing about this version.
       return {
         kind: 'pending',
-        failure: `${describeCodexVersion(codexVersion)} listed no hooks from Orca's test home`
+        failure: `${describeCodexVersion(codexVersion)} listed no hooks from Oh My DevX's test home`
       }
     }
     if (!hashes) {
-      return refused(`${describeCodexVersion(codexVersion)} did not recognize Orca's status hook`)
+      return refused(
+        `${describeCodexVersion(codexVersion)} did not recognize Oh My DevX's status hook`
+      )
     }
     return { kind: 'hashes', codexVersion, hashes }
   } catch (error) {
     if (isCodexAppServerUnsupportedError(error)) {
       return refused(
-        `${describeCodexVersion(codexVersion)} is too old for Orca status; update Codex`
+        `${describeCodexVersion(codexVersion)} is too old for Oh My DevX status; update Codex`
       )
     }
     console.warn('[codex-hook-trust] could not derive Codex hook hashes:', error)

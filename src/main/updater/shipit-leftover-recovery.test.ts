@@ -19,7 +19,7 @@ describe('prepareShipItStaging', () => {
 
   beforeEach(async () => {
     root = await mkdtemp(join(tmpdir(), 'orca-shipit-recovery-'))
-    cacheDir = join(root, 'Caches', 'io.github.singthecode.orca.ShipIt')
+    cacheDir = join(root, 'Caches', 'io.github.singthecode.omdx.ShipIt')
     coordinationDir = join(root, 'coordination')
     await mkdir(join(cacheDir, 'update.6rnCgPu', 'Orca.app'), { recursive: true })
     await writeFile(join(cacheDir, 'ShipItState.plist'), '<plist/>')
@@ -31,7 +31,7 @@ describe('prepareShipItStaging', () => {
   })
 
   const deps = (overrides: Partial<ShipItStagingDeps> = {}): ShipItStagingDeps => ({
-    bundleId: 'io.github.singthecode.orca',
+    bundleId: 'io.github.singthecode.omdx',
     cacheDir,
     coordinationDir,
     pid: 500,
@@ -85,7 +85,7 @@ describe('prepareShipItStaging', () => {
 
   it('never clears while ShipIt runs, or when that cannot be checked', async () => {
     const running = deps({
-      listProcesses: async () => `${SHIPIT} io.github.singthecode.orca.ShipIt\n`
+      listProcesses: async () => `${SHIPIT} io.github.singthecode.omdx.ShipIt\n`
     })
     await expect(prepareShipItStaging(running)).resolves.toEqual({
       kind: 'skipped',

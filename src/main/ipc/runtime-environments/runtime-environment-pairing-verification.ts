@@ -106,7 +106,7 @@ export async function verifyAndAddRuntimeEnvironmentFromPairingCode(
       message:
         error instanceof RuntimeEnvironmentStoreError && error.code === 'invalid_argument'
           ? error.message
-          : 'Orca verified the host but could not save it. Check local settings storage and try again.'
+          : 'Oh My DevX verified the host but could not save it. Check local settings storage and try again.'
     }
   }
   return {
@@ -163,7 +163,7 @@ export async function verifyAndRepairRuntimeEnvironmentFromPairingCode(
       message:
         error instanceof RuntimeEnvironmentStoreError && error.code === 'invalid_argument'
           ? error.message
-          : 'Orca verified the server but could not save the new pairing. Check local settings storage and try again.'
+          : 'Oh My DevX verified the server but could not save the new pairing. Check local settings storage and try again.'
     }
   }
   return {
@@ -189,7 +189,7 @@ function classifyPairingVerificationError(error: unknown, endpoint: string): Rem
       return {
         ok: false,
         kind: 'host-identity-mismatch',
-        message: `Orca reached ${endpoint}, but that host does not match this access link.`
+        message: `Oh My DevX reached ${endpoint}, but that host does not match this access link.`
       }
     }
     if (error.pairingStage === 'runtime') {
@@ -223,6 +223,6 @@ function unreachableHostResult(endpoint: string): RemotePairingFailure {
   return {
     ok: false,
     kind: 'host-unreachable',
-    message: `Cannot reach Orca at ${endpoint}. Confirm the other host is running and reachable.`
+    message: `Cannot reach Oh My DevX at ${endpoint}. Confirm the other host is running and reachable.`
   }
 }

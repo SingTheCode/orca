@@ -21,7 +21,7 @@ export function unservedServerStatus(
 }
 
 const HELD_MOVE_MESSAGE =
-  'Orca paused moving this host’s projects to its managed server because it couldn’t confirm the server’s copy. Nothing is lost: the host keeps its projects and stays locked until the move finishes. Connect again to resume. If the server can’t come back, stop or forget it in Settings > Managed servers.'
+  'Oh My DevX paused moving this host’s projects to its managed server because it couldn’t confirm the server’s copy. Nothing is lost: the host keeps its projects and stays locked until the move finishes. Connect again to resume. If the server can’t come back, stop or forget it in Settings > Managed servers.'
 
 /** Untranslated twin of the renderer's status line, for logs and callers without the catalog. */
 export function unservedHostServerMessage(decision: UnservedDecision): string {
@@ -30,16 +30,16 @@ export function unservedHostServerMessage(decision: UnservedDecision): string {
   }
   switch (decision.reason) {
     case 'orcad_unavailable':
-      return 'This SSH host isn’t supported by this version of Orca. To keep using it, install an older version of Orca.'
+      return 'This SSH host isn’t supported by this version of Oh My DevX. To keep using it, install an older version of Oh My DevX.'
     case 'relay_terminals_live':
     case 'relay_terminals_unverifiable':
-      return 'Terminals started by an older version of Orca are still running on this host, and they don’t stop on their own. Close them in that version of Orca or end them on the host, then reconnect.'
+      return 'Terminals started by an older version of Oh My DevX are still running on this host, and they don’t stop on their own. Close them in that version of Oh My DevX or end them on the host, then reconnect.'
     case 'refused':
-      return decision.detail ?? 'Orca couldn’t set up its server on this host.'
+      return decision.detail ?? 'Oh My DevX couldn’t set up its server on this host.'
     case 'source_changed':
-      return 'An older version of Orca changed this host’s projects. Move those changes to its managed server in SSH Hosts settings to continue.'
+      return 'An older version of Oh My DevX changed this host’s projects. Move those changes to its managed server in SSH Hosts settings to continue.'
     case 'deferred':
     case 'failed':
-      return 'Orca couldn’t start its server on this host. Try connecting again.'
+      return 'Oh My DevX couldn’t start its server on this host. Try connecting again.'
   }
 }

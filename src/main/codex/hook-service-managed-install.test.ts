@@ -100,7 +100,7 @@ describe('CodexHookService', () => {
     expect(existsSync(managedHooksJsonPath)).toBe(true)
   })
 
-  it('installs PermissionRequest with trust so Codex approval prompts reach Orca', async () => {
+  it('installs PermissionRequest with trust so Codex approval prompts reach Oh My DevX', async () => {
     const systemCodexHome = join(homes.tmpHome, '.codex')
     mkdirSync(systemCodexHome, { recursive: true })
     writeFileSync(
@@ -138,7 +138,7 @@ describe('CodexHookService', () => {
 
     expect(status).toMatchObject({
       state: 'error',
-      detail: expect.stringContaining('defines hook approvals in a form Orca cannot add to')
+      detail: expect.stringContaining('defines hook approvals in a form Oh My DevX cannot add to')
     })
     const managedToml = join(homes.userDataDir, 'codex-runtime-home', 'home', 'config.toml')
     expect(readFileSync(managedToml, 'utf-8')).not.toContain('[hooks.state.')
@@ -366,7 +366,7 @@ describe('CodexHookService', () => {
     }
   )
 
-  it('keeps hooks isolated by Orca userData instead of mutating system ~/.codex', async () => {
+  it('keeps hooks isolated by Oh My DevX userData instead of mutating system ~/.codex', async () => {
     const systemCodexHome = join(homes.tmpHome, '.codex')
     const systemHooksPath = join(systemCodexHome, 'hooks.json')
     const existingSystemHooks = '{"hooks":{"Stop":[{"hooks":[{"command":"user-hook"}]}]}}\n'

@@ -40,7 +40,7 @@ describe('file commands on a server with no app window', () => {
     await main(['file', 'open', 'src/App.tsx', '--worktree', 'id:wt-1'], '/tmp/repo')
 
     const printed = String(vi.mocked(console.error).mock.calls[0]?.[0])
-    expect(printed).toContain('This Orca server has no app window')
+    expect(printed).toContain('This Oh My DevX server has no app window')
     expect(printed).toContain('Next step: Open the file from the file explorer')
     expect(printed.split('\n')[0]).not.toBe('renderer_unavailable')
     expect(process.exitCode).toBe(1)
@@ -73,7 +73,7 @@ describe('file commands on a server with no app window', () => {
     await main(['file', 'open-changed', '--worktree', 'id:wt-1'], '/tmp/repo')
 
     expect(String(vi.mocked(console.error).mock.calls[0]?.[0])).toContain(
-      'This Orca server has no app window'
+      'This Oh My DevX server has no app window'
     )
   })
 

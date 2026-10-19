@@ -113,13 +113,13 @@ export async function callAgentLaunch(
   if (launch.prompt && !capabilities.includes(AGENT_LAUNCH_PROMPT_CARRY_RUNTIME_CAPABILITY)) {
     throw new RuntimeClientError(
       'incompatible_runtime',
-      'This Orca host cannot safely carry launch prompts. Update Orca on the execution host.'
+      'This Oh My DevX host cannot safely carry launch prompts. Update Oh My DevX on the execution host.'
     )
   }
   if (!capabilities.includes(AGENT_LAUNCH_LOCAL_PRESENTATION_RUNTIME_CAPABILITY)) {
     throw new RuntimeClientError(
       'incompatible_runtime',
-      'This Orca host cannot honor CLI launch focus or background behavior. Update Orca on the execution host.'
+      'This Oh My DevX host cannot honor CLI launch focus or background behavior. Update Oh My DevX on the execution host.'
     )
   }
   const operationId = replaySupported

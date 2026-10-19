@@ -63,7 +63,7 @@ export async function wslHostSshManagedRefusal(
       ? {
           ok: false,
           kind: 'ssh-managed',
-          message: `${distro} already runs the Orca server for “${sharing.name}”, which this computer reaches over SSH. Remove that server first; moving it to a WSL host isn’t supported yet.`
+          message: `${distro} already runs the Oh My DevX server for “${sharing.name}”, which this computer reaches over SSH. Remove that server first; moving it to a WSL host isn’t supported yet.`
         }
       : null
   } catch (error) {

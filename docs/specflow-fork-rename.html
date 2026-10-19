@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oh My DevX 이름 변경 정리</title>
+<style>
+  :root { --bg:#0f1115; --surface:#171a21; --border:#2a2f3a; --fg:#e6e8ee; --muted:#9aa3b2; --ok:#3fb950; --warn:#d29922; }
+  @media (prefers-color-scheme: light) { :root { --bg:#fafbfc; --surface:#fff; --border:#d8dde5; --fg:#1d232c; --muted:#5b6573; --ok:#1a7f37; --warn:#9a6700; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.7 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif; background:var(--bg); color:var(--fg); }
+  main { max-width:920px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  h2 { font-size:19px; margin:40px 0 12px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .lead { color:var(--muted); margin:0 0 20px; }
+  code { font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1px 5px; }
+  table { width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:14px; }
+  th,td { text-align:left; vertical-align:top; padding:8px 10px; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-size:13px; }
+  .note { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--warn); border-radius:6px; padding:12px 14px; margin:14px 0; }
+  li { margin:4px 0; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Orca → Oh My DevX 이름 변경</h1>
+<p class="lead">2026-10-19 · 범위: 사용자에게 보이는 이름만 (선택: "보이는 이름만")</p>
+
+<p>앱 이름은 <b>Oh My DevX</b>, 짧은 이름이 필요한 곳(CLI 명령, 설치 파일명, 번들 ID)은 <b>omdx</b>로 바꿨습니다. 소스 파일명, 변수·함수명, 환경변수 <code>ORCA_*</code>, 패키지 <code>@orca/*</code>, 데이터 폴더, <code>orca://</code> 링크는 그대로 두어 upstream 변경을 계속 merge할 수 있게 했습니다.</p>
+
+<h2>바뀐 것</h2>
+<table>
+  <thead><tr><th>항목</th><th>이전</th><th>이후</th></tr></thead>
+  <tbody>
+    <tr><td>앱 이름</td><td>Orca</td><td>Oh My DevX</td></tr>
+    <tr><td>macOS 앱 번들</td><td><code>Orca.app</code></td><td><code>Oh My DevX.app</code></td></tr>
+    <tr><td>Windows 실행 파일</td><td><code>Orca.exe</code></td><td><code>OhMyDevX.exe</code></td></tr>
+    <tr><td>번들 ID</td><td><code>io.github.singthecode.orca</code></td><td><code>io.github.singthecode.omdx</code> (helper, dev, computer-use 등 파생 ID 포함)</td></tr>
+    <tr><td>CLI 명령</td><td><code>orca</code>, <code>orca-dev</code>, <code>orca-ide</code>(Linux)</td><td><code>omdx</code>, <code>omdx-dev</code>, <code>omdx-ide</code></td></tr>
+    <tr><td>설치 파일</td><td><code>orca-macos-*.dmg</code>, <code>orca-windows-setup.exe</code>, <code>orca-linux.AppImage</code>, <code>orca-ide_*.deb/rpm</code></td><td><code>omdx-*</code></td></tr>
+    <tr><td>화면 문구</td><td>메뉴·설정·대화상자·알림·창 제목·트레이</td><td>6개 언어 카탈로그 약 6,000곳과 소스 기본 문구 900여 곳</td></tr>
+    <tr><td>CLI 도움말·스킬 안내</td><td><code>Usage: orca &lt;command&gt;</code></td><td><code>Usage: omdx &lt;command&gt;</code>, 에이전트에게 주는 명령 예시도 <code>omdx</code></td></tr>
+    <tr><td>macOS 권한 문구</td><td>"Orca allows …"</td><td>"Oh My DevX allows …"</td></tr>
+    <tr><td>모바일 앱 이름</td><td>Orca</td><td>Oh My DevX</td></tr>
+  </tbody>
+</table>
+
+<h2>일부러 그대로 둔 것</h2>
+<table>
+  <thead><tr><th>항목</th><th>이유</th></tr></thead>
+  <tbody>
+    <tr><td>데이터 폴더 <code>~/Library/Application Support/orca</code></td><td>CLI·daemon이 이 경로를 고정으로 찾습니다. 앱 이름이 바뀌면 Electron 기본 경로도 바뀌므로, 패키지 빌드에서 이 폴더를 명시적으로 고정했습니다(<code>configure-process.ts</code>, Windows는 <code>windows-app-data-path.ts</code>).</td></tr>
+    <tr><td>키체인 항목 "orca Safe Storage", "Orca Dev Safe Storage"</td><td>저장된 토큰을 암호화한 키입니다. 이름이 바뀌면 기존 Jira 토큰 등을 복호화할 수 없습니다. <code>package.json</code> name <code>orca</code>와 dev 앱 이름 <code>Orca Dev</code>를 유지했습니다.</td></tr>
+    <tr><td><code>orca://</code> 링크, <code>~/.orca</code>, <code>ORCA_*</code>, <code>@orca/*</code></td><td>내부 계약·데이터 경로. 바꾸면 upstream merge가 사실상 불가능해집니다.</td></tr>
+    <tr><td>Jira 요청 User-Agent <code>Orca</code></td><td>Jira XSRF 검사가 브라우저가 아닌 UA에 의존해 바꾸지 않았습니다.</td></tr>
+    <tr><td><code>TERM_PROGRAM=Orca</code></td><td>터미널 도구들이 이 값으로 기능을 판단합니다.</td></tr>
+    <tr><td><code>'Orca server ready'</code>, <code>X-Orca-*</code> 헤더, "Managed by Orca" 표시</td><td>스크립트나 다른 프로그램이 이 문자열을 찾습니다.</td></tr>
+    <tr><td>번들 스킬 이름 <code>orca-cli</code> 등</td><td>사용자가 이름으로 설치하는 식별자. 본문 안내만 <code>omdx</code>로 바꿨습니다.</td></tr>
+    <tr><td>외부 주소 (github.com/stablyai, onorca.dev)</td><td>실제 주소입니다.</td></tr>
+  </tbody>
+</table>
+
+<h2>호환성</h2>
+<ul>
+  <li>CLI 이름을 검사하는 곳은 새 이름(<code>omdx*</code>)과 이전 이름(<code>orca*</code>)을 모두 받습니다. 이미 설치된 <code>orca</code> 명령이나 이전 버전 터미널에서 온 요청도 동작합니다.</li>
+  <li>macOS CLI 런처는 <code>Oh My DevX.app</code>을 먼저 찾고 없으면 <code>Orca.app</code>으로 대체합니다. Linux·Windows 런처도 같은 방식입니다.</li>
+  <li>Linux 설치 스크립트는 새 <code>/usr/bin/omdx-ide</code>를 만들고, 이전 <code>/usr/bin/orca-ide</code>는 우리 설치 폴더를 가리킬 때만 정리합니다.</li>
+</ul>
+
+<div class="note">
+<b>기존 Orca와 함께 쓰지 마세요.</b> 데이터 폴더와 키체인 키를 그대로 쓰기 때문에 upstream Orca와 프로필을 공유합니다. Oh My DevX로 옮길 때는 기존 Orca를 종료하고 지운 뒤 설치하세요. 자세한 내용은 <code>specflow-fork-guide.html</code>.
+</div>
+
+<h2>남은 일</h2>
+<ul>
+  <li>Windows CLI 런처(Rust, <code>native/windows-cli-launcher</code>)는 수정했지만 이 Mac에서 컴파일해 보지 않았습니다. Windows 빌드에서 확인이 필요합니다.</li>
+  <li>앱 아이콘 이미지 자체는 바꾸지 않았습니다(이름만 변경).</li>
+  <li>서명·공증 전이라 배포용 빌드는 아직 만들지 않았습니다.</li>
+</ul>
+
+</main>
+</body>
+</html>

@@ -108,7 +108,7 @@ describe('resolveHostFlagEnvironmentId', () => {
 
     await expect(
       resolveHostFlagEnvironmentId(flags({ host: 'runtime:env-missing' }), NO_SELECTION)
-    ).rejects.toThrow('no paired Orca server is named or has id env-missing')
+    ).rejects.toThrow('no paired Oh My DevX server is named or has id env-missing')
   })
 
   // Why: the name is what a person or agent actually knows; requiring the raw uuid made the
@@ -153,7 +153,7 @@ describe('resolveHostFlagEnvironmentId', () => {
         pairingCode: null,
         environmentSelector: { value: 'other', label: '--environment' }
       })
-    ).rejects.toThrow('name different Orca servers')
+    ).rejects.toThrow('name different Oh My DevX servers')
   })
 
   it('names the ambient variable when ORCA_ENVIRONMENT is the conflicting selector', async () => {
@@ -167,7 +167,7 @@ describe('resolveHostFlagEnvironmentId', () => {
         pairingCode: null,
         environmentSelector: { value: 'staging', label: 'ORCA_ENVIRONMENT' }
       })
-    ).rejects.toThrow('ORCA_ENVIRONMENT staging name different Orca servers')
+    ).rejects.toThrow('ORCA_ENVIRONMENT staging name different Oh My DevX servers')
   })
 
   it('hands an agent the known environment ids to retry with', async () => {
@@ -294,7 +294,7 @@ describe('unprefixed --host aliases', () => {
 
     await expect(
       resolveHostFlagEnvironmentId(flags({ host: 'awin' }), NO_SELECTION)
-    ).rejects.toThrow('Ambiguous Orca server in --host awin')
+    ).rejects.toThrow('Ambiguous Oh My DevX server in --host awin')
   })
 
   it('refuses to route an alias to a paired server when SSH targets cannot be read', async () => {
@@ -487,6 +487,6 @@ describe('assertEnvironmentSelectorResolvable', () => {
 
     await expect(
       assertEnvironmentSelectorResolvable('nowhere', listSshTargetsMock)
-    ).rejects.toThrow('no paired Orca server is named or has id nowhere')
+    ).rejects.toThrow('no paired Oh My DevX server is named or has id nowhere')
   })
 })

@@ -209,7 +209,7 @@ export function ProjectedAgentMenuItems({
           {needsServerUpdate
             ? translate(
                 'auto.components.tab.bar.QuickLaunchButton.needsServerUpdate',
-                'Update Orca on this server to list this workspace’s agents'
+                'Update Oh My DevX on this server to list this workspace’s agents'
               )
             : detectionFailed
               ? translate(

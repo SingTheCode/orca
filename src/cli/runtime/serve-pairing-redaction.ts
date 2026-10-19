@@ -3,7 +3,7 @@ import type { superviseForegroundServe } from './serve-update-supervisor'
 import { createInterface } from 'node:readline'
 
 export const PAIRING_HIDDEN_LINE =
-  'Pairing URL: hidden because this supervised server is not writing to a terminal. Pair from the desktop app, or run `orca serve` in a terminal.'
+  'Pairing URL: hidden because this supervised server is not writing to a terminal. Pair from the desktop app, or run `omdx serve` in a terminal.'
 
 /**
  * Drops the human readiness block's pairing secrets: the web-client URL (it embeds the offer),

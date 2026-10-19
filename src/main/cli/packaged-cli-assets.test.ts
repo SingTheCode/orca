@@ -35,17 +35,17 @@ const unixLauncherFixtures = [
   {
     name: 'Linux',
     asset: linuxLauncherAsset,
-    appDir: ['Orca'],
-    launcher: ['resources', 'bin', 'orca-ide'],
-    executable: ['orca-ide'],
+    appDir: ['Oh My DevX'],
+    launcher: ['resources', 'bin', 'omdx-ide'],
+    executable: ['omdx-ide'],
     cli: ['resources', 'app.asar.unpacked', 'out', 'cli', 'index.js']
   },
   {
     name: 'macOS',
     asset: darwinLauncherAsset,
-    appDir: ['Orca.app'],
-    launcher: ['Contents', 'Resources', 'bin', 'orca'],
-    executable: ['Contents', 'MacOS', 'Orca'],
+    appDir: ['Oh My DevX.app'],
+    launcher: ['Contents', 'Resources', 'bin', 'omdx'],
+    executable: ['Contents', 'MacOS', 'Oh My DevX'],
     cli: ['Contents', 'Resources', 'app.asar.unpacked', 'out', 'cli', 'index.js']
   }
 ] as const
@@ -258,8 +258,8 @@ server.listen(0, '127.0.0.1', () => {
         const resourcesDir = join(appDir, 'resources')
         const launcherDir = join(resourcesDir, 'bin')
         const cliDir = join(resourcesDir, 'app.asar.unpacked', 'out', 'cli')
-        const launcherPath = join(launcherDir, 'orca-ide')
-        const electronPath = join(appDir, 'orca-ide')
+        const launcherPath = join(launcherDir, 'omdx-ide')
+        const electronPath = join(appDir, 'omdx-ide')
         const cliPath = join(cliDir, 'index.js')
 
         await mkdir(launcherDir, { recursive: true })
@@ -285,7 +285,7 @@ printf 'arg=%s\\n' "$@"
 
         const homeDir = join(root, 'home')
         const commandDir = join(homeDir, '.local', 'bin')
-        const commandPath = join(commandDir, 'orca-ide')
+        const commandPath = join(commandDir, 'omdx-ide')
         await mkdir(commandDir, { recursive: true })
         await mkdir(join(homeDir, 'orca'), { recursive: true })
         await symlink(launcherPath, commandPath)
@@ -372,9 +372,9 @@ node -e 'console.log(JSON.stringify({
       const resourcesDir = join(appDir, 'resources')
       const launcherDir = join(resourcesDir, 'bin')
       const cliDir = join(resourcesDir, 'app.asar.unpacked', 'out', 'cli')
-      const launcherPath = join(launcherDir, 'orca-ide')
+      const launcherPath = join(launcherDir, 'omdx-ide')
       const appRunPath = join(appDir, 'AppRun')
-      const electronPath = join(appDir, 'orca-ide')
+      const electronPath = join(appDir, 'omdx-ide')
       const cliPath = join(cliDir, 'index.js')
       const statePath = join(root, 'launch-state.json')
 

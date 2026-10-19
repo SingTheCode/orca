@@ -184,7 +184,7 @@ export function captureOrcadStateSnapshotCommand(
       return (
         `if [ -e ${path} ] || [ -L ${path} ]; then ` +
         `links=$(find ${path} -type l -print 2>&1) && [ -z "$links" ] || ` +
-        `snapshot_fail "${name} holds a symbolic link or an entry Orca cannot read: $links"; ` +
+        `snapshot_fail "${name} holds a symbolic link or an entry Oh My DevX cannot read: $links"; ` +
         `members="$members ${name}"; fi;`
       )
     }

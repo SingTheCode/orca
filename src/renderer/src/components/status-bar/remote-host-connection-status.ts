@@ -106,11 +106,11 @@ export function runtimeHostBlockedCopy(
     ),
     summary: translate(
       'auto.components.status.bar.RuntimeHostStatusRow.update_required_summary',
-      'Orca versions are not compatible'
+      'Oh My DevX versions are not compatible'
     ),
     explanation: translate(
       'auto.components.status.bar.RuntimeHostStatusRow.update_required_explanation',
-      'Update Orca on this computer or on the server, then connect again.'
+      'Update Oh My DevX on this computer or on the server, then connect again.'
     ),
     ...(compatibility?.kind === 'blocked'
       ? { detail: describeRuntimeCompatBlock(compatibility) }

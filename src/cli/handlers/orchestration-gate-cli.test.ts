@@ -210,7 +210,7 @@ describe('orchestration gate commands carry caller identity', () => {
       .mockRejectedValueOnce(
         new RuntimeClientError(
           'runtime_unavailable',
-          'The Orca runtime closed the connection before responding. Restart Orca and try again. Orchestration mutation request ID: mutation_1.',
+          'The Oh My DevX runtime closed the connection before responding. Restart Oh My DevX and try again. Orchestration mutation request ID: mutation_1.',
           {
             orchestrationRequestId: 'mutation_1',
             originalCommand: [

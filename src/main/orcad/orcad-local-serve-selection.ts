@@ -84,7 +84,7 @@ export async function selectServeRuntime(
   }
   const templateDir = input.templateDirs.find((candidate) => existsSync(candidate))
   if (!templateDir) {
-    return electron('this Orca install carries no orcad template')
+    return electron('this Oh My DevX install carries no orcad template')
   }
   const cacheRoot = join(input.userDataPath, 'orcad-artifacts')
   let slotDir: string
@@ -161,7 +161,7 @@ async function placeSlotRuntime(
       await copyVerifiedAppImageNodeRuntime(bundledNodeRuntime, destination)
       return
     } catch (error) {
-      console.error(`orca serve: not using the bundled Node (${errorMessage(error)})`)
+      console.error(`omdx serve: not using the bundled Node (${errorMessage(error)})`)
     }
   }
   const cached = await materializeRuntime(target, cacheRoot, { fetcher: fetch })

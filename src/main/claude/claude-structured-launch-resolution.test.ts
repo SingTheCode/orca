@@ -188,15 +188,15 @@ describe('claude structured launch resolution', () => {
     expect(launch.options.sessionId).toBeUndefined()
   })
 
-  it('names the child by the Orca session id, over any id the configured overlay carries', async () => {
-    // The Orca-minted id, never the provider's: the provider id rotates on /clear.
+  it('names the child by the Oh My DevX session id, over any id the configured overlay carries', async () => {
+    // The Oh My DevX-minted id, never the provider's: the provider id rotates on /clear.
     const launch = await resolverFor(record(), () => ({
       ORCA_AGENT_SESSION_ID: 'a0b1c2d3-0000-4000-8000-00000000abcd'
     }))({ identity: IDENTITY })
 
     expect(launch.env).toMatchObject({
       ORCA_AGENT_SESSION_ID: SESSION_ID,
-      ORCA_CLI_COMMAND: expect.stringMatching(/^[^:;]*[\\/]cli[\\/]bin[\\/]orca-dev$/)
+      ORCA_CLI_COMMAND: expect.stringMatching(/^[^:;]*[\\/]cli[\\/]bin[\\/]omdx-dev$/)
     })
     expect(launch.env?.ORCA_AGENT_SESSION_ID).not.toBe(launch.providerSessionId)
   })
@@ -426,7 +426,7 @@ describe('claude structured launch resolution', () => {
     ])
   })
 
-  it('builds on the supplied inherited env instead of Orca process env', async () => {
+  it('builds on the supplied inherited env instead of Oh My DevX process env', async () => {
     const launch = await createClaudeStructuredLaunchResolver({
       resolveLaunchArgs: () => [],
       store: { getRecord: () => record(), pinLaunchDirectory: vi.fn() },
@@ -599,7 +599,7 @@ describe('readable Claude thinking', () => {
       expect(asked).toMatchObject({ command, cwd: '/repos/workspace-1' })
       const segments = (env: Record<string, string> | undefined) =>
         (env?.PATH ?? env?.Path ?? '').split(delimiter)
-      // The launch's PATH is the probe's plus Orca's own CLI directory, which holds no `claude` or
+      // The launch's PATH is the probe's plus Oh My DevX's own CLI directory, which holds no `claude` or
       // runtime, so both resolve the same binary and the same shims in the same order.
       const orcaCliDir = launch.env?.ORCA_CLI_COMMAND ? dirname(launch.env.ORCA_CLI_COMMAND) : null
       expect(segments(launch.env).filter((dir) => dir !== orcaCliDir)).toEqual(segments(asked?.env))
@@ -622,7 +622,7 @@ describe('readable Claude thinking', () => {
     expect((await launchWith()).options.extraArgs).toEqual({ 'replay-user-messages': null })
   })
 
-  it('keeps saved Arguments beside readable thinking, with the display left to Orca', async () => {
+  it('keeps saved Arguments beside readable thinking, with the display left to Oh My DevX', async () => {
     const launch = await launchWith(
       { supports: async (flag) => flag === CLAUDE_THINKING_DISPLAY_FLAG },
       undefined,

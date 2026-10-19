@@ -65,7 +65,7 @@ function launchCalls(): unknown[][] {
   )
 }
 
-describe('orca cli agent launch', () => {
+describe('omdx cli agent launch', () => {
   useWorktreeAwarenessEnvironment({
     callMock,
     serveOrcaAppMock,
@@ -190,7 +190,7 @@ describe('orca cli agent launch', () => {
       '--retry-launch',
       error.data.operationId
     ])
-    expect(JSON.stringify(error)).not.toContain('Restart Orca and try again')
+    expect(JSON.stringify(error)).not.toContain('Restart Oh My DevX and try again')
     expect(launchCalls()).toHaveLength(1)
   })
 

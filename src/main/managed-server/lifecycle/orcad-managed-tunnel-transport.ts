@@ -83,7 +83,9 @@ export class OrcadManagedTunnelTransportProvider implements SshPortForwardProvid
       return this.startBridge(conn, options, generation)
     }
     if (exits.length > 0) {
-      throw new Error(`The managed Orca server tunnel closed while it was checked: ${exits[0]}`)
+      throw new Error(
+        `The managed Oh My DevX server tunnel closed while it was checked: ${exits[0]}`
+      )
     }
     rememberOrcadTunnelTransport(options.connectionId, 'tcp_forward')
     return started
@@ -97,7 +99,7 @@ export class OrcadManagedTunnelTransportProvider implements SshPortForwardProvid
     this.refusedGenerations.set(conn, generation)
     if (!this.dependencies.stdio.canHandle(conn)) {
       throw new Error(
-        'This SSH host refuses TCP forwarding, and the managed Orca server tunnel has no other route.'
+        'This SSH host refuses TCP forwarding, and the managed Oh My DevX server tunnel has no other route.'
       )
     }
     // Why: a closed `ssh -L` (ours, or one an earlier Orca orphaned) may still hold the port.

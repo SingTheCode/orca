@@ -54,11 +54,11 @@ export function getProviderAccountScope(
       target.kind === 'environment'
         ? translate(
             'auto.components.settings.providerAccountScope.remoteServerCredentials',
-            'Credentials and account checks for this provider are owned by this remote server. To use another host, change Settings > Remote Orca Servers > Advanced > Default host for new projects.'
+            'Credentials and account checks for this provider are owned by this remote server. To use another host, change Settings > Remote Oh My DevX Servers > Advanced > Default host for new projects.'
           )
         : translate(
             'auto.components.settings.providerAccountScope.localCredentials',
-            'Credentials and account checks for this provider are owned by this desktop client. To use a server, change Settings > Remote Orca Servers > Advanced > Default host for new projects.'
+            'Credentials and account checks for this provider are owned by this desktop client. To use a server, change Settings > Remote Oh My DevX Servers > Advanced > Default host for new projects.'
           )
   }
 }

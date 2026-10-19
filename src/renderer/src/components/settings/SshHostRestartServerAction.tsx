@@ -78,7 +78,7 @@ export function SshHostRestartServerAction({
             <DialogDescription>
               {translate(
                 'auto.components.settings.restartServer.description',
-                'Orca restarts this host’s managed server from your current connection. It restarts only when no terminals are running on the host, because terminals that are still open keep the lost access. Close them first.'
+                'Oh My DevX restarts this host’s managed server from your current connection. It restarts only when no terminals are running on the host, because terminals that are still open keep the lost access. Close them first.'
               )}
             </DialogDescription>
           </DialogHeader>
@@ -104,7 +104,7 @@ function refusalText(result: Exclude<OrcadManagedRestartResult, { outcome: 'rest
   if (result.liveSessions === null) {
     return translate(
       'auto.components.settings.restartServer.terminalsUnknown',
-      'Orca couldn’t confirm whether terminals are running on this host, so it didn’t restart the managed server.'
+      'Oh My DevX couldn’t confirm whether terminals are running on this host, so it didn’t restart the managed server.'
     )
   }
   return translate(

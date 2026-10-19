@@ -92,11 +92,11 @@ describe('a structured chat tab', () => {
     })
   })
 
-  it("offers Copy Orca Session ID, asking the tab's host for this session's Orca session ID", async () => {
+  it("offers Copy Oh My DevX Session ID, asking the tab's host for this session's Oh My DevX session ID", async () => {
     renderToStaticMarkup(<StructuredChatTab />)
 
     const item = items.list.find(
-      (candidate) => childrenText(candidate.children) === 'Copy Orca Session ID'
+      (candidate) => childrenText(candidate.children) === 'Copy Oh My DevX Session ID'
     )
     item?.onSelect?.()
 

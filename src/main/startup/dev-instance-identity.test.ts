@@ -4,12 +4,12 @@ import { getDevInstanceIdentity, shouldApplyPreReadyAppName } from './dev-instan
 describe('dev-instance-identity', () => {
   it('keeps packaged identity stable', () => {
     expect(getDevInstanceIdentity(false, {})).toMatchObject({
-      name: 'Orca',
-      appName: 'Orca',
+      name: 'Oh My DevX',
+      appName: 'Oh My DevX',
       isDev: false,
       devLabel: null,
       dockBadgeLabel: null,
-      appUserModelId: 'io.github.singthecode.orca'
+      appUserModelId: 'io.github.singthecode.omdx'
     })
   })
 
@@ -22,7 +22,7 @@ describe('dev-instance-identity', () => {
     // ...but the Keychain-driving appName is identical and distinct from prod.
     expect(a.appName).toBe('Orca Dev')
     expect(b.appName).toBe('Orca Dev')
-    expect(a.appName).not.toBe('Orca')
+    expect(a.appName).not.toBe('Oh My DevX')
   })
 
   it('never renames a packaged build before ready', () => {
@@ -50,9 +50,9 @@ describe('dev-instance-identity', () => {
       devWorktreeName: 'dev-indicator',
       devRepoRoot: '/repo/worktrees/dev-indicator'
     })
-    expect(identity.name).toBe('Orca: nwparker/dev-indicator')
+    expect(identity.name).toBe('Oh My DevX: nwparker/dev-indicator')
     expect(identity.dockBadgeLabel).toBeNull()
-    expect(identity.appUserModelId).toMatch(/^io\.github\.singthecode\.orca\.dev\.[a-f0-9]{10}$/)
+    expect(identity.appUserModelId).toMatch(/^io\.github\.singthecode\.omdx\.dev\.[a-f0-9]{10}$/)
   })
 
   it('includes the branch when it differs from the worktree basename', () => {
@@ -63,7 +63,7 @@ describe('dev-instance-identity', () => {
     })
 
     expect(identity.devLabel).toBe('payment-ui @ feature/billing-shell')
-    expect(identity.name).toBe('Orca: feature/billing-shell')
+    expect(identity.name).toBe('Oh My DevX: feature/billing-shell')
     expect(identity.dockBadgeLabel).toBeNull()
   })
 
@@ -75,7 +75,7 @@ describe('dev-instance-identity', () => {
     })
 
     expect(identity.devLabel).toBe('manual label')
-    expect(identity.name).toBe('Orca: feature/other')
+    expect(identity.name).toBe('Oh My DevX: feature/other')
     expect(identity.dockBadgeLabel).toBeNull()
   })
 })

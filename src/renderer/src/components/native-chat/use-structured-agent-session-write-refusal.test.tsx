@@ -114,7 +114,7 @@ describe('a chat write the host refused', () => {
     })
 
     expect(mocks.toastError).toHaveBeenCalledWith(
-      "Orca couldn't confirm what happened. Check the chat."
+      "Oh My DevX couldn't confirm what happened. Check the chat."
     )
   })
 
@@ -154,11 +154,11 @@ describe('a chat write the host refused', () => {
     })
 
     expect(mocks.toastError).toHaveBeenCalledExactlyOnceWith(
-      "Orca couldn't open this chat's history right now. The agent wasn't stopped. Try again."
+      "Oh My DevX couldn't open this chat's history right now. The agent wasn't stopped. Try again."
     )
   })
 
-  it('says to update Orca for a Stop refused on a journal a newer Orca wrote', async () => {
+  it('says to update Oh My DevX for a Stop refused on a journal a newer Oh My DevX wrote', async () => {
     mocks.call.mockImplementation((_target, method) =>
       method === 'agentSession.options'
         ? Promise.resolve(OPTIONS)
@@ -167,7 +167,8 @@ describe('a chat write the host refused', () => {
             // As the host answers it (pinned in `journal-open-failure.test.ts`).
             refusal: {
               code: 'agent_session_journal_unreadable',
-              message: 'Chats were saved by a newer Orca. Update Orca to keep using them.',
+              message:
+                'Chats were saved by a newer Oh My DevX. Update Oh My DevX to keep using them.',
               details: { reason: 'journalWrittenByNewerOrca' }
             }
           })
@@ -186,7 +187,7 @@ describe('a chat write the host refused', () => {
     })
 
     expect(mocks.toastError).toHaveBeenCalledExactlyOnceWith(
-      "Chats were saved by a newer Orca. The agent wasn't stopped. Update Orca to keep using them."
+      "Chats were saved by a newer Oh My DevX. The agent wasn't stopped. Update Oh My DevX to keep using them."
     )
   })
 

@@ -49,7 +49,7 @@ async function makeFixture() {
 }
 
 async function writePayload(rootPath: string): Promise<string> {
-  const launcherPath = join(rootPath, 'resources', 'bin', 'orca-ide')
+  const launcherPath = join(rootPath, 'resources', 'bin', 'omdx-ide')
   await mkdir(dirname(launcherPath), { recursive: true })
   await writeFile(launcherPath, '#!/usr/bin/env bash\n', { mode: 0o755 })
   return launcherPath
@@ -95,7 +95,7 @@ describe('AppImage generation namespace', () => {
     const installedLauncher = await writePayload(installed!)
     await Promise.all([writePayload(keep.rootPath), writePayload(idle!), writePayload(resident!)])
     publishAppImageLauncherEndpoint(options.cacheRootPath, 'installed', installedLauncher)
-    residentExecutables.paths = [join(resident!, 'orca-ide')]
+    residentExecutables.paths = [join(resident!, 'omdx-ide')]
 
     await pruneAppImageExtractedRoots(keep.rootPath, legacyNamespace)
 
@@ -109,7 +109,7 @@ describe('AppImage generation namespace', () => {
     const { keep } = await makeFixture()
     const older = join(dirname(keep.rootPath), 'c'.repeat(24))
     await Promise.all([writePayload(keep.rootPath), writePayload(older)])
-    residentExecutables.paths = [`${join(older, 'orca-ide')} (deleted)`]
+    residentExecutables.paths = [`${join(older, 'omdx-ide')} (deleted)`]
 
     await pruneAppImageExtractedRoots(keep.rootPath)
 
@@ -123,7 +123,7 @@ describe('AppImage generation namespace', () => {
       const older = join(dirname(keep.rootPath), 'c'.repeat(24))
       await Promise.all([writePayload(keep.rootPath), writePayload(older)])
       const leasePath = await leaseAppImageGenerationForCurrentProcess({
-        execPath: join(older, 'orca-ide')
+        execPath: join(older, 'omdx-ide')
       })
       expect(leasePath).not.toBeNull()
 

@@ -91,7 +91,7 @@ export async function restartFromNewAppImage(
   watch: AppImageBuildWatch,
   deps: AppImageRestartDeps
 ): Promise<string> {
-  deps.log(`[serve] ${watch.appImagePath} holds a new Orca build; restarting from it.`)
+  deps.log(`[serve] ${watch.appImagePath} holds a new Oh My DevX build; restarting from it.`)
   const env = appImageEnv(deps.env)
   // Why probe first: a host without FUSE cannot mount it, and an exec that fails there would
   // turn into a service restart loop instead of a server still running the old build.
@@ -210,7 +210,7 @@ export function createSupervisedAppImageUpdate(
       if (!reportedFailedAttempt) {
         reportedFailedAttempt = true
         deps.log(
-          `[serve] Keeping the running build: ${watch.appImagePath} was started once and did not come up. Replace it again, or run \`orca serve --supervise --force\` once to retry it.`
+          `[serve] Keeping the running build: ${watch.appImagePath} was started once and did not come up. Replace it again, or run \`omdx serve --supervise --force\` once to retry it.`
         )
       }
       return 'current'

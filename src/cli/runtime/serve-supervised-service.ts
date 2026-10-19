@@ -73,7 +73,7 @@ export function getServeSuperviseValidationError(input: {
     return null
   }
   if ((input.platform ?? process.platform) === 'win32') {
-    return '--supervise is not supported on Windows yet. Run `orca serve` under your own service wrapper instead.'
+    return '--supervise is not supported on Windows yet. Run `omdx serve` under your own service wrapper instead.'
   }
   if (input.recipeJson) {
     return '--recipe-json starts a detached server and returns; it cannot be combined with --supervise.'
@@ -219,7 +219,7 @@ export async function superviseServeService(options: SupervisedServeOptions): Pr
         if (held?.reason !== evidence.reason) {
           hold.current = { reason: evidence.reason, since: now(), reportedStuck: false }
           log(
-            `[serve] Waiting before starting Orca serve: ${SERVE_INSTALL_HOLD_REASON_TEXT[evidence.reason]}.`
+            `[serve] Waiting before starting Oh My DevX serve: ${SERVE_INSTALL_HOLD_REASON_TEXT[evidence.reason]}.`
           )
         } else if (
           evidence.reason === 'bundle-missing' &&
@@ -227,7 +227,7 @@ export async function superviseServeService(options: SupervisedServeOptions): Pr
         ) {
           // Why exit 1: the manager restarts the CLI through the stable launcher, which finds the installed build.
           log(
-            '[serve] The Orca executable this service started from is gone; exiting so the service manager starts the installed Orca.'
+            '[serve] The Oh My DevX executable this service started from is gone; exiting so the service manager starts the installed Oh My DevX.'
           )
           return 1
         } else if (!held.reportedStuck && now() - held.since >= SERVE_INSTALL_HOLD_STUCK_MS) {
@@ -275,7 +275,7 @@ export async function superviseServeService(options: SupervisedServeOptions): Pr
           // Why not a failure: another Orca serves this profile, so wait for it instead of racing it.
           const delayMs = standbyDelayMs(standbyAttempt++, random)
           log(
-            `[serve] Another Orca serves this profile; checking again in ${Math.round(delayMs / 1000)}s.`
+            `[serve] Another Oh My DevX serves this profile; checking again in ${Math.round(delayMs / 1000)}s.`
           )
           await sleep(delayMs)
           continue
@@ -285,7 +285,7 @@ export async function superviseServeService(options: SupervisedServeOptions): Pr
         const error: unknown = attempt.settled.reason
         // Why: the child's own errors read "Orca serve exited via SIGKILL."; the log line names serve once.
         failure = (error instanceof Error ? error.message : String(error))
-          .replace(/^Orca serve /, '')
+          .replace(/^Oh My DevX serve /, '')
           .replace(/\.$/, '')
       }
       standbyAttempt = 0
@@ -297,7 +297,7 @@ export async function superviseServeService(options: SupervisedServeOptions): Pr
         return 0
       }
       log(
-        `[serve] Orca serve ${failure}; restarting in ${Math.max(1, Math.round(next.action.delayMs / 1000))}s.`
+        `[serve] Oh My DevX serve ${failure}; restarting in ${Math.max(1, Math.round(next.action.delayMs / 1000))}s.`
       )
       await sleep(next.action.delayMs)
     }

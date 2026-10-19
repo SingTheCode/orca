@@ -11,10 +11,10 @@ import { MobileEmulatorExamples } from './MobileEmulatorExamples'
 import { translate } from '@/i18n/i18n'
 
 const EMULATOR_CLI_COMMANDS = [
-  'orca emulator list --json',
-  'orca emulator attach "iPhone 16 Pro" --json',
-  'orca emulator tap 0.5 0.7 --json',
-  'orca emulator type "hello" --json'
+  'omdx emulator list --json',
+  'omdx emulator attach "iPhone 16 Pro" --json',
+  'omdx emulator tap 0.5 0.7 --json',
+  'omdx emulator type "hello" --json'
 ] as const
 
 export function MobileEmulatorAgentControlRow(): React.JSX.Element {
@@ -37,7 +37,7 @@ export function MobileEmulatorAgentControlRow(): React.JSX.Element {
           <p className="text-xs text-muted-foreground">
             {translate(
               'auto.components.settings.MobileEmulatorAgentControlRow.ff4b7e65d6',
-              'Let coding agents control the active mobile emulator with Orca CLI commands.'
+              'Let coding agents control the active mobile emulator with Oh My DevX CLI commands.'
             )}
           </p>
         </div>
@@ -49,15 +49,15 @@ export function MobileEmulatorAgentControlRow(): React.JSX.Element {
             variant="inline"
             title={translate(
               'auto.components.settings.MobileEmulatorAgentControlRow.67e19ee03c',
-              'Orca CLI skill'
+              'Oh My DevX CLI skill'
             )}
             description={translate(
               'auto.components.settings.MobileEmulatorAgentControlRow.d94ca6a623',
-              'Enables agents to use Orca CLI commands, including mobile emulator control.'
+              'Enables agents to use Oh My DevX CLI commands, including mobile emulator control.'
             )}
             command={cliSkillInstallCommand}
-            terminalTitle="Orca CLI skill setup"
-            terminalAriaLabel="Orca CLI skill install terminal"
+            terminalTitle="Oh My DevX CLI skill setup"
+            terminalAriaLabel="Oh My DevX CLI skill install terminal"
             terminalWorktreeId="settings-mobile-emulator-orca-cli-skill-terminal"
             terminalShellOverride={activeSkillRuntime.terminalShellOverride}
             installed={setup.cliSkillInstalled}

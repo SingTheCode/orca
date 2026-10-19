@@ -15,7 +15,7 @@ import {
 const DEV_CLI_BIN_FIRST = /^[^:;]*[\\/]cli[\\/]bin[:;]/
 const DEV_CLI_BIN_DIR = /^[^:;]*[\\/]cli[\\/]bin$/
 // The dev launcher by absolute path: a login shell's profile cannot reorder it behind a global.
-const DEV_CLI_LAUNCHER = /^[^:;]*[\\/]cli[\\/]bin[\\/]orca-dev$/
+const DEV_CLI_LAUNCHER = /^[^:;]*[\\/]cli[\\/]bin[\\/]omdx-dev$/
 
 /** The sealed env a Codex launch of `sessionId` spawns with, over a shell env of `env`. */
 async function codexChildEnv(
@@ -151,7 +151,7 @@ describe('the spawned Codex child', () => {
     vi.unstubAllEnvs()
   })
 
-  it("runs with its own session id and this app's CLI, over an id inherited by Orca itself", async () => {
+  it("runs with its own session id and this app's CLI, over an id inherited by Oh My DevX itself", async () => {
     // The builder's output is an overlay on process.env, so only the spawned child proves the id
     // survives the merge — an Orca launched inside another session inherits that session's id.
     vi.stubEnv('ORCA_AGENT_SESSION_ID', 'a0b1c2d3-0000-4000-8000-00000000abcd')

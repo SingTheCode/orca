@@ -19,7 +19,7 @@ import {
 type Callbacks = Parameters<PtyTransport['connect']>[0]['callbacks']
 
 const UNREACHABLE_MESSAGE =
-  'This terminal is still running on the host under an older version of Orca. Reconnecting to it…'
+  'This terminal is still running on the host under an older version of Oh My DevX. Reconnecting to it…'
 
 export function createLegacyRelayBridgeTransport(ptyId: string, inner: PtyTransport): PtyTransport {
   const api = window.api.legacyRelayBridge

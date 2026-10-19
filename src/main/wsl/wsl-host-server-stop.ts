@@ -53,7 +53,7 @@ export async function stopWslHostServer(steps: WslHostServerStopSteps): Promise<
   try {
     leftovers = await steps.endTerminals()
   } catch (error) {
-    problems.push(`Orca couldn’t list the host’s terminals: ${errorMessage(error)}`)
+    problems.push(`Oh My DevX couldn’t list the host’s terminals: ${errorMessage(error)}`)
   }
   // Shells take a moment to exit after their PTYs close; the census is the proof they did.
   let census = await steps.census()
@@ -76,9 +76,9 @@ export async function stopWslHostServer(steps: WslHostServerStopSteps): Promise<
   // Why decommission even now: it refuses on live sessions by design, and its reason is the proof.
   const result = await steps.decommission(census, servingRuntimeId)
   if (result.outcome === 'refused') {
-    problems.push(`Orca’s server kept running: ${result.reason}`)
+    problems.push(`Oh My DevX’s server kept running: ${result.reason}`)
   } else if (result.retirement !== 'retired') {
-    problems.push('Orca’s server stopped, but its terminal daemon is still running.')
+    problems.push('Oh My DevX’s server stopped, but its terminal daemon is still running.')
   }
   return problems.length === 0 ? { stopped: true } : { stopped: false, reason: problems.join(' ') }
 }
@@ -151,7 +151,7 @@ export function decommissionWslHostOrcad(
           verdict: 'unverifiable',
           code: 'orcad_wsl_host_serving_instance_unproven',
           reason:
-            'the orcad this computer was connected to is not the one the distro records as active, so Orca could not prove it stopped.'
+            'the orcad this computer was connected to is not the one the distro records as active, so Oh My DevX could not prove it stopped.'
         }
       }
     }

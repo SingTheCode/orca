@@ -193,7 +193,7 @@ export function reconcileManagedOrcadSshTargets(
     restoreFencesFromManagedServers(userDataPath, store)
     markChangedRetainedSources(userDataPath, store, now)
   } catch (error) {
-    console.warn('[ssh] Could not reconcile managed Orca server hosts:', error)
+    console.warn('[ssh] Could not reconcile managed Oh My DevX server hosts:', error)
   }
 }
 

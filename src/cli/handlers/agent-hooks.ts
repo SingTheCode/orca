@@ -119,7 +119,7 @@ async function updateRunningRuntime(client: RuntimeClient, enabled: boolean): Pr
     if (status.result.app.running) {
       throw new RuntimeClientError(
         'runtime_error',
-        'Orca is running but unavailable. Retry when it responds, or stop Orca before changing agent hooks offline.'
+        'Oh My DevX is running but unavailable. Retry when it responds, or stop Oh My DevX before changing agent hooks offline.'
       )
     }
     return false

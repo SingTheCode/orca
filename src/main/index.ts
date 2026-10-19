@@ -140,7 +140,7 @@ if (preflightReady) {
     } catch (error) {
       const message =
         formatProfileStateStartupFailure(error) ??
-        `Orca could not finish starting: ${error instanceof Error ? error.message : String(error)}`
+        `Oh My DevX could not finish starting: ${error instanceof Error ? error.message : String(error)}`
       const failureClass = profileStateStartupFailureClass(error)
       if (failureClass !== undefined) {
         recordDurableCrashBreadcrumb('profile_state_startup_failed', {
@@ -171,7 +171,7 @@ if (preflightReady) {
           await presentProfileStateStartupRecoveryDialog({
             message,
             ...(failureClass === 'recovery-required' || failureClass === 'ambiguous-authority'
-              ? { recoveryCommand: 'orca profile state exports' }
+              ? { recoveryCommand: 'omdx profile state exports' }
               : {}),
             showMessageBox: (options) => dialog.showMessageBox(options),
             copyToClipboard: (text) => clipboard.writeText(text)

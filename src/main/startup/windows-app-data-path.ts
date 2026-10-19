@@ -1,6 +1,8 @@
 import { mkdirSync } from 'node:fs'
 import { win32 } from 'node:path'
 
+export const PACKAGED_USER_DATA_DIR_NAME = 'orca'
+
 export type WindowsAppDataPathHost = {
   getPath(name: 'appData'): string
   setPath(name: 'appData' | 'userData', value: string): void
@@ -55,6 +57,7 @@ export function ensureWindowsAppDataPath(
   if (host.commandLine.hasSwitch('user-data-dir')) {
     return
   }
-  // Same value Electron's own provider computes; setting it skips that provider entirely.
-  host.setPath('userData', win32.join(appData, host.getName()))
+  // Why the legacy folder rather than host.getName(): the product is now "Oh My DevX", and the CLI,
+  // daemon and existing profiles still resolve the packaged profile as appData/orca.
+  host.setPath('userData', win32.join(appData, PACKAGED_USER_DATA_DIR_NAME))
 }

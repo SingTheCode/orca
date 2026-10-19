@@ -75,9 +75,9 @@ function runDesktopRecovery(argv: readonly string[]): void {
       dialog.showMessageBox({
         type: 'error',
         buttons: ['Quit'],
-        title: 'Orca profile state was not changed',
-        message: 'Orca could not apply the selected profile state.',
-        detail: `${response.message}\n\nReopen Orca to choose again.`
+        title: 'Oh My DevX profile state was not changed',
+        message: 'Oh My DevX could not apply the selected profile state.',
+        detail: `${response.message}\n\nReopen Oh My DevX to choose again.`
       })
     )
     .catch((error: unknown) => console.warn('[profile-state] Recovery error dialog failed:', error))
@@ -108,7 +108,7 @@ function runRecoveryRequest(payload: string | undefined): ProfileStateRecoveryRe
       if (!acquireSingleInstanceLock(app, () => {})) {
         throw new ProfileStateRecoveryCommandError(
           'runtime_error',
-          'Stop Orca before profile-state rollback so no process can write the SQLite database.'
+          'Stop Oh My DevX before profile-state rollback so no process can write the SQLite database.'
         )
       }
       return {

@@ -96,7 +96,7 @@
   <thead><tr><th>#</th><th>요구</th><th>상태</th><th>구현/근거</th></tr></thead>
   <tbody>
     <tr><td>1</td><td>GitHub에 Orca fork</td><td><span class="pill done">완료</span></td>
-      <td><code>github.com/SingTheCode/orca</code>, <code>~/dev/orca</code> 클론, <code>upstream</code> 리모트 = stablyai/orca. 앱 ID <code>io.github.singthecode.orca</code>, 업데이트 피드·publish 대상 <code>SingTheCode/orca</code> releases</td></tr>
+      <td><code>github.com/SingTheCode/orca</code>, <code>~/dev/orca</code> 클론, <code>upstream</code> 리모트 = stablyai/orca. 앱 ID <code>io.github.singthecode.omdx</code>, 업데이트 피드·publish 대상 <code>SingTheCode/orca</code> releases</td></tr>
     <tr><td>2</td><td>SpecFlow 기능 구현 제외</td><td><span class="pill done">반영</span></td>
       <td>SpecFlow 서버/DB/프론트 코드 이식 없음. grill-me 프롬프트만 5번에서 재사용 예정</td></tr>
     <tr><td>3</td><td>omp 기본 하네스</td><td><span class="pill done">완료</span></td>
@@ -197,7 +197,7 @@
   <tbody>
     <tr><td><span class="pill risk">devx-proxy</span></td><td>Role 세팅은 <code>localhost:18888</code> 프록시가 떠 있어야 동작한다.</td><td>사내 배포 시 devx-proxy 설치/로그인 절차를 온보딩에 포함</td></tr>
     <tr><td><span class="pill risk">Registry 인증</span></td><td>게이트웨이 S2S 토큰 scope는 <code>mcp:*</code>뿐이고, Registry UI는 사용자 OIDC(Keycloak <code>devai</code>, PKCE)를 쓴다. <code>/api/hub/*</code>는 문서화되지 않은 내부 API.</td><td>Keycloak public client + redirect URI 등록 요청, 또는 devx-proxy 인증 재사용. devx 팀과 API 계약 확인</td></tr>
-    <tr><td><span class="pill next">배포 서명</span></td><td>앱 ID와 업데이트 피드는 fork 소유(<code>io.github.singthecode.orca</code>, <code>SingTheCode/orca</code>)로 바꿨다. 서명된 릴리스가 아직 없어 자동 업데이트는 "새 버전 없음"으로 끝난다.</td><td>사내 배포 전 Apple Developer ID 서명·공증, Windows 코드사이닝 설정</td></tr>
+    <tr><td><span class="pill next">배포 서명</span></td><td>앱 ID와 업데이트 피드는 fork 소유(<code>io.github.singthecode.omdx</code>, <code>SingTheCode/orca</code>)로 바꿨다. 서명된 릴리스가 아직 없어 자동 업데이트는 "새 버전 없음"으로 끝난다.</td><td>사내 배포 전 Apple Developer ID 서명·공증, Windows 코드사이닝 설정</td></tr>
     <tr><td><span class="pill risk">프로필 공유</span></td><td>사용자 데이터 폴더가 upstream Orca와 같다(<code>~/Library/Application Support/orca</code>). 단일 실행 잠금으로 동시 실행은 막히지만, 번갈아 실행하면 설정·Jira 토큰·daemon 상태를 공유하고, 앱 ID가 다른 두 daemon이 남을 수 있으며, 자동 업데이트된 upstream이 새 스키마로 쓴 상태를 fork가 읽게 된다.</td><td>배포 안내에 "기존 Orca 제거 후 설치" 명시. 병행 사용이 필요하면 userData 폴더명 분리(CLI <code>metadata.ts</code>, <code>serve-bundle-coordination.ts</code>, <code>codex-home-paths.ts</code>, <code>logs-directory.ts</code> 포함)</td></tr>
     <tr><td><span class="pill next">동기화 정책</span></td><td>Jira와 Orca가 동시에 바뀔 때의 우선순위와 상태 매핑표 미정</td><td>9번 착수 전 결정</td></tr>
   </tbody>

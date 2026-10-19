@@ -201,7 +201,7 @@ function bridgeLines(lines: readonly string[]): string {
 export function getBridgePathFromCommandPath(commandPath: string): string {
   // Why: both the current Linux command and the legacy pre-rename command
   // share one WSL bridge under ~/.local/share/orca.
-  return `${commandPath.replace(/\/\.local\/bin\/(?:orca|orca-ide)$/, '/.local/share/orca')}/orca-wsl-bridge.ps1`
+  return `${commandPath.replace(/\/\.local\/bin\/(?:omdx-ide|orca|orca-ide)$/, '/.local/share/orca')}/orca-wsl-bridge.ps1`
 }
 
 export function buildSafeReplaceGuard(path: string, managedMarker: string): string {
@@ -236,7 +236,10 @@ export function buildManagedLegacyRemoveCommand(quotedLegacyCommandPath: string)
   return `if [ ! -L ${quotedLegacyCommandPath} ] && [ -f ${quotedLegacyCommandPath} ] && grep -Fq ${quotePosixShellDoubleQuotedApostrophe(MANAGED_MARKER)} ${quotedLegacyCommandPath}; then rm -f ${quotedLegacyCommandPath}; fi`
 }
 
-export function buildSafeRemoveCommand(commandPath: string, legacyCommandPath?: string): string {
+export function buildSafeRemoveCommand(
+  commandPath: string,
+  legacyCommandPaths: readonly string[] = []
+): string {
   const bridgePath = getBridgePathFromCommandPath(commandPath)
   return [
     // Why -eu not -euo pipefail: this script runs via runWslProcess's `sh -s`,
@@ -248,9 +251,9 @@ export function buildSafeRemoveCommand(commandPath: string, legacyCommandPath?: 
     `rm -f ${quotePosixShellDoubleQuotedApostrophe(commandPath)} ${quotePosixShellDoubleQuotedApostrophe(bridgePath)}`,
     // Why: leaving a managed legacy `orca` behind lets startup reconciliation
     // re-adopt it as opt-in proof and silently undo this removal.
-    ...(legacyCommandPath
-      ? [buildManagedLegacyRemoveCommand(quotePosixShellDoubleQuotedApostrophe(legacyCommandPath))]
-      : [])
+    ...legacyCommandPaths.map((legacyCommandPath) =>
+      buildManagedLegacyRemoveCommand(quotePosixShellDoubleQuotedApostrophe(legacyCommandPath))
+    )
   ].join('\n')
 }
 
@@ -266,6 +269,15 @@ export function parseManagedLauncherTarget(content: string): string | null {
 
   const legacyTarget = content.match(/^ORCA_WIN_LAUNCHER='((?:[^']|'"'"')*)'$/m)?.[1]
   return legacyTarget ? legacyTarget.replaceAll(`'"'"'`, "'") : null
+}
+
+// Why: pre-rename WSL command names (`orca-ide`, and the even older bare `orca`) share the
+// managed launcher marker, so registration adopts and removes only Orca-managed copies.
+const LEGACY_WSL_COMMAND_NAMES = ['orca-ide', 'orca'] as const
+
+export function getLegacyWslCommandPaths(commandPath: string): string[] {
+  const directory = getPosixDirname(commandPath)
+  return LEGACY_WSL_COMMAND_NAMES.map((name) => `${directory}/${name}`)
 }
 
 export function getPosixDirname(path: string): string {

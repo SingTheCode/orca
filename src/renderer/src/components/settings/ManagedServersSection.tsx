@@ -126,14 +126,14 @@ export function ManagedServersSection({
         <p className="text-xs text-muted-foreground">
           {translate(
             'auto.components.settings.managedServers.description',
-            'Orca installs and runs a server on an empty SSH host and keeps it up to date.'
+            'Oh My DevX installs and runs a server on an empty SSH host and keeps it up to date.'
           )}
         </p>
         {loadFailed ? (
           <p className="text-xs text-destructive">
             {translate(
               'auto.components.settings.managedServers.loadFailed',
-              'Orca couldn’t load SSH hosts and unfinished moves. Reopen Settings to try again.'
+              'Oh My DevX couldn’t load SSH hosts and unfinished moves. Reopen Settings to try again.'
             )}
           </p>
         ) : null}

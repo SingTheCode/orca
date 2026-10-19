@@ -1,6 +1,6 @@
 export const LOCAL_BUILD_COMPATIBILITY_CONTRACT = {
   formatVersion: 1,
-  appId: 'io.github.singthecode.orca',
+  appId: 'io.github.singthecode.omdx',
   stateSchemaVersion: 1,
   readableStateSchemaVersions: [1],
   daemonProtocolVersion: 49,

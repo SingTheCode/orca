@@ -225,7 +225,7 @@ function formatComputerFollowUpCommand(
   target: ComputerActionFollowUpTarget
 ): string {
   const args = [
-    'orca',
+    'omdx',
     'computer',
     'get-app-state',
     '--app',

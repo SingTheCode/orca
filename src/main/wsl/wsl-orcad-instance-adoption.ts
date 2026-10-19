@@ -188,7 +188,7 @@ export async function adoptUnrecordedWslOrcad(
     },
     () => {
       throw new WslOrcadUnrecordedInstanceError(
-        'Another Orca is changing this distro’s server, so an unrecorded orcad cannot be adopted now.'
+        'Another Oh My DevX is changing this distro’s server, so an unrecorded orcad cannot be adopted now.'
       )
     }
   )

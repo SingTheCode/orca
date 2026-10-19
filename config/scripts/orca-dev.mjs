@@ -12,7 +12,7 @@ const cliEntry =
   process.env.ORCA_DEV_CLI_ENTRY_PATH ?? path.join(repoRoot, 'out', 'cli', 'index.js')
 
 if (!existsSync(cliEntry)) {
-  console.error("orca-dev: CLI not built yet. Run 'pnpm run build:cli' first.")
+  console.error("omdx-dev: CLI not built yet. Run 'pnpm run build:cli' first.")
   process.exit(1)
 }
 
