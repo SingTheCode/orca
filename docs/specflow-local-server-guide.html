@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpecFlow 로컬 서버와 통합 계획 작업 설명서</title>
+<style>
+  :root { --bg:#0f1115; --surface:#171a21; --border:#2a2f3a; --fg:#e6e8ee; --muted:#9aa3b2; --ok:#3fb950; --warn:#d29922; }
+  @media (prefers-color-scheme: light) { :root { --bg:#fafbfc; --surface:#fff; --border:#d8dde5; --fg:#1d232c; --muted:#5b6573; --ok:#1a7f37; --warn:#9a6700; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.7 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif; background:var(--bg); color:var(--fg); }
+  main { max-width:940px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  h2 { font-size:19px; margin:42px 0 12px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  h3 { font-size:16px; margin:22px 0 6px; }
+  .lead { color:var(--muted); margin:0 0 20px; }
+  code { font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1px 5px; }
+  pre { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px; overflow-x:auto; }
+  pre code { border:0; padding:0; background:none; }
+  table { width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:14px; }
+  th,td { text-align:left; vertical-align:top; padding:8px 10px; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-size:13px; }
+  .ok { color:var(--ok); font-weight:600; }
+  .note { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--warn); border-radius:6px; padding:12px 14px; margin:14px 0; }
+  li { margin:4px 0; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>SpecFlow 로컬 서버와 통합 계획 작업 설명서</h1>
+<p class="lead">2026-10-20 · 저장소 <code>~/dev/orca</code> (브랜치 <code>specflow-harness</code>, 커밋 <code>7924f17d09</code>) · 서버 소스 <code>~/dev/spec_flow</code></p>
+
+<p>SpecFlow 기능 중 Orca에 없고 가치가 큰 8개를 Orca에 붙이기 위해 두 가지를 했습니다. 하나는 SpecFlow 서버를 개인 PC에 띄우고 LLM 호출을 devx-proxy로 연결한 것이고, 다른 하나는 그 서버를 쓰는 Orca 클라이언트를 어떻게 만들지 계획을 세운 것입니다. Orca 앱 코드는 아직 바꾸지 않았습니다.</p>
+
+<h2>1. 만든 것</h2>
+<table>
+  <thead><tr><th>파일</th><th>역할</th></tr></thead>
+  <tbody>
+    <tr><td><code>scripts/specflow-local/up.sh</code></td><td>DB 컨테이너와 SpecFlow backend를 띄웁니다. <code>--seed</code>를 붙이면 로컬 계정을 만들고 devx-proxy를 그 계정의 LLM 설정으로 등록합니다.</td></tr>
+    <tr><td><code>scripts/specflow-local/down.sh</code></td><td>backend를 끄고 DB 컨테이너를 멈춥니다. 데이터는 남습니다.</td></tr>
+    <tr><td><code>docs/specflow-integration-plan.html</code></td><td>8개 기능의 통합 구조, 단계별 일정, 위험, 결정 사항</td></tr>
+  </tbody>
+</table>
+<p>스크립트는 SpecFlow 저장소를 수정하지 않도록 Orca 저장소에 두었습니다.</p>
+
+<h2>2. 로컬 서버 구성</h2>
+<table>
+  <thead><tr><th>구성</th><th>주소</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><td>PostgreSQL 15</td><td><code>localhost:5436</code></td><td>docker 컨테이너 <code>specflow_db</code>. 기존 데이터 볼륨을 그대로 씁니다. 꺼져도 다시 켜지도록 <code>unless-stopped</code> 재시작 정책을 걸었습니다.</td></tr>
+    <tr><td>SpecFlow backend</td><td><code>http://localhost:8088/api/v1</code></td><td>Go 소스를 빌드해 실행합니다. 설정은 <code>spec_flow/backend/.env</code>를 읽습니다.</td></tr>
+    <tr><td>LLM</td><td>devx-proxy <code>localhost:18888</code></td><td>로컬 계정의 개인 LLM 설정(<code>litellm</code>, 모델 <code>vertex_ai/claude-sonnet-5-5</code>). 개인 설정이 공용 설정보다 우선합니다.</td></tr>
+    <tr><td>로컬 계정</td><td><code>orca-local@specflow.test</code></td><td>개발용 임의 계정. 비밀번호 기본값은 <code>up.sh</code>에 있고 <code>SPECFLOW_LOCAL_PASSWORD</code>로 바꿀 수 있습니다.</td></tr>
+    <tr><td>실행 파일·로그</td><td><code>~/.local/state/specflow-local/</code></td><td><code>specflow-backend</code>(바이너리), <code>backend.log</code>, <code>backend.pid</code></td></tr>
+  </tbody>
+</table>
+
+<h2>3. 사용 방법</h2>
+<h3>시작</h3>
+<pre><code>cd ~/dev/orca
+scripts/specflow-local/up.sh --seed</code></pre>
+<ol>
+  <li>docker가 꺼져 있으면 OrbStack을 켜고 기다립니다.</li>
+  <li><code>specflow_db</code>를 띄우고 접속 가능해질 때까지 기다립니다.</li>
+  <li>backend가 응답하지 않으면 Go로 빌드해 백그라운드로 실행합니다. 이미 떠 있으면 그대로 둡니다.</li>
+  <li><code>--seed</code>: 계정이 없으면 만들고, devx-proxy LLM 설정이 없을 때만 등록합니다. 여러 번 실행해도 중복되지 않습니다.</li>
+</ol>
+<h3>종료</h3>
+<pre><code>scripts/specflow-local/down.sh</code></pre>
+<h3>상태 확인</h3>
+<pre><code>curl -s localhost:8088/health                      # {"service":"SpecFlow API Server","status":"OK"}
+tail -f ~/.local/state/specflow-local/backend.log   # backend 로그
+docker ps --filter name=specflow_db                 # DB 컨테이너</code></pre>
+<h3>바꿀 수 있는 환경 변수</h3>
+<table>
+  <thead><tr><th>변수</th><th>기본값</th></tr></thead>
+  <tbody>
+    <tr><td><code>SPECFLOW_DIR</code></td><td><code>~/dev/spec_flow</code></td></tr>
+    <tr><td><code>SPECFLOW_PORT</code></td><td><code>8088</code></td></tr>
+    <tr><td><code>SPECFLOW_LOCAL_EMAIL</code> / <code>SPECFLOW_LOCAL_PASSWORD</code></td><td>로컬 계정</td></tr>
+    <tr><td><code>SPECFLOW_DEVX_MODEL</code></td><td><code>vertex_ai/claude-sonnet-5-5</code></td></tr>
+  </tbody>
+</table>
+<div class="note">devx-proxy가 <code>localhost:18888</code>에서 실행 중이어야 LLM 기능(인터뷰, 명세, WBS, ERD 등)이 동작합니다. 서버만 켜고 devx-proxy가 꺼져 있으면 해당 요청이 실패합니다.</div>
+
+<h2>4. 확인한 기능</h2>
+<p>로컬 계정으로 테스트 프로젝트("점심 메뉴 투표 웹앱")를 만들어 실제 API를 호출했습니다.</p>
+<table>
+  <thead><tr><th>기능</th><th>API</th><th>결과</th><th>걸린 시간</th></tr></thead>
+  <tbody>
+    <tr><td>AI 인터뷰</td><td><code>POST /projects/:id/interview/evaluate</code></td><td class="ok">권장안을 담은 질문 1개</td><td>몇 초</td></tr>
+    <tr><td>PRD/TRD 생성</td><td><code>POST /projects/:id/specs/generate</code></td><td class="ok">PRD 7.5KB, TRD 13KB, QUESTIONS 1KB (버전 1)</td><td>122초</td></tr>
+    <tr><td>WBS 생성</td><td><code>POST /projects/:id/wbs</code></td><td class="ok">작업 29개, 우선순위와 선후관계 포함</td><td>56초</td></tr>
+    <tr><td>ERD + DDL</td><td><code>POST /projects/:id/schemas/generate</code>, <code>GET .../schemas/ddl</code></td><td class="ok">테이블 설계와 PostgreSQL DDL</td><td>54초</td></tr>
+    <tr><td>대화형 작업 생성</td><td><code>POST /projects/:id/tasks/chat</code></td><td class="ok">작업 제안 2건 (<code>dialog_state: proposal</code>)</td><td>10초</td></tr>
+    <tr><td>코드 그래프</td><td><code>POST /projects/import-source</code>, <code>code-analysis</code>, <code>code-graph/*</code></td><td class="ok">Go 소스 분석, 노드 84 / 간선 139, 검색 동작</td><td>몇 초</td></tr>
+  </tbody>
+</table>
+<div class="note">처음 PRD 생성이 500 오류로 실패했습니다. 코드 문제가 아니라 DB 컨테이너가 외부 종료 요청으로 정상 종료된 것이 원인이었습니다(Postgres 로그의 <code>fast shutdown request</code>). 재시작 정책을 건 뒤 다시 실행해 통과했습니다.</div>
+<p>DB에 남은 테스트 데이터: 로컬 계정 1개, 프로젝트 2개(<code>orca-local-smoke</code>, <code>jira-src-sample</code>)와 그 산출물. 필요 없으면 SpecFlow 화면이나 <code>DELETE /api/v1/projects/:id</code>로 지울 수 있습니다.</p>
+
+<h2>5. 통합 계획 요약</h2>
+<p>자세한 내용은 <code>docs/specflow-integration-plan.html</code>에 있습니다.</p>
+<h3>방식</h3>
+<ul>
+  <li>SpecFlow 서버의 프롬프트와 Go 로직을 그대로 쓰고, Orca에는 API를 부르는 화면만 만듭니다.</li>
+  <li>로그인 토큰과 HTTP 요청은 Orca의 Jira 연동처럼 main 프로세스에서만 다루고, 계정 정보는 암호화해 저장합니다.</li>
+  <li>Jira 게시는 Orca에 이미 연결된 사내 Jira를 씁니다.</li>
+  <li>작업 실행은 omp가 SpecFlow MCP 도구로 작업을 받고 결과를 올립니다.</li>
+</ul>
+<h3>단계</h3>
+<table>
+  <thead><tr><th>단계</th><th>내용</th><th>공수(추정)</th></tr></thead>
+  <tbody>
+    <tr><td>P0 기반</td><td>SpecFlow 클라이언트(로그인·토큰 갱신·SSE), 설정 카드, 저장소 ↔ 프로젝트 연결</td><td>4~5일</td></tr>
+    <tr><td>P1 인터뷰·명세</td><td>인터뷰 채팅, PRD/TRD 보기·편집, 버전 비교</td><td>4~5일</td></tr>
+    <tr><td>P2 WBS</td><td>WBS 생성·편집, 하위 작업, 대화형 작업 생성, 실시간 갱신</td><td>4~6일</td></tr>
+    <tr><td>P3 Jira 게시</td><td>미리보기 후 사내 Jira로 일괄 생성</td><td>3~4일</td></tr>
+    <tr><td>P4 에이전트·검증</td><td>omp에 SpecFlow MCP 연결, 검증 리포트 표시</td><td>3~4일</td></tr>
+    <tr><td>P5 ERD</td><td>mermaid로 보기, DDL</td><td>2~3일</td></tr>
+    <tr><td>P6 코드 그래프</td><td>워크트리 소스 분석, 검색·호출 관계·파일 열기</td><td>4~5일</td></tr>
+  </tbody>
+</table>
+<p>합계 약 24~32인일. P0 이후 P1, P2, P5, P6은 동시에 진행할 수 있습니다.</p>
+
+<h3>계획 중 확인한 제약</h3>
+<ul>
+  <li>SpecFlow 작업 데이터에는 Jira 키 칸이 있지만 작업 수정 API가 그 값을 받지 않습니다. P3에서 서버 한 군데를 고쳐야 합니다.</li>
+  <li>로그인 토큰은 10분, 갱신 토큰은 1시간이라 저장된 계정으로 자동 재로그인해야 합니다.</li>
+  <li>MCP 키(<code>sf_mcp_</code>)는 <code>/api/v1/mcp/*</code>에만 쓸 수 있어, Orca 화면은 로그인 토큰, omp는 MCP 키로 나눕니다.</li>
+  <li>코드 그래프는 Go와 JS/TS만 분석하고, 업로드는 zip 20MB까지입니다.</li>
+  <li>Orca에는 reactflow가 없어 ERD·코드 그래프는 우선 mermaid로 보기만 제공합니다.</li>
+</ul>
+
+<h2>6. 결정 필요</h2>
+<ul>
+  <li><b>착수 순서:</b> 기획부터 Jira까지 한 흐름으로 이어지는 P0 → P1 → P2 → P3을 권장합니다.</li>
+  <li><b>ERD 편집:</b> 보기만으로 충분한지, 편집까지 필요한지. 편집이면 reactflow를 추가하고 약 3일이 더 듭니다.</li>
+  <li><b>서버 운영:</b> 계속 개인 PC에서 쓸지, 팀 공용 서버를 둘지. 클라이언트는 서버 URL만 바꾸면 되도록 만듭니다.</li>
+</ul>
+
+<h2>관련 문서</h2>
+<ul>
+  <li><code>docs/specflow-integration-plan.html</code>: 통합 계획 상세</li>
+  <li><code>docs/specflow-fork-guide.html</code>: fork 1차 작업 설명서 (omp, devx Role, 사내 Jira, 앱 정체성)</li>
+  <li><code>docs/specflow-fork-summary.html</code>: fork 1차 작업 정리</li>
+</ul>
+
+</main>
+</body>
+</html>
