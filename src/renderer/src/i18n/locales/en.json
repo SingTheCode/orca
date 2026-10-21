@@ -20216,6 +20216,47 @@
     "openFailed": "Could not open this file in the default app.",
     "openDefault": "Open in Default App"
   },
+  "specflow": {
+    "page": {
+      "bindDescription": "Specs, WBS, ERD, and code graph for this repository are stored in the linked project.",
+      "bindTitle": "Link {{repo}} to a SpecFlow project",
+      "chooseProject": "Choose a project",
+      "createAndLink": "Create and link",
+      "existingProject": "Existing project",
+      "link": "Link",
+      "loadingProjects": "Loading projects…",
+      "newProject": "New project",
+      "noProjects": "No projects yet",
+      "noRepo": "Select a repository in the sidebar to use SpecFlow.",
+      "notConnected": "Connect a SpecFlow server to plan specs, WBS, and ERD for this repository.",
+      "openSettings": "Open SpecFlow settings",
+      "projectDescription": "Description (optional)",
+      "projectName": "Project name",
+      "sidebarLabel": "SpecFlow",
+      "tabCodeGraph": "Code Graph",
+      "tabErd": "ERD",
+      "tabPlaceholder": "{{tab}} is not available yet.",
+      "tabSpecs": "Specs",
+      "tabWbs": "WBS",
+      "title": "SpecFlow",
+      "unlink": "Unlink project"
+    },
+    "settings": {
+      "connect": "Connect SpecFlow",
+      "connectedAs": "Connected as {{email}}",
+      "credentialCopy": "Credentials are stored locally and encrypted when the OS keychain is available.",
+      "description": "Plan specs, WBS, and ERD on a SpecFlow server and hand tasks to agents.",
+      "disconnect": "Disconnect",
+      "disconnected": "Disconnected",
+      "email": "Email",
+      "password": "Password",
+      "serverUrl": "Server URL",
+      "statusConnected": "Connected",
+      "statusNotConnected": "Not connected",
+      "test": "Test",
+      "verified": "Verified"
+    }
+  },
   "workspace": {
     "links": {
       "foreignReview": "This review belongs to another repository. Add reviews from this workspace’s repository.",

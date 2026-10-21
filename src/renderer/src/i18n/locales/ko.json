@@ -20106,6 +20106,47 @@
     "moreActions": "추가 강제 삭제 옵션",
     "alwaysForceDeleteTooltip": "이후 모든 워크스페이스 삭제에 적용됩니다."
   },
+  "specflow": {
+    "page": {
+      "bindDescription": "이 리포지토리의 스펙, WBS, ERD, 코드 그래프는 연결된 프로젝트에 저장됩니다.",
+      "bindTitle": "{{repo}}를 SpecFlow 프로젝트에 연결",
+      "chooseProject": "프로젝트 선택",
+      "createAndLink": "만들고 연결",
+      "existingProject": "기존 프로젝트",
+      "link": "연결",
+      "loadingProjects": "프로젝트 불러오는 중…",
+      "newProject": "새 프로젝트",
+      "noProjects": "프로젝트가 없습니다",
+      "noRepo": "SpecFlow를 사용하려면 사이드바에서 리포지토리를 선택하세요.",
+      "notConnected": "이 리포지토리의 스펙, WBS, ERD를 계획하려면 SpecFlow 서버를 연결하세요.",
+      "openSettings": "SpecFlow 설정 열기",
+      "projectDescription": "설명 (선택)",
+      "projectName": "프로젝트 이름",
+      "sidebarLabel": "SpecFlow",
+      "tabCodeGraph": "코드 그래프",
+      "tabErd": "ERD",
+      "tabPlaceholder": "{{tab}}은(는) 아직 사용할 수 없습니다.",
+      "tabSpecs": "스펙",
+      "tabWbs": "WBS",
+      "title": "SpecFlow",
+      "unlink": "프로젝트 연결 해제"
+    },
+    "settings": {
+      "connect": "SpecFlow 연결",
+      "connectedAs": "{{email}}(으)로 연결됨",
+      "credentialCopy": "자격 증명은 로컬에 저장되며 OS 키체인을 사용할 수 있으면 암호화됩니다.",
+      "description": "SpecFlow 서버에서 스펙, WBS, ERD를 계획하고 작업을 에이전트에 넘깁니다.",
+      "disconnect": "연결 해제",
+      "disconnected": "연결 해제됨",
+      "email": "이메일",
+      "password": "비밀번호",
+      "serverUrl": "서버 URL",
+      "statusConnected": "연결됨",
+      "statusNotConnected": "연결 안 됨",
+      "test": "테스트",
+      "verified": "확인됨"
+    }
+  },
   "workspace": {
     "links": {
       "foreignReview": "이 리뷰는 다른 리포지토리에 속합니다. 이 워크스페이스의 리포지토리에서 리뷰를 추가하세요.",

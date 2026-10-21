@@ -16,6 +16,7 @@ import {
 } from './left-sidebar-appearance'
 import { DEFAULT_SOURCE_CONTROL_GROUP_ORDER } from './source-control-group-order'
 import { DESKTOP_TERMINAL_SCROLLBACK_ROWS_DEFAULT } from './terminal-scrollback-policy'
+import { DEFAULT_SPECFLOW_SERVER_URL } from './specflow-settings'
 
 export function buildDefaultSettings(args: {
   workspaceDir: string
@@ -157,6 +158,7 @@ export function buildDefaultSettings(args: {
     nestedWorkerMaxDepth: 1,
     showArtifactsButton: false,
     showSkillsButton: false,
+    specflowServerUrl: DEFAULT_SPECFLOW_SERVER_URL,
     showMobileButton: true,
     showPinnedWorktreesInGroups: false,
     ctrlTabOrderMode: 'mru',

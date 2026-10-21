@@ -96,6 +96,19 @@ export function createUiViewActions(set: UISliceSet, get: UISliceGet): Partial<U
         activeView: state.previousViewBeforeArtifacts,
         worktreeNavHistoryIndex: rewindHistoryIndexPastView(state, 'artifacts')
       })),
+    openSpecflowPage: () => {
+      get().recordViewVisit('specflow')
+      set((state) => ({
+        activeView: 'specflow',
+        previousViewBeforeSpecflow:
+          state.activeView === 'specflow' ? state.previousViewBeforeSpecflow : state.activeView
+      }))
+    },
+    closeSpecflowPage: () =>
+      set((state) => ({
+        activeView: state.previousViewBeforeSpecflow,
+        worktreeNavHistoryIndex: rewindHistoryIndexPastView(state, 'specflow')
+      })),
     openMobilePage: () =>
       set((state) => ({
         activeView: 'mobile',

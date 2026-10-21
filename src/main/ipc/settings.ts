@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import type { Store } from '../persistence'
 import type { GlobalSettings } from '../../shared/global-settings-types'
 import type { PersistedState } from '../../shared/persisted-state-types'
+import { sanitizeSpecflowSettingsUpdate } from '../../shared/specflow-settings'
 import { listSystemFontFamilies } from '../system-fonts'
 import { previewGhosttyImport } from '../ghostty/index'
 import { previewWarpThemeImport } from '../warp-themes'
@@ -162,6 +163,7 @@ export function registerSettingsHandlers(
     if ('httpProxyBypassRules' in args) {
       sanitizedArgs.httpProxyBypassRules = normalizeProxyBypassRules(args.httpProxyBypassRules)
     }
+    Object.assign(sanitizedArgs, sanitizeSpecflowSettingsUpdate(args))
     if ('appIcon' in args) {
       sanitizedArgs.appIcon = normalizeAppIconId(args.appIcon)
     }
