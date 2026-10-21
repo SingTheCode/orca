@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpecFlow 기능 Orca 통합 작업 설명서</title>
+<style>
+  :root { --bg:#0f1115; --surface:#171a21; --border:#2a2f3a; --fg:#e6e8ee; --muted:#9aa3b2; --ok:#3fb950; --warn:#d29922; }
+  @media (prefers-color-scheme: light) { :root { --bg:#fafbfc; --surface:#fff; --border:#d8dde5; --fg:#1d232c; --muted:#5b6573; --ok:#1a7f37; --warn:#9a6700; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.7 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif; background:var(--bg); color:var(--fg); }
+  main { max-width:980px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  h2 { font-size:19px; margin:42px 0 12px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  h3 { font-size:16px; margin:22px 0 6px; }
+  .lead { color:var(--muted); margin:0 0 20px; }
+  code { font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1px 5px; }
+  pre { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px; overflow-x:auto; }
+  pre code { border:0; padding:0; background:none; }
+  table { width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:14px; }
+  th,td { text-align:left; vertical-align:top; padding:8px 10px; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-size:13px; }
+  .ok { color:var(--ok); font-weight:600; } .warn { color:var(--warn); font-weight:600; }
+  .note { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--warn); border-radius:6px; padding:12px 14px; margin:14px 0; }
+  li { margin:4px 0; }
+  svg text { font-family:inherit; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>SpecFlow 기능 Orca 통합 작업 설명서</h1>
+<p class="lead">2026-10-21 · Orca fork <code>~/dev/orca</code> 브랜치 <code>specflow-harness</code> · SpecFlow 서버 <code>~/dev/spec_flow</code></p>
+
+<p>Orca 왼쪽 사이드바에 <b>SpecFlow</b> 페이지를 추가했습니다. 저장소 하나를 SpecFlow 프로젝트에 연결하면 스펙, WBS, ERD, 코드 그래프 네 탭에서 기획부터 개발 검증까지 이어서 쓸 수 있습니다. 인터뷰는 SpecFlow 자체 채팅 대신 omp의 <code>grill-me</code> 스킬로 진행하고, 결과는 SpecFlow 서버가 PRD/TRD로 만듭니다. Jira 게시는 Orca에 이미 연결한 사내 Jira를 씁니다.</p>
+
+<h2>1. 전체 흐름</h2>
+<svg viewBox="0 0 960 210" width="100%" role="img" aria-label="작업 흐름">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker></defs>
+  <g fill="none" stroke="currentColor" stroke-width="1.3">
+    <rect x="10" y="30" width="160" height="70" rx="8"/><rect x="200" y="30" width="160" height="70" rx="8"/>
+    <rect x="390" y="30" width="160" height="70" rx="8"/><rect x="580" y="30" width="160" height="70" rx="8"/>
+    <rect x="770" y="30" width="180" height="70" rx="8"/>
+    <rect x="390" y="130" width="160" height="60" rx="8"/><rect x="580" y="130" width="160" height="60" rx="8"/>
+    <path d="M170 65H200" marker-end="url(#a)"/><path d="M360 65H390" marker-end="url(#a)"/>
+    <path d="M550 65H580" marker-end="url(#a)"/><path d="M740 65H770" marker-end="url(#a)"/>
+    <path d="M470 100V130" marker-end="url(#a)"/><path d="M660 100V130" marker-end="url(#a)"/>
+  </g>
+  <g fill="currentColor" font-size="13.5">
+    <text x="24" y="58" font-weight="700">grill-me 인터뷰</text><text x="24" y="80" font-size="12.5">omp plan mode</text>
+    <text x="214" y="58" font-weight="700">PRD / TRD</text><text x="214" y="80" font-size="12.5">버전·편집·비교</text>
+    <text x="404" y="58" font-weight="700">WBS</text><text x="404" y="80" font-size="12.5">작업·우선순위·일정</text>
+    <text x="594" y="58" font-weight="700">Jira 게시</text><text x="594" y="80" font-size="12.5">사내 Jira PAT</text>
+    <text x="784" y="58" font-weight="700">omp로 실행</text><text x="784" y="80" font-size="12.5">MCP로 결과 제출</text>
+    <text x="404" y="158" font-weight="700">ERD 편집</text><text x="404" y="178" font-size="12.5">DDL</text>
+    <text x="594" y="158" font-weight="700">코드 그래프</text><text x="594" y="178" font-size="12.5">워크스페이스 분석</text>
+  </g>
+</svg>
+
+<h2>2. 시작하기</h2>
+<ol>
+  <li>SpecFlow 서버 실행: <code>cd ~/dev/orca && scripts/specflow-local/up.sh --seed</code> (DB, backend, devx LLM 설정). devx-proxy가 <code>localhost:18888</code>에서 실행 중이어야 LLM 기능이 동작합니다.</li>
+  <li>Orca → 설정 → 통합 → 작업 공급자 → <b>SpecFlow</b> 카드에서 서버 URL, 이메일, 비밀번호를 넣고 연결합니다. 로컬 기본값은 <code>http://localhost:8088</code>입니다.</li>
+  <li>사이드바의 <b>SpecFlow</b>를 누르고, 현재 저장소를 기존 SpecFlow 프로젝트에 연결하거나 새로 만듭니다.</li>
+</ol>
+<div class="note">서버 주소는 설정값입니다. 나중에 공용 서버를 두면 URL만 바꾸면 됩니다. 팀 ID로 사용자를 묶는 관리 기능은 서버 쪽 별도 작업입니다.</div>
+
+<h2>3. 탭별 기능</h2>
+<table>
+  <thead><tr><th>탭</th><th>할 수 있는 것</th></tr></thead>
+  <tbody>
+    <tr><td>스펙</td><td>
+      <b>grill-me로 기획하기</b>: 현재 워크트리에서 omp를 plan mode로 띄우고 <code>/skill:grill-me</code>로 인터뷰를 시작합니다. omp에는 이 프로젝트 전용 SpecFlow MCP가 붙습니다. 사용자가 공유된 이해를 확인하면 omp가 <code>submit_grill_decisions</code>로 결정 목록을 서버에 보내고, 서버가 PRD/TRD/QUESTIONS 새 버전을 만듭니다. 탭은 5초마다 확인하다가 새 버전이 생기면 알려 줍니다.<br>
+      PRD/TRD/QUESTIONS 보기(Markdown), 편집 후 저장(새 버전 생성), 이력에서 두 버전 비교(diff), 추가 답변으로 다듬기.</td></tr>
+    <tr><td>WBS</td><td>WBS 생성(기존 작업을 모두 지우므로 확인 후 진행), 우선순위·상태별 보기, 선후관계·일정·Jira 키 표시. 작업 상세에서 제목·설명·우선순위·일정 편집, 서버가 허용하는 상태로만 변경, 삭제, AI 하위 작업 제안 후 선택 저장. <b>AI로 태스크 추가</b>: 대화로 제안받고 골라서 생성. 다른 곳에서 바뀐 내용은 실시간(SSE)으로 반영됩니다.</td></tr>
+    <tr><td>WBS → Jira</td><td><b>Jira에 게시</b>: 사이트·프로젝트·이슈 유형·Epic(선택)을 고르고, 아직 연결되지 않은 작업을 골라 순서대로 생성합니다. 성공한 작업에는 Jira 키가 기록되고, 실패한 작업은 사유를 보여 주고 나머지는 계속 진행합니다. 작업 상세에서 한 건만 게시할 수도 있습니다.</td></tr>
+    <tr><td>WBS → 검증</td><td>작업 상세의 <b>omp로 실행</b>: omp가 SpecFlow MCP로 작업 지시서를 받아 구현·검증하고 <code>submit_task_result</code>로 결과를 올립니다. 아래에 검증 리포트(UNIT/E2E/SONARQUBE, PASS/FAIL, 로그) 목록이 표시됩니다.</td></tr>
+    <tr><td>ERD</td><td>테이블·컬럼·관계를 캔버스에서 편집합니다. 테이블 이동, 추가·이름 변경·삭제, 컬럼 편집, 컬럼끼리 연결해 FK 지정, 관계 삭제. 저장하면 서버의 이름 규칙 경고를 보여 줍니다. <b>AI로 생성</b>, <b>DDL 보기</b>(복사 가능).</td></tr>
+    <tr><td>코드 그래프</td><td><b>워크스페이스 업로드</b>: 현재 워크스페이스를 zip으로 올려 분석합니다(.git, node_modules, 빌드 산출물, 숨김 파일, 1MB 넘는 파일 제외, 최대 20MB). 개요, 진입점, 핵심 파일, 검색, 호출자·피호출자, AI 설명, 에디터에서 해당 줄 열기. Go와 JavaScript/TypeScript만 분석합니다.</td></tr>
+  </tbody>
+</table>
+
+<h2>4. 구조</h2>
+<table>
+  <thead><tr><th>영역</th><th>위치</th><th>역할</th></tr></thead>
+  <tbody>
+    <tr><td>main 클라이언트</td><td><code>src/main/specflow/</code></td><td>계정 암호화 저장(<code>~/.orca/specflow-credentials</code>), 로그인·토큰 갱신·재로그인, 요청, SSE 구독, 소스 업로드, 프로젝트별 omp 확장 생성(<code>~/.orca/specflow-mcp/&lt;projectId&gt;/</code>, MCP 키는 0600 파일)</td></tr>
+    <tr><td>IPC</td><td><code>src/main/ipc/specflow.ts</code>, <code>src/preload/api/specflow-*.ts</code></td><td><code>window.api.specflow</code>. 요청 경로는 <code>/</code>로 시작해야 하고 <code>//</code>, <code>..</code>는 막아 토큰이 다른 호스트로 가지 않게 합니다.</td></tr>
+    <tr><td>설정</td><td><code>src/shared/specflow-settings.ts</code></td><td>서버 URL, 저장소→프로젝트 연결, 코드 그래프 프로젝트 연결, MCP 진입 파일 경로</td></tr>
+    <tr><td>화면</td><td><code>src/renderer/src/components/specflow/</code></td><td>페이지, 프로젝트 연결, <code>specs/</code>, <code>wbs/</code>(<code>jira/</code>, <code>agent/</code>), <code>erd/</code>, <code>code-graph/</code></td></tr>
+    <tr><td>omp 실행</td><td><code>specflow/specflow-omp-launch.ts</code></td><td>omp를 <code>-e &lt;확장 폴더&gt;</code>(+ grill-me는 <code>--config plan.yml</code>)로 실행. 셸별 인용 처리.</td></tr>
+    <tr><td>서버 추가분</td><td><code>~/dev/spec_flow</code></td><td><code>POST /mcp/specs/from-decisions</code>, <code>POST /projects/:id/specs/from-decisions</code>, MCP 도구 <code>submit_grill_decisions</code>, <code>PUT /tasks/:id/jira-link</code></td></tr>
+  </tbody>
+</table>
+<p>새 의존성: <code>@xyflow/react</code> 12 (ERD 캔버스). 다국어 키는 <code>specflow.*</code> 아래 영어·한국어로 추가했습니다.</p>
+
+<h2>5. 검증 결과</h2>
+<h3>자동 검사</h3>
+<table>
+  <thead><tr><th>검사</th><th>결과</th></tr></thead>
+  <tbody>
+    <tr><td><code>pnpm tc:web</code></td><td class="ok">오류 0</td></tr>
+    <tr><td><code>pnpm tc:node</code></td><td>upstream에 원래 있던 1건(<code>posix-host-op-byte-budget.test.ts</code>) 외 오류 없음</td></tr>
+    <tr><td>SpecFlow 단위 테스트</td><td class="ok">12개 파일 98건 통과 (토큰 갱신·재로그인, MCP 확장 파일, SSE 파서, 업로드 경로 필터, 작업 모델, ERD 왕복·편집, Jira 페이로드, 리포트 정규화, 코드 그래프 모델, 스펙 모델)</td></tr>
+    <tr><td>oxlint / oxfmt</td><td class="ok">변경 파일 61개 모두 통과</td></tr>
+    <tr><td>다국어 검사</td><td class="ok">추출·카탈로그 검사 통과</td></tr>
+    <tr><td><code>check:code-quality:changed</code></td><td>SpecFlow 파일 0건. 남은 15건은 이전 이름 변경 작업에서 건드린 upstream 테스트 4개 파일의 기존 타입 단언</td></tr>
+  </tbody>
+</table>
+<table>
+  <thead><tr><th>항목</th><th>결과</th></tr></thead>
+  <tbody>
+    <tr><td>dev 앱에서 SpecFlow 페이지</td><td class="ok">연결 상태, 프로젝트 연결, 네 탭 모두 서버 데이터로 렌더링, 콘솔 오류 없음</td></tr>
+    <tr><td>스펙 탭</td><td class="ok">PRD 표시, 이력 v4↔v5 diff 표시</td></tr>
+    <tr><td>grill-me 버튼</td><td class="ok">워크트리에 omp 실행: <code>omp -e ~/.orca/specflow-mcp/&lt;id&gt; --config …/plan.yml</code>, plan mode, grill-me 질문 라운드 표시. 답변 후 omp가 <code>submit_grill_decisions</code>를 호출해 PRD/TRD/QUESTIONS가 v5 → v6으로 올라갔고, 스펙 탭에 v6이 표시됨</td></tr>
+    <tr><td>WBS 탭</td><td class="ok">작업 목록(P0 19건 등), 우선순위·상태·일정 표시. 편집·상태 변경 시 SSE 이벤트 수신(스크립트)</td></tr>
+    <tr><td>대화형 작업 생성</td><td class="ok">제안 2건 → 1건 생성 → 삭제로 원복(스크립트)</td></tr>
+    <tr><td>ERD 탭</td><td class="ok">테이블 4개·관계 캔버스 표시. 이동·컬럼 추가 저장 후 재조회 유지, DDL 반영, 원복(스크립트)</td></tr>
+    <tr><td>코드 그래프</td><td class="ok"><code>spec_flow/mcp</code> 업로드 → 노드 20 / 간선 33, 검색·호출 관계·AI 설명(스크립트)</td></tr>
+    <tr><td>검증 리포트</td><td class="ok">MCP로 제출한 리포트가 목록 맨 위에 표시(스크립트), omp가 MCP <code>get_task_prompt</code>로 작업 지시서를 받음</td></tr>
+    <tr><td>Jira 게시</td><td class="warn">실제 Jira 이슈는 만들지 않았습니다. 페이로드는 테스트로, SpecFlow 쪽 Jira 키 기록은 서버로 확인</td></tr>
+    <tr><td>plan mode에서 MCP 쓰기</td><td class="ok">omp plan mode에서도 MCP 쓰기 도구 호출 가능 확인</td></tr>
+  </tbody>
+</table>
+
+<h2>6. 알아 둘 점</h2>
+<ul>
+  <li><b>grill-me 제출과 plan mode:</b> 첫 실행에서 omp가 제출을 plan으로 만들고 Plan Review에서 멈췄습니다(승인하면 제출됨). 그래서 시작 프롬프트에 "plan mode에서 바로 MCP를 호출하고 plan으로 만들지 말 것"을 추가했습니다. 그래도 Plan Review가 뜨면 <b>Approve and execute</b>를 누르면 됩니다.</li>
+  <li><b>오래 걸리는 요청:</b> PRD/TRD 생성 약 2분, 스펙 저장(AI 정제 포함) 최대 약 4~5분, WBS·ERD 생성 약 1분. 요청 제한 시간은 10분입니다.</li>
+  <li><b>WBS 다시 생성:</b> 서버가 기존 작업을 모두 지웁니다(하위 작업, 상태, Jira 연결 포함).</li>
+  <li><b>코드 그래프 재업로드:</b> 매번 새 SpecFlow 프로젝트가 생깁니다. 서버의 재시도 API는 새 소스를 받지 않기 때문입니다. 이전 프로젝트는 서버에 남습니다.</li>
+  <li><b>Jira 생성 후 기록 실패:</b> 이슈는 생겼는데 SpecFlow 기록이 실패하면 그 행에 표시만 하고 자동으로 다시 연결하지 않습니다.</li>
+  <li><b>MCP 키:</b> 프로젝트마다 하나씩 <code>~/.orca/specflow-mcp/</code> 아래 0600 파일로 저장됩니다. 서버 URL이 바뀌면 새로 발급합니다.</li>
+  <li><b>테스트 데이터:</b> 로컬 서버의 <code>orca-local-smoke</code> 프로젝트에 검증 중 생긴 스펙 버전, 검증 리포트 1건, Jira 키 <code>ORCA-101</code>(가짜), 코드 그래프용 import 프로젝트가 남아 있습니다.</li>
+</ul>
+
+<h2>관련 문서</h2>
+<ul>
+  <li><code>docs/specflow-integration-plan.html</code>: 통합 계획과 결정 사항</li>
+  <li><code>docs/specflow-local-server-guide.html</code>: 로컬 서버 설명서</li>
+</ul>
+
+</main>
+</body>
+</html>

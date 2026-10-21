@@ -13,6 +13,11 @@ import {
   ensureSpecflowMcpExtension,
   isSpecflowProjectId
 } from '../specflow/specflow-mcp-extension'
+import {
+  subscribeSpecflowTaskEvents,
+  unsubscribeSpecflowTaskEvents
+} from '../specflow/specflow-task-events'
+import { uploadWorkspaceSource } from '../specflow/specflow-source-upload'
 
 const ConnectArgsSchema = z.object({
   serverUrl: z.string().min(1),
@@ -33,11 +38,11 @@ const RequestArgsSchema = z.object({
 
 const EnsureMcpKeyArgsSchema = z.object({ projectId: z.string() })
 
-const NOT_IMPLEMENTED: SpecflowResult<never> = {
-  ok: false,
-  status: null,
-  error: 'not implemented'
-}
+const UploadWorkspaceSourceArgsSchema = z.object({
+  projectId: z.string().optional(),
+  name: z.string().trim().min(1).max(255),
+  workspacePath: z.string().min(1)
+})
 
 function invalidArgs(error: z.ZodError): SpecflowResult<never> {
   return { ok: false, status: null, error: `Invalid arguments: ${error.issues[0]?.message ?? ''}` }
@@ -69,7 +74,21 @@ export function registerSpecflowHandlers(store: Store): void {
     return ensureSpecflowMcpExtension(projectId, configuredEntry || defaultSpecflowMcpEntryPath())
   })
 
-  ipcMain.handle('specflow:subscribeTaskEvents', () => NOT_IMPLEMENTED)
-  ipcMain.handle('specflow:unsubscribeTaskEvents', () => NOT_IMPLEMENTED)
-  ipcMain.handle('specflow:uploadWorkspaceSource', () => NOT_IMPLEMENTED)
+  ipcMain.handle('specflow:subscribeTaskEvents', (event, args: unknown) => {
+    const parsed = EnsureMcpKeyArgsSchema.safeParse(args)
+    if (!parsed.success || !isSpecflowProjectId(parsed.data.projectId)) {
+      return { ok: false, status: null, error: 'Invalid arguments: projectId' }
+    }
+    return subscribeSpecflowTaskEvents(parsed.data.projectId, event.sender)
+  })
+  ipcMain.handle('specflow:unsubscribeTaskEvents', (_event, args: unknown) => {
+    const parsed = z.object({ subscriptionId: z.string().min(1) }).safeParse(args)
+    return parsed.success
+      ? unsubscribeSpecflowTaskEvents(parsed.data.subscriptionId)
+      : invalidArgs(parsed.error)
+  })
+  ipcMain.handle('specflow:uploadWorkspaceSource', (_event, args: unknown) => {
+    const parsed = UploadWorkspaceSourceArgsSchema.safeParse(args)
+    return parsed.success ? uploadWorkspaceSource(parsed.data) : invalidArgs(parsed.error)
+  })
 }

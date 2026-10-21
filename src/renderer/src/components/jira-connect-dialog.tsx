@@ -229,10 +229,10 @@ export function JiraConnectDialog({
               value={instanceType}
               disabled={connectState === 'connecting'}
               onValueChange={(value) => {
-                if (!value || connectState === 'connecting') {
+                if (connectState === 'connecting' || (value !== 'cloud' && value !== 'server')) {
                   return
                 }
-                const nextType = value as JiraInstanceType
+                const nextType: JiraInstanceType = value
                 setInstanceType(nextType)
                 // Keep the house URL only where it applies; a typed URL is left alone.
                 if (nextType === 'cloud' && siteUrl.trim() === HOUSE_JIRA_SITE_URL) {

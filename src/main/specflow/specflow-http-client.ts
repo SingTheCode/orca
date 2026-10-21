@@ -295,6 +295,27 @@ export function getConnectedSpecflowServerUrl(): string | null {
   return status.ok ? status.data.serverUrl : null
 }
 
+/**
+ * Access token for transports that cannot go through `specflowRequest` (SSE `?token=`).
+ * Pass the token that just got a 401 as `stale` to force a renewal.
+ */
+export async function getSpecflowAccessToken(
+  stale?: string
+): Promise<SpecflowResult<{ serverUrl: string; accessToken: string }>> {
+  let current = session
+  if (!current || (stale !== undefined && current.accessToken === stale)) {
+    const renewed = await renewSessionOnce(current)
+    if (!renewed.ok) {
+      return renewed
+    }
+    current = renewed.data
+  }
+  return {
+    ok: true,
+    data: { serverUrl: current.credentials.serverUrl, accessToken: current.accessToken }
+  }
+}
+
 export function _resetSpecflowSessionForTests(): void {
   session = null
   renewal = null
